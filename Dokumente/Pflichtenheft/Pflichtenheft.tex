@@ -28,9 +28,9 @@
 	\subitem Verbau von Statusleds
 	\subsubitem GPS Signal Vorhanden
 	\subsubitem Akkustand mithilfe dreier LEDs
-	\subsubitem Grüne RGB LED, wenn Notruf abgebrochen
+	\subsubitem Rote RGB LED, wenn Notruf abgebrochen
 	\subsubitem Gelbe RGB Led wenn Notruf angefordert
-	\subsubitem Rote RGB Led wenn Notruf aktiv
+	\subsubitem Grüne RGB Led wenn Notruf aktiv
 	\subsubitem Blau LED wenn Bluetooth aktiv
 	\subitem Nutzung eines Vibrationsalarms als untersützendes haptisches Feedback bei Absetzung und Abbruch eines Alarms, aber auch nach jeder Stunde bei aktiven Alarm
 	\subitem Nutzung zweier Buttons zum Absetzen und Abbrechen eines Alarms.
@@ -105,7 +105,7 @@ Das System muss mindestens au folgendem bestehen:
 \subsection{Musskriterien}
 Alle LEDs werden erst bei Knopfdruck oder Bluetooth Verbindung aktiviert.
 Die Bedienung des PLBs soll über 2 Buttons erfolgen, nur wenn beide Gleichzeitig für 5 Sekunden gedrückt werden, soll, mit einer Verzögerung von einer Minute, ein Notruf abgesetzt werden. Der Notruf kann sowohl innerhalb dieser Frist, als auch außerhalb durch gleichzeitiges, 10 sekündiges Drücken beider Tasten abgebrochen werden. Bei letzterem heißt das, dass das System in den Ruhemodus geht und keine weiteren Notrufe absetzt, bis ein neuer Notruf vom Nutzer angefordert wird.\\
-Wird der Notruf per gleichzeitigen Knopfdruck angefordert, so hat unmittelbar ein halbsekündiger Vibrationsalarm zu erfolgen, der den Nutzer mitteilt, dass der gleichzeitige Tastendruck lange genug war, und das System weiß, dass es in einer Minute einen Notruf abzusetzen hat. Zudem muss eine Gelbe Statusled für eine Minute aktiviert werden. Wird der Notruf nun wirklich nach ablauf dieser einminütigen Frist abgesetzt, so hat unmittelbar ein einsekündiger Vibrationsalarm zu erfolgen. Zudem muss die Gelbe LED Deaktiviert werden und die Rote nach erfolgreicher Absetzung des Notrufs für die gesamte Zeitdauer bis zum Abbruch des Notrufs angeschaltet bleiben. Zudem soll, wenn der Notruf aktiv ist, jede 3 Stunde für jeweils zwei Sekunden ein Vibrationsalarm aktiviert werden. Wird der Notruf abgebrochen, so muss unmittelbar während dessen, ein fünfsekündiger Vibrationsalarm ausgelöst werden und eine Blaue LED zum Leuchten anfangen. Diese soll bis zum Neustart des Systems oder bis zum erneuten Absetzen eines Notrufs leuchten.
+Wird der Notruf per gleichzeitigen Knopfdruck angefordert, so hat unmittelbar ein halbsekündiger Vibrationsalarm zu erfolgen, der den Nutzer mitteilt, dass der gleichzeitige Tastendruck lange genug war, und das System weiß, dass es in einer Minute einen Notruf abzusetzen hat. Zudem muss eine Gelbe Statusled für eine Minute aktiviert werden. Wird der Notruf nun wirklich nach ablauf dieser einminütigen Frist abgesetzt, so hat unmittelbar ein einsekündiger Vibrationsalarm zu erfolgen. Zudem muss die Gelbe LED Deaktiviert werden und die Grüne nach erfolgreicher Absetzung des Notrufs für die gesamte Zeitdauer bis zum Abbruch des Notrufs angeschaltet bleiben. Zudem soll, wenn der Notruf aktiv ist, jede 3 Stunde für jeweils zwei Sekunden ein Vibrationsalarm aktiviert werden. Wird der Notruf abgebrochen, so muss unmittelbar während dessen, ein fünfsekündiger Vibrationsalarm ausgelöst werden und eine Blaue LED zum Leuchten anfangen. Diese soll bis zum Neustart des Systems oder bis zum erneuten Absetzen eines Notrufs leuchten.
 \\Die Akkustandleds sollen in einer Reihe angeordnet werden. Beträgt der Akkustand 100-75 Prozent, so sollen alle Leds Leuchten, bis 40 Prozent nur noch die Gelbe und die Rote und darunter nur noch die Rote. Die LEDs sollen folgendermaßen angeordnet werden: Rot, Gelb, Grün.\\ 
 Die Elemente müssen auf einer PCB- Platine untergebracht werden. Das heißt, alle Elemente, außer der Akku, die Antenne und den in das Gehäuse eingelassen LEDs und Buttons, müssen auf einer einzigen PCB- Platine platzfinden. Der Grund hierfür liegt einfach darin, dass weniger bewegliche oder steckbare Komponenten im Normalfall eine größere Zuverlässig- und Verträglichkeit des Systems in Hinsicht auf Erschütterungen und Staub gewährleistet. Serieller Debug-Schnittstelle über UART über USB.
 \subsection{Sollkriterien}
