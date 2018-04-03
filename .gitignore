@@ -1,0 +1,9 @@
+*.aux
+*.lof
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.pdf
+Firmware/.settings/
+*.o
