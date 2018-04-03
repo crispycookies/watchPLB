@@ -1,0 +1,126 @@
+\documentclass[a4paper]{scrreprt}
+ 
+\usepackage[german]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\usepackage[bookmarks,bookmarksnumbered]{hyperref}
+ 
+\begin{document}
+ 
+\title{Pflichtenheft}
+\author{WatchPLB}
+\maketitle
+ 
+\begin{abstract}
+%TODO Projektbeschreibung
+\end{abstract}
+ 
+\tableofcontents
+ 
+\chapter{Zielbestimmung}
+ 
+\section{Musskriterien}
+\begin{itemize}
+	\item PLB Registrierung und Zulassung
+	\item Möglichkeit des Absetzens eines GPS-Gestützten Notrufs über COSPAS/SARSAT(406MHz)
+	\item Herstellung eines Funktionstüchtigen Prototypen auf Basis einer PCB-Platine
+	\subitem Verbau von Statusleds
+	\subsubitem GPS Signal Vorhanden
+	\subsubitem Akkustand mithilfe dreier LEDs
+	\subsubitem Grüne RGB LED, wenn Notruf abgebrochen
+	\subsubitem Gelbe RGB Led wenn Notruf angefordert
+	\subsubitem Rote RGB Led wenn Notruf aktiv
+	\subsubitem Blau LED wenn Bluetooth aktiv
+	\subitem Nutzung eines Vibrationsalarms als untersützendes haptisches Feedback bei Absetzung und Abbruch eines Alarms, aber auch nach jeder Stunde bei aktiven Alarm
+	\subitem Nutzung zweier Buttons zum Absetzen und Abbrechen eines Alarms.
+	\subitem Nutzung eines dritten Buttons zur Aktivierung des Bluetooth pairings.
+	\subitem Realisierung einer Ladeschaltung
+	\item Einbau eines Bluetooth LE Moduls zur späteren Erweiterung
+\end{itemize}
+
+ 
+\section{Sollkriterien}
+\begin{itemize}
+	\item Einschalten des Geräts erst bei Tastendruck
+	\item Wasserdichtes Gehäuse nach mindestens IP65
+	\item Formfaktor einer Uhr
+	\item Android-App
+		\subitem Anbindung über Bluetooth LE
+		\subitem Anzeigen von Akkustand
+		\subitem Positionsvergleich zwischen PLB und Android Gerät
+		\subitem Anzeige ob bereits ein Notruf abgesetzt wurde.
+		\subitem (Optional) Aufzeichnung der GPS Daten für Statistische Auswertung
+\end{itemize}
+ 
+\section{Abgrenzungskriterien}
+Folgendes wird für den Prototypen nicht gefordert
+\begin{itemize}
+	\item Homing Sender auf 121 MHz oder 243 MHz
+	\item Einsatzfähigkeit in Schluchten
+	\item Einsatzfähigkeit im Schnee
+\end{itemize}
+ 
+\chapter{Einsatz}
+
+ 
+\section{Anwendungsbereiche}
+Der Anwendungsbereich besteht darin, im Notfall schnell und einfach einen COSPAS/SARSAT Notruf abzusetzen. \\
+Gerät eine Person irgendwo auf dem Planeten in eine Lebensbedrohliche Situation, so muss es möglich sein, einen Notruf mithilfe dieses Geräts abzusetzen.
+ 
+\section{Zielgruppen}
+Die Zielgruppe besteht in Extremsportlern, welche in Gewässern oder dünn besiedelten Gebieten operieren. Dabei soll es möglich sein, dieses Tragbare Gerät von nahezu jedem Punkt auf der Erde aus einzusetzen.
+\\
+Beispiele für Zielgruppen
+\begin{itemize}
+	\item Bergsteiger
+	\item Segler
+	\item Surfer/ Windsurfer
+	\item Wanderer
+\end{itemize}
+ 
+\section{Betriebsbedingungen}
+Der Prototyp soll dahingehend Entwickelt werden, dass er später mit geringem Arbeitsaufwand zu einem tragbaren, in der Praxis einsetzbarem System weiterentwickelt werden kann.\\Das heißt, das System soll in einem Temperaturbereich von -20 bis 40 Grad Celsius arbeiten können.
+ 
+\chapter{Umgebung}
+\section{Software}
+\subsection{APP}
+Android 5.1 aufwärts 
+\section{Hardware}
+Das System muss mindestens au folgendem bestehen:
+\begin{itemize}
+	\item GNSS- Chip
+	\item Bluetooth Chip
+	\item COSPAS Sender
+	\item Mikrocontroller
+	\item Akku
+	\item USB- Ladeschaltung
+	\item Statusleds
+	\item Vibrationsalarm
+\end{itemize}
+ Das System muss eigenständig, sprich, ohne externe Stromversorgung oder Rechenkapazitäten Lauffähig sein.
+ 
+\chapter{Benutzungsoberfläche und Funktionalität}
+\section{PLB- Musskriterium}
+\subsection{Musskriterien}
+Alle LEDs werden erst bei Knopfdruck oder Bluetooth Verbindung aktiviert.
+Die Bedienung des PLBs soll über 2 Buttons erfolgen, nur wenn beide Gleichzeitig für 5 Sekunden gedrückt werden, soll, mit einer Verzögerung von einer Minute, ein Notruf abgesetzt werden. Der Notruf kann sowohl innerhalb dieser Frist, als auch außerhalb durch gleichzeitiges, 10 sekündiges Drücken beider Tasten abgebrochen werden. Bei letzterem heißt das, dass das System in den Ruhemodus geht und keine weiteren Notrufe absetzt, bis ein neuer Notruf vom Nutzer angefordert wird.\\
+Wird der Notruf per gleichzeitigen Knopfdruck angefordert, so hat unmittelbar ein halbsekündiger Vibrationsalarm zu erfolgen, der den Nutzer mitteilt, dass der gleichzeitige Tastendruck lange genug war, und das System weiß, dass es in einer Minute einen Notruf abzusetzen hat. Zudem muss eine Gelbe Statusled für eine Minute aktiviert werden. Wird der Notruf nun wirklich nach ablauf dieser einminütigen Frist abgesetzt, so hat unmittelbar ein einsekündiger Vibrationsalarm zu erfolgen. Zudem muss die Gelbe LED Deaktiviert werden und die Rote nach erfolgreicher Absetzung des Notrufs für die gesamte Zeitdauer bis zum Abbruch des Notrufs angeschaltet bleiben. Zudem soll, wenn der Notruf aktiv ist, jede 3 Stunde für jeweils zwei Sekunden ein Vibrationsalarm aktiviert werden. Wird der Notruf abgebrochen, so muss unmittelbar während dessen, ein fünfsekündiger Vibrationsalarm ausgelöst werden und eine Blaue LED zum Leuchten anfangen. Diese soll bis zum Neustart des Systems oder bis zum erneuten Absetzen eines Notrufs leuchten.
+\\Die Akkustandleds sollen in einer Reihe angeordnet werden. Beträgt der Akkustand 100-75 Prozent, so sollen alle Leds Leuchten, bis 40 Prozent nur noch die Gelbe und die Rote und darunter nur noch die Rote. Die LEDs sollen folgendermaßen angeordnet werden: Rot, Gelb, Grün.\\ 
+Die Elemente müssen auf einer PCB- Platine untergebracht werden. Das heißt, alle Elemente, außer der Akku, die Antenne und den in das Gehäuse eingelassen LEDs und Buttons, müssen auf einer einzigen PCB- Platine platzfinden. Der Grund hierfür liegt einfach darin, dass weniger bewegliche oder steckbare Komponenten im Normalfall eine größere Zuverlässig- und Verträglichkeit des Systems in Hinsicht auf Erschütterungen und Staub gewährleistet. Serieller Debug-Schnittstelle über UART über USB.
+\subsection{Sollkriterien}
+Es soll zudem auch möglich sein, über Bluetooth LE die GPS Daten, den Akkustand, den Status(Notruf abgesetzt und wann, Wurde er abgebrochen, wie oft wurde bereits Ein Notruf seit dem letzten Neustart ausgelöst) auszulesen. Das heißt, man solle den dritten Knopf nutzen um das Bluetooth Pairing einzuleiten. So wie sich das externe Gerät mit dem PLB verbunden hat, soll eine blaue LED leuchten und das PLB auf Anfrage des externen Gerätes die beschriebenen Daten liefern. Es soll auch möglich sein, GPS- Korrekturdaten von einer externen Quelle einzuspielen.
+\section{Locator- Wunschkriterium}
+1xx Mhz Locator Beacon
+\section{Low Power Optimierung- Wunschkriterium}
+Gerät schaltet erst bei Knopfdruck ein.
+\section{APP- Wunschkriterium}
+Die optionale App muss die im Sektor PLB beschriebenen Daten auslesen und Darstellen können. Die GPS Daten müssen auf einer Karte in der APP direkt dargestellt werden können. Zudem müssen die GPS Daten des Smartphones Zeitgleich auf der Karte eingeblendet werden können. Die Daten müssen intern mitgeschrieben werden und auf dem Smartphone für die Spätere Analyse gespeichert werden.(Alsbald sie eingetroffen sind; inklusive der Smartphone GPS Daten, auch wenn sie nicht auf der Karte angezeigt werden). Das betrifft das GPS System, aber auch die restlichen Daten. Die Restlichen Daten müssen in einem Separaten Tab dargestellt werden(Akkustand, Betriebsdauer, Anzahl der gesendeten Notrufe, aktiver Notruf, Anzahl und Zeitpunkt der Notrufe und der abgebrochenen Notrufe). Hier reicht es, wenn es in Textfeldern angezeigt wird. Das Design dieses Tabs ist aber grundsätzlich dem Entwickler überlassen. Mithilfe der App muss es möglich sein, manuell die Daten vom PLB anzufordern, aber auch automatisch alle 10 Sekunden. Das Design der App ist im Grunde dem Entwickler überlassen, soll sich aber an der GoogleMaps App orientieren. Das heißt, eine Karte mit der Postion des Smartphones als Startseite. Über einen runden Button, welcher links unten Positioniert ist, sollen die Daten angefordert werden können, sowohl im Karten Tab, als auch im Datentab. Links oben soll ein Menübutton zum Wechseln der Tabs angeordnet sein. Die App soll modular und die Tabs leicht erweiterbar sein. Das heißt, die App soll mit möglichst geringem Aufwand durch mehrere Tabs erweitert werden können. Das Farbschema soll pures Weiß oder Schwarz nicht beinhalten, höchsten graustufen.
+Einspielung von GPS Korrekturdaten.
+\section{Gehäuse- Sollkriterium}
+\subsection{Sollhkriterien}
+Das optionale Gehäuse des Prototypen soll am Körper befestigbar sein und dem Prototypen mindestens den Schutz nach IP65 bieten. Das Betrifft auch die Aussparungen für die LEDs und die Buttons. Zudem heißt das, dass Gehäuse muss entweder am Arm befestigt werden können, oder als eine Art seitlicher Bauchtasche. Dies soll Gewährleisten, dass das System, auch von Radfahrern oder Seglern getragen werden kann, ohne große Schmerzen bei einem Unfall zu verursachen.  Zudem soll das Gerät in dem Gehäuse einen einmaligen Sturz aus mindestens 1.5 Meter höhe überleben. Es soll Platz für die Hardware, Aussparungen für die Integration der Antenne, der Buttons und der LEDs bieten. Gleichzeitig soll das Gerät NICHT gegen Funk abschirmem, sodass es nicht zu Problemen mit dem GPS kommen kann.
+\subsection{Wunschkriterien}
+Das Gehäuse soll einem Druck von mindestens 80 Kg aushalten.
+ 
+\end{document}
