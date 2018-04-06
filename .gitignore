@@ -7,3 +7,4 @@
 *.pdf
 Firmware/.settings/
 *.o
+Firmware/.metadata/
