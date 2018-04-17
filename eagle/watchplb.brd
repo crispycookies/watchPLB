@@ -2104,6 +2104,24 @@ Based on the following sources:
 </package>
 </packages>
 </library>
+<library name="testpad">
+<description>&lt;b&gt;Test Pins/Pads&lt;/b&gt;&lt;p&gt;
+Cream on SMD OFF.&lt;br&gt;
+new: Attribute TP_SIGNAL_NAME&lt;br&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="B2,54">
+<description>&lt;b&gt;TEST PAD&lt;/b&gt;</description>
+<wire x1="-0.635" y1="0" x2="0.635" y2="0" width="0.0024" layer="37"/>
+<wire x1="0" y1="-0.635" x2="0" y2="0.635" width="0.0024" layer="37"/>
+<circle x="0" y="0" radius="0.635" width="0.254" layer="37"/>
+<smd name="TP" x="0" y="0" dx="2.54" dy="2.54" layer="1" roundness="100" cream="no"/>
+<text x="-1.27" y="1.651" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-1.27" y="-1.397" size="0.0254" layer="27">&gt;VALUE</text>
+<text x="-1.27" y="-3.175" size="1" layer="37">&gt;TP_SIGNAL_NAME</text>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2415,6 +2433,39 @@ design rules under a new name.</description>
 <element name="D1" library="diode" package="SMC" value="S8NC-13 " x="-114.3" y="-392.43"/>
 <element name="Q2" library="Hick" package="U-DFN2020-6_TYPE_F" value="DMT5015LFDF" x="-121.92" y="-394.97"/>
 <element name="R25" library="resistor" package="M0805" value="100k" x="-120.65" y="-401.32"/>
+<element name="VIBR" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-445.77">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-445.77" size="1.778" layer="27" display="off"/>
+</element>
+<element name="BT_TX" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-452.12">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-452.12" size="1.778" layer="27" display="off"/>
+</element>
+<element name="BT_RX" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-458.47">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-458.47" size="1.778" layer="27" display="off"/>
+</element>
+<element name="GPS_NRESET" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-464.82">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-464.82" size="1.778" layer="27" display="off"/>
+</element>
+<element name="GPS_EXTINT" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-471.17">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-471.17" size="1.778" layer="27" display="off"/>
+</element>
+<element name="GPS_SDA" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-477.52">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-477.52" size="1.778" layer="27" display="off"/>
+</element>
+<element name="GPS_SCL" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-483.87">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-483.87" size="1.778" layer="27" display="off"/>
+</element>
+<element name="GPS_RX" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-490.22">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-490.22" size="1.778" layer="27" display="off"/>
+</element>
+<element name="GPS_TX" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-496.57">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-496.57" size="1.778" layer="27" display="off"/>
+</element>
+<element name="NRST_MCU" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-515.62">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-515.62" size="1.778" layer="27" display="off"/>
+</element>
+<element name="3V3" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-521.97">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-521.97" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="+3V3">
@@ -2449,8 +2500,6 @@ design rules under a new name.</description>
 <contactref element="S3" pad="2"/>
 <contactref element="S3" pad="1"/>
 <contactref element="JP1" pad="4"/>
-<contactref element="C16" pad="2"/>
-<contactref element="U2" pad="19"/>
 <contactref element="S4" pad="2"/>
 <contactref element="S4" pad="1"/>
 <contactref element="S5" pad="2"/>
@@ -2458,6 +2507,9 @@ design rules under a new name.</description>
 <contactref element="U3" pad="4"/>
 <contactref element="R23" pad="1"/>
 <contactref element="R24" pad="1"/>
+<contactref element="C16" pad="2"/>
+<contactref element="U2" pad="19"/>
+<contactref element="3V3" pad="TP"/>
 <wire x1="-74.08" y1="-193.04" x2="-67.31" y2="-185.42" width="0" layer="19" extent="1-1"/>
 <wire x1="-81.8388" y1="-212.3694" x2="-74.08" y2="-193.04" width="0" layer="19" extent="1-1"/>
 <wire x1="-88.3412" y1="-212.3694" x2="-81.8388" y2="-212.3694" width="0" layer="19" extent="1-1"/>
@@ -2497,40 +2549,53 @@ design rules under a new name.</description>
 <wire x1="-81.8388" y1="-272.0594" x2="-88.3412" y2="-272.0594" width="0" layer="19" extent="1-1"/>
 <wire x1="-111.44" y1="-370.84" x2="-88.3412" y2="-272.0594" width="0" layer="19" extent="1-1"/>
 <wire x1="-111.44" y1="-377.19" x2="-111.44" y2="-370.84" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-521.97" x2="-111.44" y2="-377.19" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPS_RXD">
 <contactref element="IC1" pad="14"/>
 <contactref element="U2" pad="51"/>
-<wire x1="-44.24" y1="-37.43" x2="41.66" y2="46.35" width="0" layer="19" extent="1-16"/>
+<contactref element="GPS_RX" pad="TP"/>
+<wire x1="-44.24" y1="-37.43" x2="-121.92" y2="-490.22" width="0" layer="19" extent="1-1"/>
+<wire x1="41.66" y1="46.35" x2="-44.24" y2="-37.43" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="GPS_TXD">
 <contactref element="IC1" pad="13"/>
 <contactref element="U2" pad="52"/>
-<wire x1="-44.74" y1="-37.43" x2="41.66" y2="44.45" width="0" layer="19" extent="1-16"/>
+<contactref element="GPS_TX" pad="TP"/>
+<wire x1="-44.74" y1="-37.43" x2="-121.92" y2="-496.57" width="0" layer="19" extent="1-1"/>
+<wire x1="41.66" y1="44.45" x2="-44.74" y2="-37.43" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="GPS_SCL">
 <contactref element="IC1" pad="12"/>
 <contactref element="R1" pad="2"/>
 <contactref element="U2" pad="34"/>
-<wire x1="41.66" y1="42.55" x2="-41.24" y2="-46.43" width="0" layer="19" extent="1-1"/>
-<wire x1="-14.29" y1="20.32" x2="41.66" y2="42.55" width="0" layer="19" extent="1-1"/>
+<contactref element="GPS_SCL" pad="TP"/>
+<wire x1="-41.24" y1="-46.43" x2="-121.92" y2="-483.87" width="0" layer="19" extent="1-1"/>
+<wire x1="-14.29" y1="20.32" x2="-41.24" y2="-46.43" width="0" layer="19" extent="1-1"/>
+<wire x1="41.66" y1="42.55" x2="-14.29" y2="20.32" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="GPS_SDA">
 <contactref element="IC1" pad="9"/>
 <contactref element="R2" pad="2"/>
 <contactref element="U2" pad="35"/>
-<wire x1="46.36" y1="37.85" x2="-41.24" y2="-45.93" width="0" layer="19" extent="1-1"/>
-<wire x1="-19.37" y1="20.32" x2="46.36" y2="37.85" width="0" layer="19" extent="1-1"/>
+<contactref element="GPS_SDA" pad="TP"/>
+<wire x1="-41.24" y1="-45.93" x2="-121.92" y2="-477.52" width="0" layer="19" extent="1-1"/>
+<wire x1="-19.37" y1="20.32" x2="-41.24" y2="-45.93" width="0" layer="19" extent="1-1"/>
+<wire x1="46.36" y1="37.85" x2="-19.37" y2="20.32" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="GPS_EXTINT">
 <contactref element="IC1" pad="19"/>
 <contactref element="U2" pad="36"/>
-<wire x1="50.16" y1="51.05" x2="-41.24" y2="-45.43" width="0" layer="19" extent="1-1"/>
+<contactref element="GPS_EXTINT" pad="TP"/>
+<wire x1="-41.24" y1="-45.43" x2="50.16" y2="51.05" width="0" layer="19" extent="1-16"/>
+<wire x1="-121.92" y1="-471.17" x2="-41.24" y2="-45.43" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPS_NRESET">
 <contactref element="IC1" pad="18"/>
 <contactref element="U2" pad="37"/>
-<wire x1="48.26" y1="51.05" x2="-41.24" y2="-44.93" width="0" layer="19" extent="1-1"/>
+<contactref element="GPS_NRESET" pad="TP"/>
+<wire x1="-41.24" y1="-44.93" x2="48.26" y2="51.05" width="0" layer="19" extent="1-16"/>
+<wire x1="-121.92" y1="-464.82" x2="-41.24" y2="-44.93" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GND">
 <contactref element="IC1" pad="20"/>
@@ -2684,15 +2749,19 @@ design rules under a new name.</description>
 <contactref element="CONFIG_INTERFACE_TEST_POINT" pad="3"/>
 <contactref element="IC2" pad="22"/>
 <contactref element="U2" pad="42"/>
+<contactref element="BT_RX" pad="TP"/>
 <wire x1="-46.99" y1="-34.29" x2="-41.24" y2="-42.43" width="0" layer="19" extent="1-1"/>
 <wire x1="21.06" y1="48.01" x2="-46.99" y2="-34.29" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-458.47" x2="-41.24" y2="-42.43" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BT_HCI_TXD">
 <contactref element="CONFIG_INTERFACE_TEST_POINT" pad="4"/>
 <contactref element="IC2" pad="23"/>
 <contactref element="U2" pad="43"/>
+<contactref element="BT_TX" pad="TP"/>
 <wire x1="-44.45" y1="-34.29" x2="-41.24" y2="-41.93" width="0" layer="19" extent="1-1"/>
 <wire x1="19.96" y1="48.01" x2="-44.45" y2="-34.29" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-452.12" x2="-41.24" y2="-41.93" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$2">
 <contactref element="C12" pad="2"/>
@@ -2762,11 +2831,13 @@ design rules under a new name.</description>
 <contactref element="S1" pad="2"/>
 <contactref element="C11" pad="2"/>
 <contactref element="U2" pad="7"/>
+<contactref element="NRST_MCU" pad="TP"/>
 <wire x1="-62.55" y1="-104.14" x2="-64.77" y2="-185.42" width="0" layer="19" extent="1-1"/>
 <wire x1="-62.65" y1="-97.79" x2="-62.55" y2="-104.14" width="0" layer="19" extent="1-1"/>
 <wire x1="-64.2112" y1="-85.3694" x2="-62.65" y2="-97.79" width="0" layer="19" extent="1-1"/>
 <wire x1="-57.7088" y1="-85.3694" x2="-64.2112" y2="-85.3694" width="0" layer="19" extent="1-1"/>
 <wire x1="-52.74" y1="-42.43" x2="-57.7088" y2="-85.3694" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-515.62" x2="-64.77" y2="-185.42" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$11">
 <contactref element="C17" pad="2"/>
@@ -2799,13 +2870,13 @@ design rules under a new name.</description>
 </signal>
 <signal name="IND_LED_G">
 <contactref element="R10" pad="2"/>
-<contactref element="U2" pad="30"/>
-<wire x1="-86.68" y1="-199.39" x2="-44.24" y2="-48.93" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="28"/>
+<wire x1="-86.68" y1="-199.39" x2="-45.24" y2="-48.93" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="IND_LED_B">
 <contactref element="R11" pad="2"/>
-<contactref element="U2" pad="29"/>
-<wire x1="-86.68" y1="-205.74" x2="-44.74" y2="-48.93" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="27"/>
+<wire x1="-86.68" y1="-205.74" x2="-45.74" y2="-48.93" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GND1">
 <contactref element="LED4" pad="C"/>
@@ -2817,8 +2888,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="IND_LED_W">
 <contactref element="R14" pad="2"/>
-<contactref element="U2" pad="28"/>
-<wire x1="-86.68" y1="-241.3" x2="-45.24" y2="-48.93" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="26"/>
+<wire x1="-86.68" y1="-241.3" x2="-46.24" y2="-48.93" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GND2">
 <contactref element="LED5" pad="C"/>
@@ -2830,8 +2901,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="IND_LED_R">
 <contactref element="R15" pad="2"/>
-<contactref element="U2" pad="27"/>
-<wire x1="-86.68" y1="-255.27" x2="-45.74" y2="-48.93" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="25"/>
+<wire x1="-86.68" y1="-255.27" x2="-46.74" y2="-48.93" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$18">
 <contactref element="C18" pad="2"/>
@@ -2855,9 +2926,9 @@ design rules under a new name.</description>
 <wire x1="-86.68" y1="-293.37" x2="-93.98" y2="-293.15" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="POW_LED_G3">
-<contactref element="U2" pad="26"/>
 <contactref element="R18" pad="1"/>
-<wire x1="-46.24" y1="-48.93" x2="-88.58" y2="-293.37" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="24"/>
+<wire x1="-47.24" y1="-48.93" x2="-88.58" y2="-293.37" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$22">
 <contactref element="R19" pad="2"/>
@@ -2866,8 +2937,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="POW_LED_G2">
 <contactref element="R19" pad="1"/>
-<contactref element="U2" pad="25"/>
-<wire x1="-46.74" y1="-48.93" x2="-94.93" y2="-308.61" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="23"/>
+<wire x1="-47.74" y1="-48.93" x2="-94.93" y2="-308.61" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$25">
 <contactref element="R20" pad="2"/>
@@ -2876,8 +2947,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="POW_LED_G1">
 <contactref element="R20" pad="1"/>
-<contactref element="U2" pad="24"/>
-<wire x1="-47.24" y1="-48.93" x2="-94.93" y2="-323.85" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="22"/>
+<wire x1="-48.24" y1="-48.93" x2="-94.93" y2="-323.85" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$13">
 <contactref element="R21" pad="2"/>
@@ -2886,8 +2957,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="POW_LED_R">
 <contactref element="R21" pad="1"/>
-<contactref element="U2" pad="22"/>
-<wire x1="-48.24" y1="-48.93" x2="-94.93" y2="-339.09" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="20"/>
+<wire x1="-49.24" y1="-48.93" x2="-94.93" y2="-339.09" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$24">
 <contactref element="R22" pad="2"/>
@@ -2896,8 +2967,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="POW_LED_Y">
 <contactref element="R22" pad="1"/>
-<contactref element="U2" pad="23"/>
-<wire x1="-47.74" y1="-48.93" x2="-94.93" y2="-354.33" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="21"/>
+<wire x1="-48.74" y1="-48.93" x2="-94.93" y2="-354.33" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$10">
 <contactref element="C19" pad="3"/>
@@ -2985,8 +3056,13 @@ design rules under a new name.</description>
 <contactref element="Q2" pad="3"/>
 <contactref element="R25" pad="1"/>
 <contactref element="U2" pad="44"/>
+<contactref element="VIBR" pad="TP"/>
 <wire x1="-122.82" y1="-395.62" x2="-41.24" y2="-41.43" width="0" layer="19" extent="1-1"/>
 <wire x1="-121.6" y1="-401.32" x2="-122.82" y2="-395.62" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-445.77" x2="-121.6" y2="-401.32" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="RESERVED">
+<contactref element="U2" pad="30"/>
 </signal>
 </signals>
 </board>
