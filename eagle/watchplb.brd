@@ -2466,6 +2466,21 @@ design rules under a new name.</description>
 <element name="3V3" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-521.97">
 <attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-521.97" size="1.778" layer="27" display="off"/>
 </element>
+<element name="USB_D-" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-528.32">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-528.32" size="1.778" layer="27" display="off"/>
+</element>
+<element name="USB_D+" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-534.67">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-534.67" size="1.778" layer="27" display="off"/>
+</element>
+<element name="USB_5V" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-541.02">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-541.02" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SWD_TXD" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-547.37">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-547.37" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SWD_RXD" library="testpad" package="B2,54" value="PTR1B2,54" x="-121.92" y="-553.72">
+<attribute name="TP_SIGNAL_NAME" value="" x="-121.92" y="-553.72" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="+3V3">
@@ -2983,12 +2998,16 @@ design rules under a new name.</description>
 <signal name="N$17">
 <contactref element="J1" pad="D-"/>
 <contactref element="U3" pad="18"/>
+<contactref element="USB_D-" pad="TP"/>
 <wire x1="-81.3816" y1="-262.5344" x2="-98.875" y2="-353.68" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-528.32" x2="-98.875" y2="-353.68" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$20">
 <contactref element="U3" pad="19"/>
 <contactref element="J1" pad="D+"/>
+<contactref element="USB_D+" pad="TP"/>
 <wire x1="-81.3816" y1="-261.884159375" x2="-98.875" y2="-354.33" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-534.67" x2="-98.875" y2="-354.33" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$21">
 <contactref element="C20" pad="1"/>
@@ -2998,7 +3017,9 @@ design rules under a new name.</description>
 <signal name="+5V">
 <contactref element="J1" pad="VBUS"/>
 <contactref element="U3" pad="1"/>
+<contactref element="USB_5V" pad="TP"/>
 <wire x1="-88.7984" y1="-261.23391875" x2="-98.875" y2="-353.03" width="0" layer="19" extent="1-1"/>
+<wire x1="-121.92" y1="-541.02" x2="-98.875" y2="-353.03" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="SWD_RX">
 <contactref element="U3" pad="12"/>
@@ -3028,9 +3049,13 @@ design rules under a new name.</description>
 </signal>
 <signal name="SWD_RXD">
 <contactref element="U2" pad="16"/>
+<contactref element="SWD_RXD" pad="TP"/>
+<wire x1="-52.74" y1="-46.93" x2="-121.92" y2="-553.72" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="SWD_TXD">
 <contactref element="U2" pad="17"/>
+<contactref element="SWD_TXD" pad="TP"/>
+<wire x1="-50.74" y1="-48.93" x2="-121.92" y2="-547.37" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$28">
 <contactref element="JP2" pad="2"/>
