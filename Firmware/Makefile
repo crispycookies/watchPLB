@@ -25,17 +25,10 @@ OBJECT_DIR = Debug
 BIN_DIR = $(OBJECT_DIR)
 
 # Define sources and objects
-SRC := $(wildcard src/*.c) \
-	$(wildcard src/*/*.c) \
+SRC := $(wildcard App/*/*.c) \
+	$(wildcard Drivers/User/*/*.c) \
 	Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c
-SRCSASM := 	$(wildcard */*/*/*/*/*/*/*/*.s) \
-	$(wildcard */*/*/*/*/*/*/*.s) \
-	$(wildcard */*/*/*/*/*/*.s) \
-	$(wildcard */*/*/*/*/*.s) \
-	$(wildcard */*/*/*/*.s) \
-	$(wildcard */*/*/*.s) \
-	$(wildcard */*/*.s) \
-	$(wildcard */*.s)
+SRCSASM := App/main/startup_stm32l073xx.s
 OBJS := $(SRC:%.c=$(OBJECT_DIR)/%.o) $(SRCSASM:%.s=$(OBJECT_DIR)/%.o)
 OBJS := $(OBJS:%.S=$(OBJECT_DIR)/%.o)  
 
@@ -50,16 +43,7 @@ buildelf: $(OBJS)
 
 clean:
 	$(RM) $(OBJS) "$(BIN_DIR)/WatchPLB.elf" "$(BIN_DIR)/WatchPLB.map"
-
-
-##################
-# Specific targets
-##################
-$(OBJECT_DIR)/src/main.o: src/main.c
-	@mkdir $(subst /,\,$(dir $@)) 2> NUL || echo off
-	$(CC) $(COMPILER_FLAGS) src/main.c -o $(OBJECT_DIR)/src/main.o 
-
-
+	
 ##################
 # Implicit targets
 ##################

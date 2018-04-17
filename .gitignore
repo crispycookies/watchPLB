@@ -8,3 +8,5 @@
 Firmware/.settings/
 *.o
 Firmware/.metadata/
+Firmware/Debug/
+.metadata/
