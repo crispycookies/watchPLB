@@ -53,26 +53,20 @@ Required by regulations\}
 
 \setcounter{secnumdepth}{3} 		%enable section numbering
 \section{Einleitung}
-This section should provide an overview of the entire document.
-
 \subsection{Sinn und Zweck}
-Describe the purpose of this specification and its intended audience.
-
+Extremsportler aller Art setzen sich tagtäglich einer nicht kalkulierbaren Gefahr aus. Was wäre, wenn der Ernstfall eintritt? Wie werden sie gerettet? Wie werden sie gefunden? Wie können sie einen Notruf absetzen? Für Schiffe, Autos und andere Fahrzeuge, aber auch Senioren gibt’s Notrufsysteme, im Extremsportbereich allerdings nur recht unhandliche (Blue Locar Ray…). Viele davon brauchen Empfangsstationen. Das mitschleppen einer Empfangsstation ist aber unpraktikabel. Wie wäre es nun mit einem kleinen, handlichen, tragbaren Gerät, welches einen satellitengestützten Notruf abgibt?\\[12pt]
+Das Projekt zielt darauf ab, ein tragbares, wasserdichtes PLB-Gerät, im Idealfall ähnlich einer Uhr zu entwickeln. PLB steht für Personal Locator Beacons (PLBs) und es handelt sich hierbei um ein Gerät, mit welchem ein weltweiter (satellitengestützter) Notrufruf absetzbar ist. Im Zuge dieses Notrufs werden zudem die GPS-Koordinaten automatisiert durchgegeben. Hierbei handelt es sich aber nicht um einen Funkspruch(Audio), was dieses Konzept sehr interessant für ein solches Gerät macht, da es keine Nutzerinteraktion erfordert (Abgesehen vom Drücken eines Knopfes). \\[12pt]Die Zielgruppe des Gerätes findet sich in erster Linie bei den Wassersportlern wieder. Hier ist es wichtig, dass sich das Gerät leicht am Körper, an einer Stelle wo es nicht stört, montieren lässt, eine Uhrform wäre somit Ideal. Um die Projektkomplexität einzuschränken, soll der PLB nur den Satellitennotruf abgeben können, nicht aber das für PLB typische Suchsignal.
 \subsection{Umfang und Anwendungsbereich}
-Identify the software product(s) to be produced by name. Explain what the products will and will not do. Describe how the software will be used, and identify relevant benefits, objectives, and goals.
 
 \subsection{Definitionen und Abkürzungen}
-Define all terms, acronyms, and abbreviations used in this document.
 
 \subsection{Referenzen}
 List all the documents and other materials referenced in this document. This section is like the bibliography in a published book and my also be moved to the appendix.
 
 \subsection{Prioritäten}
-Specify the priorities used for requirements specification. The following example is one way to specify priorities. In an iterative process, the priorities would specify those requirements, that must be in the next iteration, the next release or in a later release. \\[-0.3cm]
-
-\noindent Jede formulierte Anforderungen muss mit einer der folgenden Prioritätsstufen gekennzeichnet werden, um die Wichtigkeit der Anforderung aus Kundensicht zu spezifizieren: \\[0.1cm]
 
 \begin{tabular}{| p{1.5cm} | p{2cm} | p{10cm} |}
+
 
 \hline
 \textbf{Priori-} \newline \textbf{tät} & 
@@ -117,7 +111,19 @@ Specify the logical characteristics of each interface between the software produ
 \noindent Specify all the aspects of optimizing the interface with the person who must use the system (e.g., required functionality to provide long or short error messages). This could be a list of do’s and don’ts describing how the system will appear to the user.
 
 \subsubsection{Hardwareschnittstellen}
-Specify the logical characteristics of each interface between the software product and the hardware components of the system. This includes configuration characteristics (e.g., number of ports, instruction sets), what devices are to be supported, and protocols.
+Die folgenden Schnittstellen werden verwendet:
+\begin{itemize}
+\item UART, zur Kommunikation zwischen STM32 Mikrocontroller und 
+	\begin{enumerate}
+	\item GPS-Modul
+	\item Bluetooth-Modul 
+	\item USB-to-Serial IC 
+\end{enumerate}
+\item I2C zur Kommunikation zwischen GPS-Modul und STM32, möglicherweise nicht notwendig da diese beiden Komponenten bereits über UART verbunden sind
+\item Interface zwischen STM32 und 406MHz-Funksender, je nach Bauteilwahl wahrscheinlich SPI
+\item SWD-Schnittstelle zum Programmieren/Debuggen des STM32
+\end{itemize}
+
 
 \subsubsection{Softwareschnittstellen}
 Specify the use of other required software products (e.g., a DBMS or operating system), and interfaces with other application systems. \\[-0.3cm]
@@ -148,11 +154,13 @@ Define requirements for any data or initialization sequences that are specific t
 Provide a summary of the major functions that the software will perform.
 
 \subsection{Benutzereigenschaften}
-Describe the general characteristics of the intended users, including
+Die Anforderungen an den Benutzer sind wie folgt:
 \begin{itemize}
-	\item educational level
-	\item experience
-	\item technical expertise
+	\item Keine spezielle Schulbildung erforderlich
+	\item Keine Erfahrung erforderlich
+	\item Kein technisches Wissen notwendig
+	\item Grundlegendes Verständnis der deutschen Sprache in Schrift, da die Gebrauchsanleitung auf Deutsch geschrieben wird
+	\item Geringfügige feinmechanische Fertigkeiten um das Ladekabel anstecken zu können bzw die Knöpfe betätigen zu können.
 \end{itemize}
 
 \subsection{Allgemeine Einschränkungen}
