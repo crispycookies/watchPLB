@@ -1,1 +1,1 @@
-This directory contains the gps-driver
+This directory contains the gps protocol implementation
