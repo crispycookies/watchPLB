@@ -111,7 +111,19 @@ Specify the logical characteristics of each interface between the software produ
 \noindent Specify all the aspects of optimizing the interface with the person who must use the system (e.g., required functionality to provide long or short error messages). This could be a list of do’s and don’ts describing how the system will appear to the user.
 
 \subsubsection{Hardwareschnittstellen}
-Specify the logical characteristics of each interface between the software product and the hardware components of the system. This includes configuration characteristics (e.g., number of ports, instruction sets), what devices are to be supported, and protocols.
+Die folgenden Schnittstellen werden verwendet:
+\begin{itemize}
+\item UART, zur Kommunikation zwischen STM32 Mikrocontroller und 
+	\begin{enumerate}
+	\item GPS-Modul
+	\item Bluetooth-Modul 
+	\item USB-to-Serial IC 
+\end{enumerate}
+\item I2C zur Kommunikation zwischen GPS-Modul und STM32, möglicherweise nicht notwendig da diese beiden Komponenten bereits über UART verbunden sind
+\item Interface zwischen STM32 und 406MHz-Funksender, je nach Bauteilwahl wahrscheinlich SPI
+\item SWD-Schnittstelle zum Programmieren/Debuggen des STM32
+\end{itemize}
+
 
 \subsubsection{Softwareschnittstellen}
 Specify the use of other required software products (e.g., a DBMS or operating system), and interfaces with other application systems. \\[-0.3cm]
@@ -142,11 +154,13 @@ Define requirements for any data or initialization sequences that are specific t
 Provide a summary of the major functions that the software will perform.
 
 \subsection{Benutzereigenschaften}
-Describe the general characteristics of the intended users, including
+Die Anforderungen an den Benutzer sind wie folgt:
 \begin{itemize}
-	\item educational level
-	\item experience
-	\item technical expertise
+	\item Keine spezielle Schulbildung erforderlich
+	\item Keine Erfahrung erforderlich
+	\item Kein technisches Wissen notwendig
+	\item Grundlegendes Verständnis der deutschen Sprache in Schrift, da die Gebrauchsanleitung auf Deutsch geschrieben wird
+	\item Geringfügige feinmechanische Fertigkeiten um das Ladekabel anstecken zu können bzw die Knöpfe betätigen zu können.
 \end{itemize}
 
 \subsection{Allgemeine Einschränkungen}
