@@ -61,43 +61,43 @@ Describe the purpose of this specification and its intended audience.
 \subsection{Umfang und Anwendungsbereich}
 Identify the software product(s) to be produced by name. Explain what the products will and will not do. Describe how the software will be used, and identify relevant benefits, objectives, and goals.
 
-\subsection{Definitionen und Abkürzungen}
+\subsection{Definitionen und AbkÃ¼rzungen}
 Define all terms, acronyms, and abbreviations used in this document.
 
 \subsection{Referenzen}
 List all the documents and other materials referenced in this document. This section is like the bibliography in a published book and my also be moved to the appendix.
 
-\subsection{Prioritäten}
+\subsection{PrioritÃ¤ten}
 Specify the priorities used for requirements specification. The following example is one way to specify priorities. In an iterative process, the priorities would specify those requirements, that must be in the next iteration, the next release or in a later release. \\[-0.3cm]
 
-\noindent Jede formulierte Anforderungen muss mit einer der folgenden Prioritätsstufen gekennzeichnet werden, um die Wichtigkeit der Anforderung aus Kundensicht zu spezifizieren: \\[0.1cm]
+\noindent Jede formulierte Anforderungen muss mit einer der folgenden PrioritÃ¤tsstufen gekennzeichnet werden, um die Wichtigkeit der Anforderung aus Kundensicht zu spezifizieren: \\[0.1cm]
 
 \begin{tabular}{| p{1.5cm} | p{2cm} | p{10cm} |}
 
 \hline
-\textbf{Priori-} \newline \textbf{tät} & 
-\textbf{Abkür-} \newline \textbf{zung} & 
+\textbf{Priori-} \newline \textbf{tÃ¤t} & 
+\textbf{AbkÃ¼r-} \newline \textbf{zung} & 
 \textbf{Bedeutung} \\
 \hline
 
 Muss & 
 M & 
-Diese Anforderung ist unabdingbar und notwendig für das korrekte Funktionieren der Software; sie muss realisiert werden. \\
+Diese Anforderung ist unabdingbar und notwendig fÃ¼r das korrekte Funktionieren der Software; sie muss realisiert werden. \\
 \hline
 
 Soll &
 S &
-Diese Anforderung ist nicht unabdingbar ihre Realisierung trägt zur wesentlichen Verbesserung der Software bei. Sie soll wenn möglich realisiert werden. \\
+Diese Anforderung ist nicht unabdingbar ihre Realisierung trÃ¤gt zur wesentlichen Verbesserung der Software bei. Sie soll wenn mÃ¶glich realisiert werden. \\
 \hline
 
 Wunsch &
 W &
-Diese Anforderung trägt zur Verbesserung der Software bei, ist jedoch nicht unbedingt notwendig. Es wäre aus wünschenswert, wenn die Anforderung realisiert würde. \\
+Diese Anforderung trÃ¤gt zur Verbesserung der Software bei, ist jedoch nicht unbedingt notwendig. Es wÃ¤re aus wÃ¼nschenswert, wenn die Anforderung realisiert wÃ¼rde. \\
 \hline
 
 \end{tabular}
 
-\subsection{Übersicht}
+\subsection{Ãœbersicht}
 Describe the content and organization of the rest of this document.
 
 \newpage
@@ -145,8 +145,8 @@ Specify any normal and special operations required by the user, including:
 Define requirements for any data or initialization sequences that are specific to a given site, mission, or operational mode. Specify features that should be modified to adapt the software to a particular installation.
 
 \subsection{Produkt Funktionen}
-Die Bedienung des PLBs soll über 3 Tasten erfolgen. Ein Notruf wird mit einer Verzögerung von einer Minute abgesetzt, nur wenn beide Tasten gleichzeitig für 5 Sekunden gedrückt werden. Der Notruf kann sowohl innerhalb dieser Frist, als auch außerhalb durch gleichzeitiges 10-sekundiges Drücken beider Tasten abgebrochen werden. Um den Nutzer mitzuteilen, dass ein Notruf angefordert wird, erfolgt kurzzeitiger (ca. halbsekundiger) Vibrationsalarm. Zudem wird eine gelbe Statusled für eine Minute aktiviert. Nach erfolgreicher Absetzung des Notrufs für die gesamte Zeitdauer bis zum Abbruch des Notrufs wird grüne Statusled angeschaltet und leuchten. Wenn der Notruf aktiv ist, soll jede 3 Stunden für ca. 2 Sekunden ein Vibrationsalarm aktiviert wird. Falls der Notruf abgebrochen wird, dann muss ein fünfsekundiger Vibrationsalarm ausgelöst werden und ein blaue Led zum leuchten anfangen und wird bis zum Neustart des Systems oder bis zum erneuten Absetzen eines Notrufs leuchten.\\\
-Dritte Taste wird benutzt, um das Bluetooth Pairing einzuleiten. Wenn PLB mit einem Gerät verbunden wird, wird ein blaue Led leuchten. Über Bluetooth werden die GPS Daten, Akkustand und Notrufstatus (wann ein Notruf abgesetzt und wann abgebrochen war; wie oft, seit dem letzten Neustart, war ein Notruf bereits ausgelöst) ausgelesen.
+Die Bedienung des PLBs soll Ã¼ber 3 Tasten erfolgen. Ein Notruf wird mit einer VerzÃ¶gerung von einer Minute abgesetzt, nur wenn beide Tasten gleichzeitig fÃ¼r 5 Sekunden gedrÃ¼ckt werden. Der Notruf kann sowohl innerhalb dieser Frist, als auch auÃŸerhalb durch gleichzeitiges 10-sekundiges DrÃ¼cken beider Tasten abgebrochen werden. Um den Nutzer mitzuteilen, dass ein Notruf angefordert wird, erfolgt kurzzeitiger (ca. halbsekundiger) Vibrationsalarm. Zudem wird eine gelbe Statusled fÃ¼r eine Minute aktiviert. Nach erfolgreicher Absetzung des Notrufs fÃ¼r die gesamte Zeitdauer bis zum Abbruch des Notrufs wird grÃ¼ne Statusled angeschaltet und leuchten. Wenn der Notruf aktiv ist, soll jede 3 Stunden fÃ¼r ca. 2 Sekunden ein Vibrationsalarm aktiviert wird. Falls der Notruf abgebrochen wird, dann muss ein fÃ¼nfsekundiger Vibrationsalarm ausgelÃ¶st werden und ein blaue Led zum leuchten anfangen und wird bis zum Neustart des Systems oder bis zum erneuten Absetzen eines Notrufs leuchten.\\\
+Dritte Taste wird benutzt, um das Bluetooth Pairing einzuleiten. Wenn PLB mit einem GerÃ¤t verbunden wird, wird ein blaue Led leuchten. Ãœber Bluetooth werden die GPS Daten, Akkustand und Notrufstatus (wann ein Notruf abgesetzt und wann abgebrochen war; wie oft, seit dem letzten Neustart, war ein Notruf bereits ausgelÃ¶st) ausgelesen.
 \subsection{Benutzereigenschaften}
 Describe the general characteristics of the intended users, including
 \begin{itemize}
@@ -155,7 +155,7 @@ Describe the general characteristics of the intended users, including
 	\item technical expertise
 \end{itemize}
 
-\subsection{Allgemeine Einschränkungen}
+\subsection{Allgemeine EinschrÃ¤nkungen}
 Describe any other items that will constrain the design options, including
 \begin{itemize}
 	\item reliability requirements
@@ -171,7 +171,7 @@ Describe any other items that will constrain the design options, including
 	\item etc.
 \end{itemize}
 
-\subsection{Annahmen und Abhängigkeiten}
+\subsection{Annahmen und AbhÃ¤ngigkeiten}
 List factors that affect the requirements. These factors are not design constraints, but areas where future changes might drive change in the requirements.
 
 \subsection{Realisierung der Anforderungen}
@@ -215,9 +215,9 @@ IMPORTANT: Number each item
 
 \section{Funktionale Anforderungen}
 \subsection{Allgemeine Verwendung des Projektes}
-	Das Projekt ist so angelegt, dass im Notfall mit dem PLB Gerät schnell und einfach einen COSPAS/SARSAT Notruf abzusetzen. \\\
-	Der Prototyp soll dahingehend Entwickelt werden, dass er später mit geringem Arbeitsaufwand zu einem tragbaren, in der Praxis einsetzbarem System weiterentwickelt werden kann.
-Das heißt, das System soll in einem Temperaturbereich von -20 bis 40 Grad Celsius arbeiten können.
+	Das Projekt ist so angelegt, dass im Notfall mit dem PLB GerÃ¤t schnell und einfach einen COSPAS/SARSAT Notruf abzusetzen. \\\
+	Der Prototyp soll dahingehend Entwickelt werden, dass er spÃ¤ter mit geringem Arbeitsaufwand zu einem tragbaren, in der Praxis einsetzbarem System weiterentwickelt werden kann.
+Das heiÃŸt, das System soll in einem Temperaturbereich von -20 bis 40 Grad Celsius arbeiten kÃ¶nnen.
 %\noindent Anyway the features as well as use cases should be structured according their granularity.
 %\begin{itemize}
 %	\item[--] few ''System Features`` containing functional requirements or
@@ -226,8 +226,8 @@ Das heißt, das System soll in einem Temperaturbereich von -20 bis 40 Grad Celsiu
 %	\item[--] an alternative to using the use case granularity for structuring the document, is to group it into logical packages (use cases which belong ''somehow`` together)
 %\end{itemize}
 \subsection{Plan}
-Die Elemente müssen auf einer PCB-Platine untergebracht werden. Das heißt, alle Elemente, außer der Akku, die Antenne und den in das Gehäuse eingelassen LEDs und Tasten, müssen auf einer einzigen PCB- Platine platzfinden. Der Grund hierfür liegt einfach darin, dass weniger bewegliche oder steckbare Komponenten im Normalfall eine größere Zuverlässig- und Verträglichkeit des Systems in Hinsicht auf Erschütterungen und Staub gewährleistet. Serieller Debug-Schnittstelle über UART über USB.\\\
-Es soll zudem auch möglich sein, über Bluetooth LE die GPS Daten, den Akkustand, den Status(Notruf abgesetzt und wann, Wurde er abgebrochen, wie oft wurde bereits ein Notruf seit dem letzten Neustart ausgelöst) auszulesen. Das heißt, man sollte den dritten Knopf nutzen um das Bluetooth Pairing einzuleiten. So wie sich das externe Gerät mit dem PLB verbunden hat, soll eine blaue LED leuchten und das PLB auf Anfrage des externen Gerätes die beschriebenen Daten liefern. Es soll auch möglich sein, GPS- Korrekturdaten von einer externen Quelle einzuspielen.
+Die Elemente mÃ¼ssen auf einer PCB-Platine untergebracht werden. Das heiÃŸt, alle Elemente, auÃŸer der Akku, die Antenne und den in das GehÃ¤use eingelassen LEDs und Tasten, mÃ¼ssen auf einer einzigen PCB- Platine platzfinden. Der Grund hierfÃ¼r liegt einfach darin, dass weniger bewegliche oder steckbare Komponenten im Normalfall eine grÃ¶ÃŸere ZuverlÃ¤ssig- und VertrÃ¤glichkeit des Systems in Hinsicht auf ErschÃ¼tterungen und Staub gewÃ¤hrleistet. Serieller Debug-Schnittstelle Ã¼ber UART Ã¼ber USB.\\\
+Es soll zudem auch mÃ¶glich sein, Ã¼ber Bluetooth LE die GPS Daten, den Akkustand, den Status(Notruf abgesetzt und wann, Wurde er abgebrochen, wie oft wurde bereits ein Notruf seit dem letzten Neustart ausgelÃ¶st) auszulesen. Das heiÃŸt, man sollte den dritten Knopf nutzen um das Bluetooth Pairing einzuleiten. So wie sich das externe GerÃ¤t mit dem PLB verbunden hat, soll eine blaue LED leuchten und das PLB auf Anfrage des externen GerÃ¤tes die beschriebenen Daten liefern. Es soll auch mÃ¶glich sein, GPS- Korrekturdaten von einer externen Quelle einzuspielen.
 
 \subsection{Hardware}
 Das System muss mindestens aus folgendem bestehen:
@@ -238,7 +238,7 @@ Das System muss mindestens aus folgendem bestehen:
 	\item Mikrokontroller
 	\item Akku
 	\item USB-Ladeschaltung
-	\item Statusleds: Rot, Gelb, Grün, Blau 
+	\item Statusleds: Rot, Gelb, GrÃ¼n, Blau 
 	\item Vibrationsalarm
 	\item Drei Tasten
 \end{itemize}
@@ -248,13 +248,14 @@ Das System muss mindestens aus folgendem bestehen:
 	\item Akkustand mithilfe dreier LEDs
 	\item Rote Led wenn Notruf abgebrochen
 	\item Gelbe Led wenn Notruf angefordert
-	\item Grüne Led wenn Notruf aktiv
+	\item GrÃ¼ne Led wenn Notruf aktiv
 	\item Blaue Led wenn Bluetooth aktiv
 	\item Gleichzeitige druck(ca. 5 sec.) zwei Tasten setzen den Notruf ab.
 	\item Vibrationsalarm wird benutzt als Feedback bei Absetzung und Abbruch eines Notrufs und auch bei aktiven Notruf jede Stunde (dauer ca. 5 sec.)
 	\item Mithilfe dritte Taste wird die Aktivierung des Bluetooth pairings gemacht.
 \end{itemize}
-
+\subsection{Antenneberechnung}
+\lstinputlisting{./plb_antenna_calc.m}
 
 \noindent \textit{\large Introduction} \\
 \textit{\large Inputs} \\
@@ -275,13 +276,13 @@ Specify static and dynamic numerical requirements placed on the software or on h
 \subsection{Entwurfsbedingungen}
 Specify requirements imposed by standards, hardware limitations, etc.
 
-\subsection{Software Qualitätsanforderungen}
+\subsection{Software QualitÃ¤tsanforderungen}
 The following items provide a partial list of system attributes that can serve as requirements that should be objectively verified. \\[0.1cm]
 Other possible options include scalability, portability, robustness, recoverability, etc.
 
-\subsubsection{Zuverlässigkeit}
+\subsubsection{ZuverlÃ¤ssigkeit}
 
-\subsubsection{Verfügbarkeit}
+\subsubsection{VerfÃ¼gbarkeit}
 
 \subsubsection{Sicherheit}
 Specify the factors that will protect the software from accidental or malicious access, misuse, or modification. These factors may include:
@@ -292,7 +293,7 @@ Specify the factors that will protect the software from accidental or malicious 
 	\item data integrity checks
 \end{itemize}
 
-\subsubsection{Wartbarkeit / Adaptionsfähigkeit}
+\subsubsection{Wartbarkeit / AdaptionsfÃ¤higkeit}
 Specify attributes of the software that relate to ease of maintenance. These requirements may relate to modularity, complexity, or interface design. Requirements should not be placed here simply because they are thought to be good design practices.
 
 \subsection{Datenbank Anforderungen}
@@ -321,7 +322,7 @@ Specify the requirements for any information that is to be placed into a databas
 \section{Analyse Modell}
 This chapter describes the complete conceptual model for the problem domain. It lists some must to have content (domain classes, domain model) and some possibly helpful modeling tools. Add/remove models as needed.
 
-\subsection{Domänen Klassen}
+\subsection{DomÃ¤nen Klassen}
 For each class specify its name, its purpose in the domain and its properties.
 
 \subsubsection{ClassName1}
