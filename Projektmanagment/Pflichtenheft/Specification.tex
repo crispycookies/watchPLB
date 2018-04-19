@@ -53,26 +53,20 @@ Required by regulations\}
 
 \setcounter{secnumdepth}{3} 		%enable section numbering
 \section{Einleitung}
-This section should provide an overview of the entire document.
-
 \subsection{Sinn und Zweck}
-Describe the purpose of this specification and its intended audience.
-
+Extremsportler aller Art setzen sich tagtäglich einer nicht kalkulierbaren Gefahr aus. Was wäre, wenn der Ernstfall eintritt? Wie werden sie gerettet? Wie werden sie gefunden? Wie können sie einen Notruf absetzen? Für Schiffe, Autos und andere Fahrzeuge, aber auch Senioren gibt’s Notrufsysteme, im Extremsportbereich allerdings nur recht unhandliche (Blue Locar Ray…). Viele davon brauchen Empfangsstationen. Das mitschleppen einer Empfangsstation ist aber unpraktikabel. Wie wäre es nun mit einem kleinen, handlichen, tragbaren Gerät, welches einen satellitengestützten Notruf abgibt?\\[12pt]
+Das Projekt zielt darauf ab, ein tragbares, wasserdichtes PLB-Gerät, im Idealfall ähnlich einer Uhr zu entwickeln. PLB steht für Personal Locator Beacons (PLBs) und es handelt sich hierbei um ein Gerät, mit welchem ein weltweiter (satellitengestützter) Notrufruf absetzbar ist. Im Zuge dieses Notrufs werden zudem die GPS-Koordinaten automatisiert durchgegeben. Hierbei handelt es sich aber nicht um einen Funkspruch(Audio), was dieses Konzept sehr interessant für ein solches Gerät macht, da es keine Nutzerinteraktion erfordert (Abgesehen vom Drücken eines Knopfes). \\[12pt]Die Zielgruppe des Gerätes findet sich in erster Linie bei den Wassersportlern wieder. Hier ist es wichtig, dass sich das Gerät leicht am Körper, an einer Stelle wo es nicht stört, montieren lässt, eine Uhrform wäre somit Ideal. Um die Projektkomplexität einzuschränken, soll der PLB nur den Satellitennotruf abgeben können, nicht aber das für PLB typische Suchsignal.
 \subsection{Umfang und Anwendungsbereich}
-Identify the software product(s) to be produced by name. Explain what the products will and will not do. Describe how the software will be used, and identify relevant benefits, objectives, and goals.
 
 \subsection{Definitionen und Abkürzungen}
-Define all terms, acronyms, and abbreviations used in this document.
 
 \subsection{Referenzen}
 List all the documents and other materials referenced in this document. This section is like the bibliography in a published book and my also be moved to the appendix.
 
 \subsection{Prioritäten}
-Specify the priorities used for requirements specification. The following example is one way to specify priorities. In an iterative process, the priorities would specify those requirements, that must be in the next iteration, the next release or in a later release. \\[-0.3cm]
-
-\noindent Jede formulierte Anforderungen muss mit einer der folgenden Prioritätsstufen gekennzeichnet werden, um die Wichtigkeit der Anforderung aus Kundensicht zu spezifizieren: \\[0.1cm]
 
 \begin{tabular}{| p{1.5cm} | p{2cm} | p{10cm} |}
+
 
 \hline
 \textbf{Priori-} \newline \textbf{tät} & 
@@ -302,55 +296,53 @@ conversion
 \section{Andere Nicht-Funktionale Anforderungen}
 
 \subsection{Leistungsanforderungen}
-Specify static and dynamic numerical requirements placed on the software or on human interaction with the software. \\[-0.3cm]
-
-\noindent Static numerical requirements may include the number of terminals to be supported, the number of simultaneous users to be supported, and the amount and type of information to be handled. \\[-0.3cm]
-
-\noindent Dynamic numerical requirements may include the number of transactions and tasks and the amount of data to be processed within certain time period for both normal and peak workload conditions.
+Um ein Absenden eines Notrufsignales sicher zu stellen, muss der Auslöser mit freier Sicht zum Himmel und über Wasser
+betätigt werden. \\
+Sobald der Sender korrekt bestätigt wurde sollte innerhalb kurzer Zeit [0-3min] ein Notruf über
+eine 406 Mhz Frequenz versendet und bei der zuständigen Station empfangen worden sein. Somit kann ein möglichst rasches Eintreffen der Rettungskräfte ermöglicht werden.\\
+Des weiteren wird versichert, dass zu jeder Uhrzeit und an jedem Tag der Woche die Empfangsstation besetzt ist und 
+auf eintreffende Notrufe reagiert wird.
 
 \subsection{Entwurfsbedingungen}
-Specify requirements imposed by standards, hardware limitations, etc.
-
+Design muss so konzipiert sein, dass es von einer gesunden erwachsenen Person ohne Probleme bedient werden kann und 
+somit versichert wird, dass das Notfallsignal korrekt abgesendet wird.
 \subsection{Software Qualitätsanforderungen}
-The following items provide a partial list of system attributes that can serve as requirements that should be objectively verified. \\[0.1cm]
-Other possible options include scalability, portability, robustness, recoverability, etc.
-
+\subsubsection{Mitführbarkeit}
+Sobald das Gerät voll Funktionsfähig ist, wird an der Entwicklung eines tragbaren Designs gearbeitet. Dabei
+soll es möglich sein das Gerät ohne jegliche körperlichen Einschränkungen jederzeit am Körper zu tragen.
+(Bsp: Armbanduhr, Brustgurt etc...)
+\subsubsection{Robustheit}
+Vorerst steht die Funktionalität im Vordergrund. Sollte der Prototyp voll Funktionsfähig sein, wird ein einem
+wasserdichten[IP55]und Stoßfestem[1.5m|800N] Gehäuse gearbeitet.
 \subsubsection{Zuverlässigkeit}
-
-\subsubsection{Verfügbarkeit}
-
+Die Funktion des Gerätes soll zu 99.99{\%} gewährleistet werden, solange man sich beim Senden des Signales im Freien 
+befindet, keine Extrembedingungen dem Gerät schaden und freie Sicht zum Himmel ist.
 \subsubsection{Sicherheit}
-Specify the factors that will protect the software from accidental or malicious access, misuse, or modification. These factors may include:
-\begin{itemize}
-	\item cryptography
-	\item activity logging
-	\item restrictions on intermodule communications
-	\item data integrity checks
-\end{itemize}
-
+Um sicher zu stellen, dass kein Notruf unabsichtlich abgesetzt wird, müssen um das System zu aktivieren zwei unterschiedliche Aktivierungsmechanismen betätigt werden. (2 Taster an 2 unterschiedlichen Seiten des Geräts)\\
+Ebenso wird sobald der Sendemechanismus ausgelöst worden ist ein Vibrationsmotor aktiviert. Dieses haptische Feedback
+ermöglicht es zusätzlich den Sendevorgang abzubrechen, falls dieser ungewollt ausgelöst wurde.\\
+Das Gerät besteht außerdem aus keinen verschluckbaren Kleinteilen. (Vor der Nutzung des Notfallsenders von Kindern wird dennoch abgeraten) 
+\subsubsection{Verfügbarkeit}
+Vor der Verwendung (nach dem Kauf) des Geräts muss dieses an einem behördlichen Stelle angemeldet und 
+registriert werden!
+Danach soll das Gerät jederzeit verwendbar sein, sobald ein Satellitensignal zur Verfügung steht.
 \subsubsection{Wartbarkeit / Adaptionsfähigkeit}
-Specify attributes of the software that relate to ease of maintenance. These requirements may relate to modularity, complexity, or interface design. Requirements should not be placed here simply because they are thought to be good design practices.
+Keine Nutzermöglichkeiten zur Wartung notwendig.
+Aufladen des Geräts ist über eine USB-Ladestation möglich.
+Dies Software muss ausschließlich auf der im Projekt gefertigten Hardware funktionieren.
 
-\subsection{Datenbank Anforderungen}
-Specify the requirements for any information that is to be placed into a database, including
-\begin{itemize}
-	\item types of information used by various functions
-	\item frequency of use
-	\item accessing capabilities
-	\item data entities and their relationships
-	\item integrity constraints
-	\item data retention requirements
-\end{itemize}
+\subsection{Elektronische Datenverwaltung}
+Die Speicherung aller Daten die zur Übertragung per Bluetooth zur Verfügung gestellt werden sollen, werden in 
+einem möglichst klein gehaltenem System bearbeitet. Dieses ermöglicht dann mittels eines Protokolls die Übertragung per Bluetooth an ein externes Gerät. (Smartphone)
 
 \subsection{Weitere Anforderungen}
-
 \subsubsection{Kontrollfunktionen}
-
-\subsubsection{Traces}
-
+Mittels Bluetooth ist es möglich die GPS Daten auf seinem Smartphone mitschreiben zu lassen.
+Somit lässt sich die richtige Funktion des GPS Empfängers überprüfen.
 \subsubsection{Fehlerdokumentation}
-
-\subsubsection{Support und Service}
+Keine Fehlerdokumentation notwendig
+\subsubsection {Support und Service}
+Es wird kein Support oder Service zur Verfügung gestellt.
 
 \newpage
 
