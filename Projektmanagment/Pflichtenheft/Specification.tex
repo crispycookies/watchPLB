@@ -207,9 +207,61 @@ IMPORTANT: Number each item
 
 \subsection{Hardwareschnittstellen}
 
-\subsection{Softwareschnittstellen}
-
 \subsection{Kommunikationsschnittstellen}
+
+Im Projekt gibt es verschiedene Kommunikationsschnittstellen:
+\begin{itemize}
+	\item COSPAS-SARSAT: Funkkommunikation mit Satelliten zum Absetzen von Notrufen
+	\item GPS: Satellitenunterstützte Positionsbestimmung mittels GPS-Signalen
+	\item USB: Mittels USB werden Debug-Ausgaben ohne dedizierten Debugger ermöglicht.
+	\item Bluetooth LE: Zur Kommunikation mit der App wird eine Schnittstelle über Bluetooth LE (Low Energy) realisiert	
+\end{itemize}
+
+\subsubsection{COSPAS-SARSAT}
+
+COSPAS-SARSAT ist ein internationales, satellitengestütztes Such- und Rettungssystem zur Erfassung und Lokalisierung von Notfunkbaken – EPIRB (Emergency Position Indicating Radio Beacon) für Schiffe, ELT (Emergency Locator Transmitter) für Luftfahrzeugen und PLB (Personal Locator Beacon) für die persönliche Verwendung.
+
+Hierfür wird ein Sender für Notrufsignale umgesetzt, der Notrufe inklusive genauer Position senden kann.
+
+\subsubsection{GPS}
+
+Zur genauen Positionsbestimmung wird GPS eingesetzt. Dieses ermöglicht präzise Ortung Weltweit.
+Hierfür wird ein fertiges GPS-Modul eingesetzt, da die Entwicklung eines eigenen Moduls keinen direkten Vorteil bringt, aber mit sehr hohem Aufwand verbunden wäre. Durch Einsatz eines bestehenden Moduls wird das Know-How des Herstellers genutzt.
+
+\subsubsection{USB}
+
+Der Hauptzweck der USB Schnittstelle ist laden des integrierten Akkus. Zusätzlich werden Debug-Ausgaben und optional folgende Debug-Funktionen zusätzlich realisiert:
+
+\begin{itemize}
+	\item Starten/Beenden des GPS-Positionsempfangs
+	\item Abruf der zuletzt bekannten Position
+	\item Testen von LEDs, Vibrationsmotor und Taster
+	\item Abrufen des Aktuellen Status:
+	\begin{itemize}
+		\item Tasten gedrückt
+		\item Notruf aktiv
+		\item GPS Empfang aktiv
+		\item Akkustand
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Bluetooth LE}
+
+Der Hauptzweck der App ist das Anzeigen der aktuellen GPS Position und folgender Systeminformationen:
+\begin{itemize}
+	\item Notruf aktiv
+	\item GPS Empfang aktiv
+	\item Akkustand
+\end{itemize}
+
+Zusätzlich kann optional noch folgendes hinzugefügt werden:
+
+\begin{itemize}
+	\item Starten/Beenden des GPS-Positionsempfangs
+	\item Abruf der zuletzt bekannten Position
+	\item Testen von LEDs, Vibrationsmotor und Taster
+	\item Debug-Ausgaben
+\end{itemize}
 
 \newpage
 
