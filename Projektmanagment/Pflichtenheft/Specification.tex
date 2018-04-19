@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+﻿%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% @file		Specification.tex
 %% @author		Christopher Reiterer
 %% @date		18.03.2015
@@ -145,8 +145,9 @@ Specify any normal and special operations required by the user, including:
 Define requirements for any data or initialization sequences that are specific to a given site, mission, or operational mode. Specify features that should be modified to adapt the software to a particular installation.
 
 \subsection{Produkt Funktionen}
-Provide a summary of the major functions that the software will perform.
-
+Die Bedienung des PLBs soll über 3 Tasten erfolgen. Ein Notruf wird mit einer Verzögerung von einer Minute abgesetzt, wenn beide Tasten gleichzeitig für 5 Sekunden gedrückt werden. Der Notruf kann sowohl innerhalb dieser Frist, als auch außerhalb durch gleichzeitiges Drücken beider Tasten für 10 Sekunden abgebrochen werden. 
+Um den Nutzer mitzuteilen, dass ein Notruf angefordert wird, erfolgt kurzzeitiger (eine  halbe Sekunde lang) Vibrationsalarm. Zudem wird eine gelbe Status-led für eine Minute aktiviert. Nach erfolgreicher Absetzung des Notrufs wird für die gesamte Zeitdauer bis zum Abbruch des Notrufs eine grüne Status-led eingeschaltet. Wenn der Notruf aktiv ist, soll alle 3 Stunden für ca. 2 Sekunden ein Vibrationsalarm aktiviert werden. Falls der Notruf abgebrochen wird, dann muss der Vibrationsalarm für 5 Sekunden ausgelöst werden und die blaue Led leuchten bis zum Neustart des Systems oder bis zum erneuten Absetzen eines Notrufs.\\\
+Die dritte Taste wird benutzt, um das Bluetooth Pairing einzuleiten. Wenn das PLB mit einem Gerät verbunden wird, wird eine blaue Led leuchten. Über Bluetooth werden die GPS Daten, Akkustand und Notrufstatus (wann ein Notruf abgesetzt und wann abgebrochen wurde, wie oft ein Notruf seit dem Neustart des Geräts abgesetzt wurde) ausgelesen.
 \subsection{Benutzereigenschaften}
 Describe the general characteristics of the intended users, including
 \begin{itemize}
@@ -266,31 +267,48 @@ Zusätzlich kann optional noch folgendes hinzugefügt werden:
 \newpage
 
 \section{Funktionale Anforderungen}
-This section describes the actual requested user functions of the product and is a refinement of section 2.4.1. These requirements may be listed as “system features” or as use cases, whichever is your preferred method. \\[-0.3cm]
+\subsection{Allgemeine Verwendung des Projektes}
+Das Projekt ist so angelegt, dass im Notfall mit dem PLB Gerät schnell und einfach einen COSPAS/SARSAT Notruf abzusetzen. \\\
+Der Prototyp soll dahingehend Entwickelt werden, dass er später mit geringem Arbeitsaufwand zu einem tragbaren, in der Praxis einsetzbarem System weiterentwickelt werden kann.
+Das heißt, das System soll in einem Temperaturbereich von -20 bis 40 Grad Celsius arbeiten können.
+%\noindent Anyway the features as well as use cases should be structured according their granularity.
+%\begin{itemize}
+%	\item[--] few ''System Features`` containing functional requirements or
+%	\item[--] very few ?summary level? use cases (only needed for large systems) containing more ?user-goal level? use cases %containing other ?function level? use cases below (use a use case template for describing use cases)
+%	\item[] Alternative:
+%	\item[--] an alternative to using the use case granularity for structuring the document, is to group it into logical packages (use cases which belong ''somehow`` together)
+%\end{itemize}
+\subsection{Plan}
+Die Elemente müssen auf einer PCB-Platine untergebracht werden. Das heißt, alle Elemente, außer der Akku, die Antenne und den in das Gehäuse eingelassen LEDs und Tasten, müssen auf einer einzigen PCB- Platine platz finden. Der Grund hierfür liegt einfach darin, dass weniger bewegliche oder steckbare Komponenten im Normalfall eine größere Zuverlässig- und Verträglichkeit des Systems in Hinsicht auf Erschütterungen und Staub gewährleistet. Es wird eine serieller Debug-Schnittstelle über USB bereitgestellt.\\\
+Es soll zudem auch möglich sein, über Bluetooth LE die GPS Daten, den Akkustand, den Status(Notruf abgesetzt und wann, Wurde er abgebrochen, wie oft wurde bereits ein Notruf seit dem letzten Neustart ausgelöst) auszulesen. Das heißt, man sollte den dritten Knopf nutzen um das Bluetooth Pairing einzuleiten. So wie sich das externe Gerät mit dem PLB verbunden hat, soll eine blaue LED leuchten und das PLB auf Anfrage des externen Gerätes die beschriebenen Daten liefern. Es soll auch möglich sein, GPS- Korrekturdaten von einer externen Quelle einzuspielen.
 
-\noindent Anyway the features as well as use cases should be structured according their granularity.
+\subsection{Hardware}
+Das System muss mindestens aus folgendem bestehen:
 \begin{itemize}
-	\item[--] few ''System Features`` containing functional requirements or
-	\item[--] very few “summary level” use cases (only needed for large systems) containing more “user-goal level” use cases containing other “function level” use cases below (use a use case template for describing use cases)
-	\item[] Alternative:
-	\item[--] an alternative to using the use case granularity for structuring the document, is to group it into logical packages (use cases which belong ''somehow`` together)
+	\item GNSS-Chip
+	\item Bluetooth Chip
+	\item COSPAS Sender
+	\item Mikrokontroller
+	\item Akku
+	\item USB-Ladeschaltung
+	\item Statusleds: Rot, Gelb, Grün, Blau 
+	\item Vibrationsalarm
+	\item Drei Tasten
 \end{itemize}
 
-\subsection{System Feature 1 / Use Case 1}
-Repeat subsections at this level and below for each feature. \\[-0.3cm]
-
-\noindent \textit{\large Functional Requirement 1} \\
-Repeat subsections at this level and below for each associated functional requirement. \\[-0.3cm]
-
-\noindent Each functional requirement may be described in natural language, pseudocode, or in four subsections as follows. Functional requirements include:
+\subsection{Funktionsweise Komponenten}
 \begin{itemize}
-	\item validity checks on inputs
-	\item exact sequencing of operations
-	\item responses to abnormal situations, including error handling and recovery
-	\item effects of parameters
-	\item relationships of inputs to outputs, including input/output sequences and formulas for input to output
-conversion
+	\item Akkustand mithilfe dreier LEDs
+	\item Rote Led wenn Notruf abgebrochen
+	\item Gelbe Led wenn Notruf angefordert
+	\item Grüne Led wenn Notruf aktiv
+	\item Blaue Led wenn Bluetooth aktiv
+	\item Gleichzeitige druck(ca. 5 sec.) zwei Tasten setzen den Notruf ab.
+	\item Vibrationsalarm wird benutzt als Feedback bei Absetzung und Abbruch eines Notrufs und auch bei aktiven Notruf jede Stunde (dauer ca. 5 sec.)
+	\item Mithilfe dritte Taste wird die Aktivierung des Bluetooth pairings gemacht.
 \end{itemize}
+\subsection{Antenneberechnung}
+\lstinputlisting{./plb_antenna_calc.m}
 
 \noindent \textit{\large Introduction} \\
 \textit{\large Inputs} \\
