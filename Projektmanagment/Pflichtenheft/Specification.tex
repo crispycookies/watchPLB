@@ -24,27 +24,16 @@
 \cellcolor{lightgray!130}\textbf{Kommentar} & 
 \cellcolor{lightgray!130}\textbf{Autor} \\
 \hline
-00.00.00 & 
-dd.mm.yy & 
-Information about the revision. This table does not need to be filled in whenever a document is touched, only when the \textbf{version is being upgraded.} & 
-Name \\
-\hline
+01.00 & 
+19.04.2018 & 
+Erste fertige Version des Pflichtenheftes & 
+Egger, Hick, Kanzler, Götzinger, Svyrydova, Neuhofer
+ \\
 &&& \\
 \specialrule{1.7pt}{0pt}{0pt} 
 
 \end{tabular}
-\\[0.7cm]
-\noindent \{ The paragraphs written in the “Comment” style are for explanations and help for the document writer and should be removed in the “real” document. \\[-0.3cm]
 
-\noindent This template can be used to create Software Requirements Specifications that conform to IEEE Standard 830-1993. \\[-0.3cm]
-
-\noindent An SRS is a tool for capturing requirements on a project; it is the epitome of “plain language requirements”. Although an SRS is designed to stand on its own, most projects will employ additional tools for capturing requirements. An SRS may be ancillary or unnecessary on many projects, but a partial or lightweight one may be quite useful even if other techniques are being used to capture the bulk of the requirements. \\[-0.3cm]
-
-\noindent Consider using an SRS when: \\[0.1cm]
-Modeling techniques need to be augmented \\[0.1cm]
-Plain language is the best mechanism for capturing system behavior \\[0.1cm]
-Requirements must be traceable \\[0.1cm]
-Required by regulations\}
 
 \newpage
 \renewcommand*\contentsname{\hfill Inhaltsverzeichnis \hfill} %center the title of the table of contents
@@ -54,9 +43,9 @@ Required by regulations\}
 \setcounter{secnumdepth}{3} 		%enable section numbering
 \section{Einleitung}
 \subsection{Sinn und Zweck}
-Im Rahmen der Projektarbeit "WatchPLB"\ an der FH Hagenberg erstellt das zugehörige Projektteam sowohl die nötige Soft-, als auch Hardware für ein Satellitengestütztes, persönliches Notrufsystem, genannt PLB. Das Projektteam besteht aus Tobias Egger, Michael Neuhofer, Samuel Hick, Olga Svyrydova, Eva- Maria Kanzler und Paul Götzinger. Als Projektvorstand dient Florian Eibensteiner und als Projektleiter Tobias Egger. Die hier festgelegten Anforderung und Bestimmung sind verpflichtend Einzuhalten und zur Produktreife zu bringen. Alle Projektmitglieder verpflichten sich dazu, diese Anforderungen einzuhalten.
+Im Rahmen der Projektarbeit "WatchPLB"\ an der FH Hagenberg erstellt das zugehörige Projektteam sowohl die nötige Soft-, als auch Hardware für ein Satellitengestütztes, persönliches Notrufsystem, genannt PLB(Personal Locator Beacon). Das Projektteam besteht aus Tobias Egger, Michael Neuhofer, Samuel Hick, Olga Svyrydova, Eva- Maria Kanzler und Paul Götzinger. Als Projektvorstand dient Florian Eibensteiner und als Projektleiter Tobias Egger. Die hier festgelegten Anforderung und Bestimmung sind verpflichtend Einzuhalten und zur Prototypenreife zu bringen. Alle Projektmitglieder verpflichten sich dazu, diese Anforderungen einzuhalten.
 \subsection{Umfang und Anwendungsbereich}
-Es wird ein tragbares PLB entwickelt, welches sich an Wasser- und Extremsportler richtet. Es muss ein, durch GPS- Daten gestützter, COSPAS- SARSAT- Notruf über die Notruffrequenz 406 MHz abgesetzt werden können. Diesem Notruf müssen alle benötigten Positionsdaten, sowie zumindest noch die persönliche Kennung gemäß der Registrierung mitgegeben werden, damit das System in Europa funktionsfähig ist. Eine Erweiterung des Systems stellt das integrierte Bluetooth Modul dar, welches die Funktionalität um eine Ausgabe der Positions- und Vitaldaten des Systems für eine spätere Verwendung in Apps oder dergleichen verwendet. Zudem soll noch eine Android App implementiert werden, welche es ermöglicht, eben diese Vital- und Positionsdaten auszulesen und mit den Positionsdaten des Smartphones zu vergleichen. Dabei sollen alle Daten, sowohl die des Smartphones, als auch die des PLBs, automatisch am Smartphone mitgeloggt werden. Der Grund hierfür ist eine optionale, spätere Auswertung dieser Daten und einer damit verbunden Fehleranalyse.
+Es wird ein tragbares PLB entwickelt, welches sich an Wasser- und Extremsportler richtet. Es muss ein, durch GPS- Daten gestützter, COSPAS- SARSAT- Notruf über die Notruffrequenz 406 MHz abgesetzt werden können. Diesem Notruf müssen alle benötigten Positionsdaten, sowie zumindest noch die persönliche Kennung gemäß der Registrierung mitgegeben werden, damit das System in Europa funktionsfähig ist. Eine Erweiterung des Systems stellt das integrierte Bluetooth Modul dar, welches die Funktionalität um eine Ausgabe der Positions- und Vitaldaten des Systems für eine spätere Verwendung in Apps oder dergleichen erweitert. Zudem soll noch eine Android App implementiert werden, welche es ermöglicht, eben diese Vital- und Positionsdaten auszulesen und mit den Positionsdaten des Smartphones zu vergleichen. Dabei sollen alle Daten, sowohl die des Smartphones, als auch die des PLBs, automatisch am Smartphone mitgeloggt werden. Der Grund hierfür ist eine optionale, spätere Auswertung dieser Daten und eine damit verbunden Fehleranalyse.
 \subsection{Definitionen und Abkürzungen}
 \begin{tabular}{| p{2cm} |p{3cm}| p{11cm} |}
 	
@@ -268,17 +257,17 @@ Diese Anforderung trägt zur Verbesserung der Software bei, ist jedoch nicht unb
 \newpage
 
 \section{Allgemeine Beschreibung}
-Um das korrekte Funktionieren des PLBs zu gewährleisten, müssen natürlich die einzelnen Komponenten richtig funktionieren. Wenn ein Notruf abgesetzt wird, sendet der PLB ein Notrufsignal an Satelliten. Vorausgesetzt man hat einen Ëmpfang". In enge Schluchten bzw unter Wasser funktioniert gegebenenfalls nicht.
+Um das korrekte Funktionieren des PLBs zu gewährleisten, müssen natürlich die einzelnen Komponenten richtig funktionieren. Wenn ein Notruf abgesetzt wird, sendet der PLB ein Notrufsignal an Satelliten. In enge Schluchten bzw unter Wasser funktioniert dies gegebenenfalls nicht, da an diesen Orten kein ausreichend guter GPS-Empfang besteht und es daher naheliegt dass das Signal unseres Senders ebenfalls nicht durchkommt.
 
 
 \subsection{Beziehung zu anderen Systemen}
-Das PLB ist weitgehend unabhängig, kann aber über eine Bluetoothschnittstelle mit einem Smartphone verbunden werden.
-
-\subsubsection{Systemschnittstellen}
+Der PLB ist weitgehend unabhängig, kann aber über eine Bluetoothschnittstelle mit einem Smartphone verbunden werden.\\
+Der PLB sendet einen Notruf an die Satelliten des COSPAS-SARSAT Systems.\\
+Der PLB empfängt Positionsdaten von GPS-Satelliten.
 
 
 \subsubsection{Benutzerschnittstellen}
-PLB selber hat eine sehr eingeschränkte Benutzeroberfläche. Bedient wird es durch insgesamt 3 Tasten, Feedback gibt es einerseits durch mehrere LEDs die verschiedene Stati anzeigen und durch Vibration beim Notrufabsetzen. Weiters kann eine Smartphone-App weitere Informationen anzeigen. \\[-0.3cm]
+Der PLB selber hat eine sehr eingeschränkte Benutzeroberfläche. Bedient wird er durch insgesamt 3 Tasten, Feedback gibt es einerseits durch mehrere LEDs die verschiedene Stati anzeigen und durch Vibration beim Notrufabsetzen. Weiters kann eine Smartphone-App weitere Informationen anzeigen. \\[-0.3cm]
 
 \subsubsection{Hardwareschnittstellen}
 Die folgenden Schnittstellen werden verwendet:
@@ -293,14 +282,6 @@ Die folgenden Schnittstellen werden verwendet:
 \item Interface zwischen STM32 und 406MHz-Funksender, je nach Bauteilwahl wahrscheinlich SPI
 \item SWD-Schnittstelle zum Programmieren/Debuggen des STM32
 \end{itemize}
-
-
-\subsubsection{Softwareschnittstellen}
-Specify the use of other required software products (e.g., a DBMS or operating system), and interfaces with other application systems. \\[-0.3cm]
-
-\noindent For each required software product, provide identification information including at least name, version number, and source. \\[-0.3cm]
-
-\noindent For each interface, discuss the purpose of the interfacing software, and define the interface in terms of message format and content. For well-documented interfaces, simply provide a reference to the documentation. \\[-0.3cm]
 
 \subsubsection{Kommunikationsschnittstellen}
 Bluetooth,Funkverbindung, USB
@@ -467,8 +448,8 @@ Das System muss mindestens aus folgendem bestehen:
 	\item Gelbe Led wenn Notruf angefordert
 	\item Grüne Led wenn Notruf aktiv
 	\item Blaue Led wenn Bluetooth aktiv
-	\item Gleichzeitige druck(ca. 5 sec.) zwei Tasten setzen den Notruf ab.
-	\item Vibrationsalarm wird benutzt als Feedback bei Absetzung und Abbruch eines Notrufs und auch bei aktiven Notruf jede Stunde (dauer ca. 5 sec.)
+	\item Gleichzeitiger Druck(ca. 2 sec.) auf zwei Tasten setzen den Notruf ab.
+	\item Vibrationsalarm wird benutzt als Feedback bei Absetzung und Abbruch eines Notrufs und auch bei aktiven Notruf jede Stunde (dauer ca. 2 sec.)
 	\item Mithilfe dritte Taste wird die Aktivierung des Bluetooth pairings gemacht.
 \end{itemize}
 \subsection{Antenneberechnung}
