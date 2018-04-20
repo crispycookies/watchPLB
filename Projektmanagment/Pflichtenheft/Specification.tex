@@ -54,22 +54,98 @@ Required by regulations\}
 \setcounter{secnumdepth}{3} 		%enable section numbering
 \section{Einleitung}
 \subsection{Sinn und Zweck}
-Extremsportler aller Art setzen sich tagtäglich einer nicht kalkulierbaren Gefahr aus. Was wäre, wenn der Ernstfall eintritt? Wie werden sie gerettet? Wie werden sie gefunden? Wie können sie einen Notruf absetzen? Für Schiffe, Autos und andere Fahrzeuge, aber auch Senioren gibt’s Notrufsysteme, im Extremsportbereich allerdings nur recht unhandliche (Blue Locar Ray…). Viele davon brauchen Empfangsstationen. Das mitschleppen einer Empfangsstation ist aber unpraktikabel. Wie wäre es nun mit einem kleinen, handlichen, tragbaren Gerät, welches einen satellitengestützten Notruf abgibt?\\[12pt]
-Das Projekt zielt darauf ab, ein tragbares, wasserdichtes PLB-Gerät, im Idealfall ähnlich einer Uhr zu entwickeln. PLB steht für Personal Locator Beacons (PLBs) und es handelt sich hierbei um ein Gerät, mit welchem ein weltweiter (satellitengestützter) Notrufruf absetzbar ist. Im Zuge dieses Notrufs werden zudem die GPS-Koordinaten automatisiert durchgegeben. Hierbei handelt es sich aber nicht um einen Funkspruch(Audio), was dieses Konzept sehr interessant für ein solches Gerät macht, da es keine Nutzerinteraktion erfordert (Abgesehen vom Drücken eines Knopfes). \\[12pt]Die Zielgruppe des Gerätes findet sich in erster Linie bei den Wassersportlern wieder. Hier ist es wichtig, dass sich das Gerät leicht am Körper, an einer Stelle wo es nicht stört, montieren lässt, eine Uhrform wäre somit Ideal. Um die Projektkomplexität einzuschränken, soll der PLB nur den Satellitennotruf abgeben können, nicht aber das für PLB typische Suchsignal.
+Im Rahmen der Projektarbeit "WatchPLB"\ an der FH Hagenberg erstellt das zugehörige Projektteam sowohl die nötige Soft-, als auch Hardware für ein Satellitengestütztes, persönliches Notrufsystem, genannt PLB. Das Projektteam besteht aus Tobias Egger, Michael Neuhofer, Samuel Hick, Olga Svyrydova, Eva- Maria Kanzler und Paul Götzinger. Als Projektvorstand dient Florian Eibensteiner und als Projektleiter Tobias Egger. Die hier festgelegten Anforderung und Bestimmung sind verpflichtend Einzuhalten und zur Produktreife zu bringen. Alle Projektmitglieder verpflichten sich dazu, diese Anforderungen einzuhalten.
 \subsection{Umfang und Anwendungsbereich}
-
+Es wird ein tragbares PLB entwickelt, welches sich an Wasser- und Extremsportler richtet. Es muss ein, durch GPS- Daten gestützter, COSPAS- SARSAT- Notruf über die Notruffrequenz 406 MHz abgesetzt werden können. Diesem Notruf müssen alle benötigten Positionsdaten, sowie zumindest noch die persönliche Kennung gemäß der Registrierung mitgegeben werden, damit das System in Europa funktionsfähig ist. Eine Erweiterung des Systems stellt das integrierte Bluetooth Modul dar, welches die Funktionalität um eine Ausgabe der Positions- und Vitaldaten des Systems für eine spätere Verwendung in Apps oder dergleichen verwendet. Zudem soll noch eine Android App implementiert werden, welche es ermöglicht, eben diese Vital- und Positionsdaten auszulesen und mit den Positionsdaten des Smartphones zu vergleichen. Dabei sollen alle Daten, sowohl die des Smartphones, als auch die des PLBs, automatisch am Smartphone mitgeloggt werden. Der Grund hierfür ist eine optionale, spätere Auswertung dieser Daten und einer damit verbunden Fehleranalyse.
 \subsection{Definitionen und Abkürzungen}
+\begin{tabular}{| p{2cm} |p{3cm}| p{11cm} |}
+	
+	\hline
+	\textbf{Abkür-} \newline \textbf{zung} & 
+	\textbf{Bedeutung} & \textbf{Definition}\\
+	\hline
+	
+	PLB & 
+	Personal Locator Beacon &
+	 Tragbares, für die persönliche Nutzung gedachtes, Gerät zum Absetzen eines Notrufs.\\
+	\hline
+	
+	Button & 
+	Knopf &
+	Ein Knopf \\
+	\hline
+	
+	GPIO & 
+	General-purpose input/output &
+	Hardwareinterface eines Prozessors zur Ein- oder Ausgabe von Daten in oder aus dem Prozessor.\\ 
+	\hline
+	
+	SPI & 
+	Serial Peripheral Interface &
+	Serieller Datenbus für elektronische Geräte \\
+	\hline
+	
+	UART &
+	Universal Asynchronous Receiver Transmitter &
+	Transmitter zur asynchronen, seriellen Datenübermittlung \\
+	\hline
+	
+	I2C &
+	Inter-Integrated Circuit &
+	Serieller Datenbus zur Kommunikation mit verschiedenen Geräten\\
+	\hline
+	
+	COPSAS- SARSAT & 
+	Satellitennetzwerk &
+	Internationales Satellitennetzwerk zur Aufspürung und Weiterleitung von Notrufen\\
+	\hline
+	
+	OQPSK & 
+	Offset quadrature phase-shift keying &
+	Funkmodulation	\\
+	\hline
+	
+	IDE & Integrated development environment
+	 & Programmierumgebung für das einfache Programmieren, Übersetzen und zur Fehlersuche.
+	\\
+	\hline
+	
+	Debugger & 
+	 & Tool zur Fehlersuche im Programm
+	\\
+	\hline
+	
+	Compiler & 
+	Übersetzer &
+	Programm zum Übersetzen des Programmcodes in ein, für den Prozessor, nutzbares Format
+	\\
+	\hline
+	
+	Makefile & 
+	Erstellungsskript
+	& Eine Art Skript, um den Erstellungsprozess zu automatisieren.
+	\\
+	\hline
 
-\subsection{Referenzen}
-List all the documents and other materials referenced in this document. This section is like the bibliography in a published book and my also be moved to the appendix.
+	HF & 
+	Hochfrequenz
+	& 
+	\\
+	\hline	
 
+	Modulation & 
+	& Veränderung eines Trägersignals.
+	\\
+	\hline
+	
+\end{tabular}
 \subsection{Prioritäten}
 
-\begin{tabular}{| p{1.5cm} | p{2cm} | p{10cm} |}
+\begin{tabular}{| p{3cm} | p{2cm} | p{10cm} |}
 
 
 \hline
-\textbf{Priori-} \newline \textbf{tät} & 
+\textbf{Priorität} & 
 \textbf{Abkür-} \newline \textbf{zung} & 
 \textbf{Bedeutung} \\
 \hline
@@ -91,8 +167,103 @@ Diese Anforderung trägt zur Verbesserung der Software bei, ist jedoch nicht unb
 
 \end{tabular}
 
-\subsection{Übersicht}
-Describe the content and organization of the rest of this document.
+\begin{tabular}{| p{1.5cm} | p{13.5cm} |}
+	
+	\hline
+	\textbf{Priori-} \newline \textbf{tät} & 
+	\textbf{Bedeutung} \\
+	\hline
+	
+	M & 
+	Bau eines 406 MHz Senders, welcher genug Leistung hat, um von einem Satelliten Zuverlässig empfangen zu werden. (5Watt) \\
+	\hline
+	
+	M &
+	Einbau eines Bluetooth LE- Moduls zur späteren Weiterverwendung in der optionalen App \\
+	\hline
+	
+	M &
+	Herstellung eines Prototypen, mit dem sich erfolgreich ein Notruf absetzen lässt  \\
+	\hline
+	
+	M &
+    Einbau und Programmierung eines GPS- Moduls und Weitergabe dieser Daten an den Notruf  \\
+	\hline
+	
+	M &
+	Erstellung eines PCBs und Integration aller elektronischen Bestandteile außer Akku, LEDs und Buttons  \\
+	\hline
+	
+	M &
+	Verbau eines Vibrationsmotors um haptisches Feedback über den Status des Notrufes an den Nutzer weiter zu geben  \\
+	\hline
+	
+	M &
+	Nutzung und Verbau zweier Buttons, welche gleichzeitig für 5 Sekunden gedrückt werden müssen, um den Notruf auszulösen. Mithilfe eines gleichzeitigen 10 sekündigen Tastendrucks kann der Notruf abgebrochen werden \\
+	\hline
+	
+	M &
+	Nutzung und Verbau eines weiteren Buttons zur Aktivierung des Bluetooth LE Moduls. Sowohl zum ein, als auch ausschalten, muss der Button mindestens 2 Sekunden gedrückt werden \\
+	\hline
+	
+	M &
+	Verbau eines mehrfärbigen LED- Histogrammes mit 5 LEDs zur Angabe des Akkustandes(Rot, Orange, Gelb, Grün, Grün). Der Akkustand wird in 20 Prozent Schritten angegeben. \\
+	\hline
+	
+	M & 
+	Verbau einer RGB- LED, welche grün leuchtet, wenn der Notruf ausgelöst werden kann, gelb wenn er ausgelöst wurde, rot wenn der Notruf aktiv ist und weiß, wenn er ausgelöst aber abgebrochen wurde \\
+	\hline
+	
+	M & 
+	Verbau einer Blauen LED, welche wenn aktiviert indiziert, dass das Bluetooth Modul eingeschalten wurde.\\
+	\hline
+	
+	M & 
+	Verbau einer Micro- B USB Ladeschaltung direkt auf dem PCB\\
+	\hline
+	
+	M & 
+	Verbau eines Akkus, welcher mindestens 2 Stunden Betriebszeit bei abgesetzten Notruf gewährleistet\\
+	\hline
+\end{tabular}
+\newpage
+\begin{tabular}{| p{1.5cm} | p{13.5cm} |}
+	
+	\hline
+	\textbf{Priori-} \newline \textbf{tät} & 
+	\textbf{Bedeutung} \\
+	\hline
+	
+	W & 
+	Bau eines Gehäuses, welches dem Gerät Schutz nach IP55 gibt
+	Zudem soll es das Gehäuse das Gerät so stark schützen, dass das Gerät einen Sturz aus 1.5m problemlos übersteht.
+	In das Gehäuse sollen die LEDs und Buttons integriert werden. Die Ladeschaltung soll mithilfe eines Stöpsels versiegelt werden.\\
+	\hline
+	S &
+	Es soll eine minimale Bluetooth LE- API zum auslesen folgender Daten bereitgestellt werden: Akkustand, GPS- Postion, Ob der Notruf Aktiv ist, Ob der Notruf angefordert wurde, ob der Notruf angefordert wurde, wie oft der Notruf abgesetzt wurde. Wie lange der Notruf aktiv ist, wie oft er abgesetzt oder abgebrochen wurde, und Fehlermeldungen in Form kurzer Strings.\\
+	\hline
+	S &
+	Erstellung einer Android 6 Smartphone App zur Ausgabe der über die oben beschriebenen API- Daten. Die App soll einen Tab haben, in welchem die GPS- Daten des Smartphones und des PLBs auf einer Karte eingezeichnet werden, und eines Tabs, der alle sonstigen Beschriebenen Daten in Textform untereinander Ausgibt. Zudem soll die APP alle Empfangenen Daten, sowie die eigene GPS Position bei Eingang der Daten mitloggen. Nützlich für eine spätere statistische Analyse\\
+	\hline
+	
+	W & 
+	Formfaktor einer Uhr. Das Betrifft sowohl das Gehäuse, als auch das Gerät. Antenne soll integriert sein.\\
+	\hline
+	
+	S &
+	Erstmaliges Einschalten des Geräts erst bei zwei sekündigen, einmaligen Tastendruck auf einen Button.\\
+	\hline
+	
+	W & 
+	Bau eines Funktionstüchtigen Homing Senders auf 121 und 243 MHz\\
+	\hline
+	
+	W & 
+	Zulassung des PLBs als PLB in Österreich.\\
+	\hline
+	
+\end{tabular}
+
 
 \newpage
 
