@@ -1,0 +1,583 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% @file		Specification.tex
+%% @author		Christopher Reiterer
+%% @date		18.03.2015
+%% @brief		Specification template
+%% @remarks		-
+%% @version		1.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{Definitions}
+
+\begin{document}
+
+\input{./TitlePage.tex}
+
+\setcounter{secnumdepth}{0}		%disable numbering for this section
+\csection{Revisions}
+
+\begin{tabular}{!{\VRule[1.7pt]} p{1.9cm} | p{1.9cm} | p{7cm} | p{4.5cm} !{\VRule[1.7pt]}}
+
+\specialrule{1.9pt}{0pt}{0pt} 
+\cellcolor{lightgray!130}\textbf{Version} & 
+\cellcolor{lightgray!130}\textbf{Datum} & 
+\cellcolor{lightgray!130}\textbf{Kommentar} & 
+\cellcolor{lightgray!130}\textbf{Autor} \\
+\hline
+00.00.00 & 
+dd.mm.yy & 
+Information about the revision. This table does not need to be filled in whenever a document is touched, only when the \textbf{version is being upgraded.} & 
+Name \\
+\hline
+&&& \\
+\specialrule{1.7pt}{0pt}{0pt} 
+
+\end{tabular}
+\\[0.7cm]
+\noindent \{ The paragraphs written in the “Comment” style are for explanations and help for the document writer and should be removed in the “real” document. \\[-0.3cm]
+
+\noindent This template can be used to create Software Requirements Specifications that conform to IEEE Standard 830-1993. \\[-0.3cm]
+
+\noindent An SRS is a tool for capturing requirements on a project; it is the epitome of “plain language requirements”. Although an SRS is designed to stand on its own, most projects will employ additional tools for capturing requirements. An SRS may be ancillary or unnecessary on many projects, but a partial or lightweight one may be quite useful even if other techniques are being used to capture the bulk of the requirements. \\[-0.3cm]
+
+\noindent Consider using an SRS when: \\[0.1cm]
+Modeling techniques need to be augmented \\[0.1cm]
+Plain language is the best mechanism for capturing system behavior \\[0.1cm]
+Requirements must be traceable \\[0.1cm]
+Required by regulations\}
+
+\newpage
+\renewcommand*\contentsname{\hfill Inhaltsverzeichnis \hfill} %center the title of the table of contents
+\tableofcontents
+\newpage
+
+\setcounter{secnumdepth}{3} 		%enable section numbering
+\section{Einleitung}
+\subsection{Sinn und Zweck}
+Im Rahmen der Projektarbeit "WatchPLB"\ an der FH Hagenberg erstellt das zugehörige Projektteam sowohl die nötige Soft-, als auch Hardware für ein Satellitengestütztes, persönliches Notrufsystem, genannt PLB. Das Projektteam besteht aus Tobias Egger, Michael Neuhofer, Samuel Hick, Olga Svyrydova, Eva- Maria Kanzler und Paul Götzinger. Als Projektvorstand dient Florian Eibensteiner und als Projektleiter Tobias Egger. Die hier festgelegten Anforderung und Bestimmung sind verpflichtend Einzuhalten und zur Produktreife zu bringen. Alle Projektmitglieder verpflichten sich dazu, diese Anforderungen einzuhalten.
+\subsection{Umfang und Anwendungsbereich}
+Es wird ein tragbares PLB entwickelt, welches sich an Wasser- und Extremsportler richtet. Es muss ein, durch GPS- Daten gestützter, COSPAS- SARSAT- Notruf über die Notruffrequenz 406 MHz abgesetzt werden können. Diesem Notruf müssen alle benötigten Positionsdaten, sowie zumindest noch die persönliche Kennung gemäß der Registrierung mitgegeben werden, damit das System in Europa funktionsfähig ist. Eine Erweiterung des Systems stellt das integrierte Bluetooth Modul dar, welches die Funktionalität um eine Ausgabe der Positions- und Vitaldaten des Systems für eine spätere Verwendung in Apps oder dergleichen verwendet. Zudem soll noch eine Android App implementiert werden, welche es ermöglicht, eben diese Vital- und Positionsdaten auszulesen und mit den Positionsdaten des Smartphones zu vergleichen. Dabei sollen alle Daten, sowohl die des Smartphones, als auch die des PLBs, automatisch am Smartphone mitgeloggt werden. Der Grund hierfür ist eine optionale, spätere Auswertung dieser Daten und einer damit verbunden Fehleranalyse.
+\subsection{Definitionen und Abkürzungen}
+\begin{tabular}{| p{2cm} |p{3cm}| p{11cm} |}
+	
+	\hline
+	\textbf{Abkür-} \newline \textbf{zung} & 
+	\textbf{Bedeutung} & \textbf{Definition}\\
+	\hline
+	
+	PLB & 
+	Personal Locator Beacon &
+	 Tragbares, für die persönliche Nutzung gedachtes, Gerät zum Absetzen eines Notrufs.\\
+	\hline
+	
+	Button & 
+	Knopf &
+	Ein Knopf \\
+	\hline
+	
+	GPIO & 
+	General-purpose input/output &
+	Hardwareinterface eines Prozessors zur Ein- oder Ausgabe von Daten in oder aus dem Prozessor.\\ 
+	\hline
+	
+	SPI & 
+	Serial Peripheral Interface &
+	Serieller Datenbus für elektronische Geräte \\
+	\hline
+	
+	UART &
+	Universal Asynchronous Receiver Transmitter &
+	Transmitter zur asynchronen, seriellen Datenübermittlung \\
+	\hline
+	
+	I2C &
+	Inter-Integrated Circuit &
+	Serieller Datenbus zur Kommunikation mit verschiedenen Geräten\\
+	\hline
+	
+	COPSAS- SARSAT & 
+	Satellitennetzwerk &
+	Internationales Satellitennetzwerk zur Aufspürung und Weiterleitung von Notrufen\\
+	\hline
+	
+	OQPSK & 
+	Offset quadrature phase-shift keying &
+	Funkmodulation	\\
+	\hline
+	
+	IDE & Integrated development environment
+	 & Programmierumgebung für das einfache Programmieren, Übersetzen und zur Fehlersuche.
+	\\
+	\hline
+	
+	Debugger & 
+	 & Tool zur Fehlersuche im Programm
+	\\
+	\hline
+	
+	Compiler & 
+	Übersetzer &
+	Programm zum Übersetzen des Programmcodes in ein, für den Prozessor, nutzbares Format
+	\\
+	\hline
+	
+	Makefile & 
+	Erstellungsskript
+	& Eine Art Skript, um den Erstellungsprozess zu automatisieren.
+	\\
+	\hline
+
+	HF & 
+	Hochfrequenz
+	& 
+	\\
+	\hline	
+
+	Modulation & 
+	& Veränderung eines Trägersignals.
+	\\
+	\hline
+	
+\end{tabular}
+\subsection{Prioritäten}
+
+\begin{tabular}{| p{3cm} | p{2cm} | p{10cm} |}
+
+
+\hline
+\textbf{Priorität} & 
+\textbf{Abkür-} \newline \textbf{zung} & 
+\textbf{Bedeutung} \\
+\hline
+
+Muss & 
+M & 
+Diese Anforderung ist unabdingbar und notwendig für das korrekte Funktionieren der Software; sie muss realisiert werden. \\
+\hline
+
+Soll &
+S &
+Diese Anforderung ist nicht unabdingbar ihre Realisierung trägt zur wesentlichen Verbesserung der Software bei. Sie soll wenn möglich realisiert werden. \\
+\hline
+
+Wunsch &
+W &
+Diese Anforderung trägt zur Verbesserung der Software bei, ist jedoch nicht unbedingt notwendig. Es wäre aus wünschenswert, wenn die Anforderung realisiert würde. \\
+\hline
+
+\end{tabular}
+
+\begin{tabular}{| p{1.5cm} | p{13.5cm} |}
+	
+	\hline
+	\textbf{Priori-} \newline \textbf{tät} & 
+	\textbf{Bedeutung} \\
+	\hline
+	
+	M & 
+	Bau eines 406 MHz Senders, welcher genug Leistung hat, um von einem Satelliten Zuverlässig empfangen zu werden. (5Watt) \\
+	\hline
+	
+	M &
+	Einbau eines Bluetooth LE- Moduls zur späteren Weiterverwendung in der optionalen App \\
+	\hline
+	
+	M &
+	Herstellung eines Prototypen, mit dem sich erfolgreich ein Notruf absetzen lässt  \\
+	\hline
+	
+	M &
+    Einbau und Programmierung eines GPS- Moduls und Weitergabe dieser Daten an den Notruf  \\
+	\hline
+	
+	M &
+	Erstellung eines PCBs und Integration aller elektronischen Bestandteile außer Akku, LEDs und Buttons  \\
+	\hline
+	
+	M &
+	Verbau eines Vibrationsmotors um haptisches Feedback über den Status des Notrufes an den Nutzer weiter zu geben  \\
+	\hline
+	
+	M &
+	Nutzung und Verbau zweier Buttons, welche gleichzeitig für 5 Sekunden gedrückt werden müssen, um den Notruf auszulösen. Mithilfe eines gleichzeitigen 10 sekündigen Tastendrucks kann der Notruf abgebrochen werden \\
+	\hline
+	
+	M &
+	Nutzung und Verbau eines weiteren Buttons zur Aktivierung des Bluetooth LE Moduls. Sowohl zum ein, als auch ausschalten, muss der Button mindestens 2 Sekunden gedrückt werden \\
+	\hline
+	
+	M &
+	Verbau eines mehrfärbigen LED- Histogrammes mit 5 LEDs zur Angabe des Akkustandes(Rot, Orange, Gelb, Grün, Grün). Der Akkustand wird in 20 Prozent Schritten angegeben. \\
+	\hline
+	
+	M & 
+	Verbau einer RGB- LED, welche grün leuchtet, wenn der Notruf ausgelöst werden kann, gelb wenn er ausgelöst wurde, rot wenn der Notruf aktiv ist und weiß, wenn er ausgelöst aber abgebrochen wurde \\
+	\hline
+	
+	M & 
+	Verbau einer Blauen LED, welche wenn aktiviert indiziert, dass das Bluetooth Modul eingeschalten wurde.\\
+	\hline
+	
+	M & 
+	Verbau einer Micro- B USB Ladeschaltung direkt auf dem PCB\\
+	\hline
+	
+	M & 
+	Verbau eines Akkus, welcher mindestens 2 Stunden Betriebszeit bei abgesetzten Notruf gewährleistet\\
+	\hline
+\end{tabular}
+\newpage
+\begin{tabular}{| p{1.5cm} | p{13.5cm} |}
+	
+	\hline
+	\textbf{Priori-} \newline \textbf{tät} & 
+	\textbf{Bedeutung} \\
+	\hline
+	
+	W & 
+	Bau eines Gehäuses, welches dem Gerät Schutz nach IP55 gibt
+	Zudem soll es das Gehäuse das Gerät so stark schützen, dass das Gerät einen Sturz aus 1.5m problemlos übersteht.
+	In das Gehäuse sollen die LEDs und Buttons integriert werden. Die Ladeschaltung soll mithilfe eines Stöpsels versiegelt werden.\\
+	\hline
+	S &
+	Es soll eine minimale Bluetooth LE- API zum auslesen folgender Daten bereitgestellt werden: Akkustand, GPS- Postion, Ob der Notruf Aktiv ist, Ob der Notruf angefordert wurde, ob der Notruf angefordert wurde, wie oft der Notruf abgesetzt wurde. Wie lange der Notruf aktiv ist, wie oft er abgesetzt oder abgebrochen wurde, und Fehlermeldungen in Form kurzer Strings.\\
+	\hline
+	S &
+	Erstellung einer Android 6 Smartphone App zur Ausgabe der über die oben beschriebenen API- Daten. Die App soll einen Tab haben, in welchem die GPS- Daten des Smartphones und des PLBs auf einer Karte eingezeichnet werden, und eines Tabs, der alle sonstigen Beschriebenen Daten in Textform untereinander Ausgibt. Zudem soll die APP alle Empfangenen Daten, sowie die eigene GPS Position bei Eingang der Daten mitloggen. Nützlich für eine spätere statistische Analyse\\
+	\hline
+	
+	W & 
+	Formfaktor einer Uhr. Das Betrifft sowohl das Gehäuse, als auch das Gerät. Antenne soll integriert sein.\\
+	\hline
+	
+	S &
+	Erstmaliges Einschalten des Geräts erst bei zwei sekündigen, einmaligen Tastendruck auf einen Button.\\
+	\hline
+	
+	W & 
+	Bau eines Funktionstüchtigen Homing Senders auf 121 und 243 MHz\\
+	\hline
+	
+	W & 
+	Zulassung des PLBs als PLB in Österreich.\\
+	\hline
+	
+\end{tabular}
+
+
+\newpage
+
+\section{Allgemeine Beschreibung}
+Um das korrekte Funktionieren des PLBs zu gewährleisten, müssen natürlich die einzelnen Komponenten richtig funktionieren. Wenn ein Notruf abgesetzt wird, sendet der PLB ein Notrufsignal an Satelliten. Vorausgesetzt man hat einen Ëmpfang". In enge Schluchten bzw unter Wasser funktioniert gegebenenfalls nicht.
+
+
+\subsection{Beziehung zu anderen Systemen}
+Das PLB ist weitgehend unabhängig, kann aber über eine Bluetoothschnittstelle mit einem Smartphone verbunden werden.
+
+\subsubsection{Systemschnittstellen}
+
+
+\subsubsection{Benutzerschnittstellen}
+PLB selber hat eine sehr eingeschränkte Benutzeroberfläche. Bedient wird es durch insgesamt 3 Tasten, Feedback gibt es einerseits durch mehrere LEDs die verschiedene Stati anzeigen und durch Vibration beim Notrufabsetzen. Weiters kann eine Smartphone-App weitere Informationen anzeigen. \\[-0.3cm]
+
+\subsubsection{Hardwareschnittstellen}
+Die folgenden Schnittstellen werden verwendet:
+\begin{itemize}
+\item UART, zur Kommunikation zwischen STM32 Mikrocontroller und 
+	\begin{enumerate}
+	\item GPS-Modul
+	\item Bluetooth-Modul 
+	\item USB-to-Serial IC 
+\end{enumerate}
+\item I2C zur Kommunikation zwischen GPS-Modul und STM32, möglicherweise nicht notwendig da diese beiden Komponenten bereits über UART verbunden sind
+\item Interface zwischen STM32 und 406MHz-Funksender, je nach Bauteilwahl wahrscheinlich SPI
+\item SWD-Schnittstelle zum Programmieren/Debuggen des STM32
+\end{itemize}
+
+
+\subsubsection{Softwareschnittstellen}
+Specify the use of other required software products (e.g., a DBMS or operating system), and interfaces with other application systems. \\[-0.3cm]
+
+\noindent For each required software product, provide identification information including at least name, version number, and source. \\[-0.3cm]
+
+\noindent For each interface, discuss the purpose of the interfacing software, and define the interface in terms of message format and content. For well-documented interfaces, simply provide a reference to the documentation. \\[-0.3cm]
+
+\subsubsection{Kommunikationsschnittstellen}
+Bluetooth,Funkverbindung, USB
+
+\subsubsection{Speicher Bedingungen}
+Microcontroller: 192KB flash memory, 20KB RAM
+
+\subsubsection{Operationen}
+\begin{itemize}
+	\item Gleichzeitiges längeres Drücken von 2 Tasten löst einen Notruf aus, erneutes längeres Drücken bricht den Notruf wieder ab
+	\item Eine Taste aktiviert/deaktiviert Bluetooth
+	\item Ein/Aus-schalten
+\end{itemize}
+
+\subsubsection{Installations- und Anpassungs-Anforderungen}
+Es gibt nur einen Modi, Installations- und Anpassungs-Anforderungen sind immer die Gleichen und von Anfang an gegeben, keine weiteren Einstellungen erforderlich.
+
+\subsection{Produkt Funktionen}
+Die Bedienung des PLBs soll über 3 Tasten erfolgen. Ein Notruf wird mit einer Verzögerung von einer Minute abgesetzt, wenn beide Tasten gleichzeitig für 5 Sekunden gedrückt werden. Der Notruf kann sowohl innerhalb dieser Frist, als auch außerhalb durch gleichzeitiges Drücken beider Tasten für 10 Sekunden abgebrochen werden. 
+Um den Nutzer mitzuteilen, dass ein Notruf angefordert wird, erfolgt kurzzeitiger (eine  halbe Sekunde lang) Vibrationsalarm. Zudem wird eine gelbe Status-led für eine Minute aktiviert. Nach erfolgreicher Absetzung des Notrufs wird für die gesamte Zeitdauer bis zum Abbruch des Notrufs eine grüne Status-led eingeschaltet. Wenn der Notruf aktiv ist, soll alle 3 Stunden für ca. 2 Sekunden ein Vibrationsalarm aktiviert werden. Falls der Notruf abgebrochen wird, dann muss der Vibrationsalarm für 5 Sekunden ausgelöst werden und die blaue Led leuchten bis zum Neustart des Systems oder bis zum erneuten Absetzen eines Notrufs.\\\
+Die dritte Taste wird benutzt, um das Bluetooth Pairing einzuleiten. Wenn das PLB mit einem Gerät verbunden wird, wird eine blaue Led leuchten. Über Bluetooth werden die GPS Daten, Akkustand und Notrufstatus (wann ein Notruf abgesetzt und wann abgebrochen wurde, wie oft ein Notruf seit dem Neustart des Geräts abgesetzt wurde) ausgelesen.
+\subsection{Benutzereigenschaften}
+Die Anforderungen an den Benutzer sind wie folgt:
+\begin{itemize}
+	\item Keine spezielle Schulbildung erforderlich
+	\item Keine Erfahrung erforderlich
+	\item Kein technisches Wissen notwendig
+	\item Grundlegendes Verständnis der deutschen Sprache in Schrift, da die Gebrauchsanleitung auf Deutsch geschrieben wird
+	\item Geringfügige feinmechanische Fertigkeiten um das Ladekabel anstecken zu können bzw die Knöpfe betätigen zu können.
+\end{itemize}
+
+\subsection{Allgemeine Einschränkungen}
+
+\begin{itemize}
+	\item Funkgesetze
+	\item Wasserfestigkeit
+	\item Akkudauer 
+	\item Größe der Bauteile 
+\end{itemize}
+
+\subsection{Annahmen und Abhängigkeiten}
+Es wird angenommen, dass alle Projektteilnehmer das Projekt auch vollenden, kommt es aber zum Vorzeitigen ausscheiden von einzelnen Teilnehmern, so wird es wahrscheinlich zu deutlichen Verzögerungen kommen. Aus zeitkritischen Gründen kann es in der Zukunft zu kleineren Änderungen kommen. Vor allem im Gehäuse des PLBs.
+
+\subsection{Realisierung der Anforderungen}
+Die Version eines PLBs in einer tragbaren Uhrform ist nicht für den Prototypen vorgesehen.
+
+\newpage
+
+\section{Externe Schnittstellen}
+
+\begin{itemize}
+	\item Bluetooth Low Energy (BLE)
+	\item Informationen des PLBs senden
+	\item Senden vom PLB an ein Smartphone, App zeigt die Statusinformation des PLB an
+	\item Bluetooth Reichweite: 10m circa Frequenzbereich: ISM band: 2.402 GHz bis 2.480 GHz
+	\item Braucht die Informationen von anderen I/Os wie GPS Position, Akkustand, abgesetze Notrufe
+	\item Unterstützte Protokolle: Bluetooth 4.2: GAP, GATT, SMP, L2CAP and integrated public protokolle
+\end{itemize}
+
+\begin{itemize}
+	\item Tasten am Gehäuse
+	\item Notruf auslösen/abbrechen | Bluetooth aktivieren/deaktivieren
+	\item 2 Tasten um Notruf abzusetzen/abzubrechen | 1 Taste um Bluetooth zu aktivieren/deaktivieren (für Pairing mit Smartphone) 
+	\item  Notruf: die 2 Tasten müssen 2-3 Sekunden durchgehend gedrückt werden um Notruf abzusetzen/abzubrechen| Bluetooth: Taste 2 Sekunden drücken umzu aktivieren/deaktivieren 
+	\item Sekunden (Zeitspanne wie lang eine Taste gedrückt werden muss) 
+	\item  2-3 Sekunden Wartezeit bevor es eine Reaktion gibt (intern + extern) 
+	\item  LEDs zeigen Status an, Vibrationsmotor gibt haptisches Feedback, Funknotruf über Satellit 
+	\item  3 Tasten am Gehäuse, die 2 für Notruf an gegenüberliegenden Seiten 
+\end{itemize}
+
+\subsection{Benutzerschnittstellen}
+
+\subsection{Hardwareschnittstellen}
+
+\subsection{Kommunikationsschnittstellen}
+
+Im Projekt gibt es verschiedene Kommunikationsschnittstellen:
+\begin{itemize}
+	\item COSPAS-SARSAT: Funkkommunikation mit Satelliten zum Absetzen von Notrufen
+	\item GPS: Satellitenunterstützte Positionsbestimmung mittels GPS-Signalen
+	\item USB: Mittels USB werden Debug-Ausgaben ohne dedizierten Debugger ermöglicht.
+	\item Bluetooth LE: Zur Kommunikation mit der App wird eine Schnittstelle über Bluetooth LE (Low Energy) realisiert	
+\end{itemize}
+
+\subsubsection{COSPAS-SARSAT}
+
+COSPAS-SARSAT ist ein internationales, satellitengestütztes Such- und Rettungssystem zur Erfassung und Lokalisierung von Notfunkbaken – EPIRB (Emergency Position Indicating Radio Beacon) für Schiffe, ELT (Emergency Locator Transmitter) für Luftfahrzeugen und PLB (Personal Locator Beacon) für die persönliche Verwendung.
+
+Hierfür wird ein Sender für Notrufsignale umgesetzt, der Notrufe inklusive genauer Position senden kann.
+
+\subsubsection{GPS}
+
+Zur genauen Positionsbestimmung wird GPS eingesetzt. Dieses ermöglicht präzise Ortung Weltweit.
+Hierfür wird ein fertiges GPS-Modul eingesetzt, da die Entwicklung eines eigenen Moduls keinen direkten Vorteil bringt, aber mit sehr hohem Aufwand verbunden wäre. Durch Einsatz eines bestehenden Moduls wird das Know-How des Herstellers genutzt.
+
+\subsubsection{USB}
+
+Der Hauptzweck der USB Schnittstelle ist laden des integrierten Akkus. Zusätzlich werden Debug-Ausgaben und optional folgende Debug-Funktionen zusätzlich realisiert:
+
+\begin{itemize}
+	\item Starten/Beenden des GPS-Positionsempfangs
+	\item Abruf der zuletzt bekannten Position
+	\item Testen von LEDs, Vibrationsmotor und Taster
+	\item Abrufen des Aktuellen Status:
+	\begin{itemize}
+		\item Tasten gedrückt
+		\item Notruf aktiv
+		\item GPS Empfang aktiv
+		\item Akkustand
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Bluetooth LE}
+
+Der Hauptzweck der App ist das Anzeigen der aktuellen GPS Position und folgender Systeminformationen:
+\begin{itemize}
+	\item Notruf aktiv
+	\item GPS Empfang aktiv
+	\item Akkustand
+\end{itemize}
+
+Zusätzlich kann optional noch folgendes hinzugefügt werden:
+
+\begin{itemize}
+	\item Starten/Beenden des GPS-Positionsempfangs
+	\item Abruf der zuletzt bekannten Position
+	\item Testen von LEDs, Vibrationsmotor und Taster
+	\item Debug-Ausgaben
+\end{itemize}
+
+\newpage
+
+\section{Funktionale Anforderungen}
+\subsection{Allgemeine Verwendung des Projektes}
+Das Projekt ist so angelegt, dass im Notfall mit dem PLB Gerät schnell und einfach einen COSPAS/SARSAT Notruf abzusetzen. \\\
+Der Prototyp soll dahingehend Entwickelt werden, dass er später mit geringem Arbeitsaufwand zu einem tragbaren, in der Praxis einsetzbarem System weiterentwickelt werden kann.
+Das heißt, das System soll in einem Temperaturbereich von -20 bis 40 Grad Celsius arbeiten können.
+%\noindent Anyway the features as well as use cases should be structured according their granularity.
+%\begin{itemize}
+%	\item[--] few ''System Features`` containing functional requirements or
+%	\item[--] very few ?summary level? use cases (only needed for large systems) containing more ?user-goal level? use cases %containing other ?function level? use cases below (use a use case template for describing use cases)
+%	\item[] Alternative:
+%	\item[--] an alternative to using the use case granularity for structuring the document, is to group it into logical packages (use cases which belong ''somehow`` together)
+%\end{itemize}
+\subsection{Plan}
+Die Elemente müssen auf einer PCB-Platine untergebracht werden. Das heißt, alle Elemente, außer der Akku, die Antenne und den in das Gehäuse eingelassen LEDs und Tasten, müssen auf einer einzigen PCB- Platine platz finden. Der Grund hierfür liegt einfach darin, dass weniger bewegliche oder steckbare Komponenten im Normalfall eine größere Zuverlässig- und Verträglichkeit des Systems in Hinsicht auf Erschütterungen und Staub gewährleistet. Es wird eine serieller Debug-Schnittstelle über USB bereitgestellt.\\\
+Es soll zudem auch möglich sein, über Bluetooth LE die GPS Daten, den Akkustand, den Status(Notruf abgesetzt und wann, Wurde er abgebrochen, wie oft wurde bereits ein Notruf seit dem letzten Neustart ausgelöst) auszulesen. Das heißt, man sollte den dritten Knopf nutzen um das Bluetooth Pairing einzuleiten. So wie sich das externe Gerät mit dem PLB verbunden hat, soll eine blaue LED leuchten und das PLB auf Anfrage des externen Gerätes die beschriebenen Daten liefern. Es soll auch möglich sein, GPS- Korrekturdaten von einer externen Quelle einzuspielen.
+
+\subsection{Hardware}
+Das System muss mindestens aus folgendem bestehen:
+\begin{itemize}
+	\item GNSS-Chip
+	\item Bluetooth Chip
+	\item COSPAS Sender
+	\item Mikrokontroller
+	\item Akku
+	\item USB-Ladeschaltung
+	\item Statusleds: Rot, Gelb, Grün, Blau 
+	\item Vibrationsalarm
+	\item Drei Tasten
+\end{itemize}
+
+\subsection{Funktionsweise Komponenten}
+\begin{itemize}
+	\item Akkustand mithilfe dreier LEDs
+	\item Rote Led wenn Notruf abgebrochen
+	\item Gelbe Led wenn Notruf angefordert
+	\item Grüne Led wenn Notruf aktiv
+	\item Blaue Led wenn Bluetooth aktiv
+	\item Gleichzeitige druck(ca. 5 sec.) zwei Tasten setzen den Notruf ab.
+	\item Vibrationsalarm wird benutzt als Feedback bei Absetzung und Abbruch eines Notrufs und auch bei aktiven Notruf jede Stunde (dauer ca. 5 sec.)
+	\item Mithilfe dritte Taste wird die Aktivierung des Bluetooth pairings gemacht.
+\end{itemize}
+\subsection{Antenneberechnung}
+\lstinputlisting{./plb_antenna_calc.m}
+
+\noindent \textit{\large Introduction} \\
+\textit{\large Inputs} \\
+\textit{\large Processing} \\
+\textit{\large Outputs} \\
+
+\newpage
+
+\section{Andere Nicht-Funktionale Anforderungen}
+
+\subsection{Leistungsanforderungen}
+Um ein Absenden eines Notrufsignales sicher zu stellen, muss der Auslöser mit freier Sicht zum Himmel und über Wasser
+betätigt werden. \\
+Sobald der Sender korrekt bestätigt wurde sollte innerhalb kurzer Zeit [0-3min] ein Notruf über
+eine 406 Mhz Frequenz versendet und bei der zuständigen Station empfangen worden sein. Somit kann ein möglichst rasches Eintreffen der Rettungskräfte ermöglicht werden.\\
+Des weiteren wird versichert, dass zu jeder Uhrzeit und an jedem Tag der Woche die Empfangsstation besetzt ist und 
+auf eintreffende Notrufe reagiert wird.
+
+\subsection{Entwurfsbedingungen}
+Design muss so konzipiert sein, dass es von einer gesunden erwachsenen Person ohne Probleme bedient werden kann und 
+somit versichert wird, dass das Notfallsignal korrekt abgesendet wird.
+\subsection{Software Qualitätsanforderungen}
+\subsubsection{Mitführbarkeit}
+Sobald das Gerät voll Funktionsfähig ist, wird an der Entwicklung eines tragbaren Designs gearbeitet. Dabei
+soll es möglich sein das Gerät ohne jegliche körperlichen Einschränkungen jederzeit am Körper zu tragen.
+(Bsp: Armbanduhr, Brustgurt etc...)
+\subsubsection{Robustheit}
+Vorerst steht die Funktionalität im Vordergrund. Sollte der Prototyp voll Funktionsfähig sein, wird ein einem
+wasserdichten[IP55]und Stoßfestem[1.5m|800N] Gehäuse gearbeitet.
+\subsubsection{Zuverlässigkeit}
+Die Funktion des Gerätes soll zu 99.99{\%} gewährleistet werden, solange man sich beim Senden des Signales im Freien 
+befindet, keine Extrembedingungen dem Gerät schaden und freie Sicht zum Himmel ist.
+\subsubsection{Sicherheit}
+Um sicher zu stellen, dass kein Notruf unabsichtlich abgesetzt wird, müssen um das System zu aktivieren zwei unterschiedliche Aktivierungsmechanismen betätigt werden. (2 Taster an 2 unterschiedlichen Seiten des Geräts)\\
+Ebenso wird sobald der Sendemechanismus ausgelöst worden ist ein Vibrationsmotor aktiviert. Dieses haptische Feedback
+ermöglicht es zusätzlich den Sendevorgang abzubrechen, falls dieser ungewollt ausgelöst wurde.\\
+Das Gerät besteht außerdem aus keinen verschluckbaren Kleinteilen. (Vor der Nutzung des Notfallsenders von Kindern wird dennoch abgeraten) 
+\subsubsection{Verfügbarkeit}
+Vor der Verwendung (nach dem Kauf) des Geräts muss dieses an einem behördlichen Stelle angemeldet und 
+registriert werden!
+Danach soll das Gerät jederzeit verwendbar sein, sobald ein Satellitensignal zur Verfügung steht.
+\subsubsection{Wartbarkeit / Adaptionsfähigkeit}
+Keine Nutzermöglichkeiten zur Wartung notwendig.
+Aufladen des Geräts ist über eine USB-Ladestation möglich.
+Dies Software muss ausschließlich auf der im Projekt gefertigten Hardware funktionieren.
+
+\subsection{Elektronische Datenverwaltung}
+Die Speicherung aller Daten die zur Übertragung per Bluetooth zur Verfügung gestellt werden sollen, werden in 
+einem möglichst klein gehaltenem System bearbeitet. Dieses ermöglicht dann mittels eines Protokolls die Übertragung per Bluetooth an ein externes Gerät. (Smartphone)
+
+\subsection{Weitere Anforderungen}
+\subsubsection{Kontrollfunktionen}
+Mittels Bluetooth ist es möglich die GPS Daten auf seinem Smartphone mitschreiben zu lassen.
+Somit lässt sich die richtige Funktion des GPS Empfängers überprüfen.
+\subsubsection{Fehlerdokumentation}
+Keine Fehlerdokumentation notwendig
+\subsubsection {Support und Service}
+Es wird kein Support oder Service zur Verfügung gestellt.
+
+\newpage
+
+\section{Analyse Modell}
+This chapter describes the complete conceptual model for the problem domain. It lists some must to have content (domain classes, domain model) and some possibly helpful modeling tools. Add/remove models as needed.
+
+\subsection{Domänen Klassen}
+For each class specify its name, its purpose in the domain and its properties.
+
+\subsubsection{ClassName1}
+
+\begin{tabular}{| p{2cm} | p{2cm} | p{9.5cm} |}
+
+\hline
+Zweck: &  
+\multicolumn{2}{p{11.5cm} |}{} \\
+\hline
+
+Attribute: & 
+PropName & 
+Description \\
+\hline
+
+\end{tabular}
+
+\subsubsection{ClassName2}
+
+\subsection{System Interactions}
+\{Specifiy the system operations, i.e. the interactions of actors with the system, for important use cases as system sequence diagrams, for example\}
+
+\subsection{Konzeptuelles Modell}
+\{Specifiy the conceptional class model (domain model)\}
+
+\subsection{Datenmodell}
+
+\subsection{Zustandsdiagramme}
+
+\newpage
+
+\setcounter{secnumdepth}{0}
+\section{Anhang}
+
+\subsection{Anhang A: Index}
+
+\subsection{Anhang B: To be determined list}
+
+\end{document}
