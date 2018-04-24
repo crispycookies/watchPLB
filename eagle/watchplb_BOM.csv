@@ -1,31 +1,31 @@
-"Qty";"Value";"Device";"Package";"Parts";"Description";"DESCRIPTION";"HEIGHT";"MANUFACTURER_NAME";"MANUFACTURER_PART_NUMBER";"MF";"MOUSER-NR";"MPN";"OC_FARNELL";"OC_NEWARK";"PROD_ID";"RS_PART_NUMBER";"RS_PRICE/STOCK";"TP_SIGNAL_NAME";"VENDOR";
-"4";"";"DIODESOD-123";"SOD-123";"D2, D3, D4, D5";"Diode";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"";"PINHD-1X5";"1X05";"CONFIG_INTERFACE_TEST_POINT";"PIN HEADER";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"5";"";"TL3305";"SMD_SWITCH";"S1, S2, S3, S4, S5";"OMRON SWITCH";"";"";"";"";"";"612-TL3305AF260QG";"TL3305";"";"";"";"";"";"";"";
-"1";"";"USB_MICRO-B_FEMALE-SMT";"USB-B-MICRO-SMD";"J1";"USB Type Micro-B Connector";"";"";"";"";"";"";"";"";"";"CONN-11752";"";"";"";"";
-"1";"100k";"R-EU_M0805";"M0805";"R25";"RESISTOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"11";"100nF";"C-EUC0805";"C0805";"C4, C5, C6, C7, C8, C11, C12, C13, C16, C17, C18";"CAPACITOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"8";"10k";"R-EU_M0805";"M0805";"R5, R6, R7, R8, R12, R13, R16, R17";"RESISTOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"10uF";"C-EUC1206";"C1206";"C9";"CAPACITOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"5";"1uF";"C-EUC0805";"C0805";"C1, C2, C3, C10, C20";"CAPACITOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"12";"220R";"R-EU_M0805";"M0805";"R9, R10, R11, R14, R15, R18, R19, R20, R21, R22, R23, R24";"RESISTOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"2";"27p";"C-EUC0805";"C0805";"C14, C15";"CAPACITOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"3";"47k";"R-EU_M0805";"M0805";"R1, R2, R4";"RESISTOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"4k7";"R-EU_M0805";"M0805";"R3";"RESISTOR, European symbol";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"8MHz / LFXTAL020423Reel ";"CRYSTALHC49UP";"HC49UP";"Q1";"CRYSTAL";"";"";"";"";"";"";"";"unknown";"unknown";"";"";"";"";"";
-"2";"BLUE";"LEDCHIP-LED0805";"CHIP-LED0805";"LED1, LED3";"LED";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"BM70BLES1FC2-0B03AA";"BM70BLES1FC2-0B03AA";"BM78SPPS5NC2_1";"IC2";"Bluetooth / 802.15.1 Modules";"Bluetooth / 802.15.1 Modules";"mm";"Microchip";"BM70BLES1FC2-0B03AA";"";"";"";"";"";"";"";"";"";"";
-"1";"CSTCE12M0G15L99-R0 ";"CSTCE8M00G52-R0";"CSTCE";"C19";"";"";"";"";"CSTCE8M00G52R0";"";"";"";"";"";"";"";"";"";"Murata";
-"1";"DMN3023L-7 ";"BSS123";"SOT23";"Q3";"N-CHANNEL MOS FET";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"5";"GREEN";"LEDCHIP-LED0805";"CHIP-LED0805";"LED2, LED6, LED7, LED8, LED11";"LED";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"MCP111-XXXXX/TO";"MCP111-XXXXX/TO";"TO-92_MC";"U1";"";"";"";"";"MCP111XXXXXTO";"";"";"";"";"";"";"";"";"";"Microchip";
-"1";"MCP2200-I/SS";"MCP2200-I/SS";"SSOP20_MC";"U3";"";"";"";"";"mcp2200iss";"";"";"";"";"";"";"";"";"";"Microchip";
-"21";"PTR1B2,54";"PTR1B2,54";"B2,54";"3V3, BTN_1, BTN_2, BTN_3, BTN_4, BTN_NRST, BT_RX, BT_TX, GPS_EXTINT, GPS_NRESET, GPS_RX, GPS_SCL, GPS_SDA, GPS_TX, NRST_MCU, SWD_RXD, SWD_TXD, USB_5V, USB_D+, USB_D-, VIBR";"TEST PIN";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"3";"RED";"LEDCHIP-LED0805";"CHIP-LED0805";"LED5, LED9, LED12";"LED";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"S8NC-13 ";"DIODE-SMC";"SMC";"D1";"DIODE";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"SAM-M8Q";"SAM-M8Q";"SAM-M8Q";"IC1";"u-blox SAM GNSS antenna module";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"STM32L073RZ";"STM32L0X3RL";"LQFP64-10X10MM";"U2";"";"";"";"";"stm32l0x3rl";"";"";"";"";"";"";"";"";"";"STMicroelectronics";
-"1";"SWD";"PINHD-1X5";"1X05";"JP1";"PIN HEADER";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"VIB_MOTOR, 619-28821";"PINHD-1X2";"1X02";"JP2";"PIN HEADER";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"WHITE";"LEDCHIP-LED0805";"CHIP-LED0805";"LED4";"LED";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
-"1";"YELLOW";"LEDCHIP-LED0805";"CHIP-LED0805";"LED10";"LED";"";"";"";"";"";"";"";"";"";"";"";"";"";"";
+Qty;Value;Device;Package;Parts;Description;DESCRIPTION;HEIGHT;MANUFACTURER_NAME;MANUFACTURER_PART_NUMBER;MF;MOUSER-NR;MPN;OC_FARNELL;OC_NEWARK;PROD_ID;RS_PART_NUMBER;RS_PRICE/STOCK;TP_SIGNAL_NAME;VENDOR
+4;;DIODESOD-123;SOD-123;D2, D3, D4, D5;Diode;;;;;;621-1N4148W-F ;;;;;;;;
+1;;PINHD-1X5;1X05;CONFIG_INTERFACE_TEST_POINT;PIN HEADER;;;;;;x;;;;;;;;
+5;;TL3305;SMD_SWITCH;S1, S2, S3, S4, S5;OMRON SWITCH;;;;;;612-TL3305AF260QG;TL3305;;;;;;;
+1;;USB_MICRO-B_FEMALE-SMT;USB-B-MICRO-SMD;J1;USB Type Micro-B Connector;;;;;;649-10118192-0001LF;;;;CONN-11752;;;;
+1;100k;R-EU_M0805;M0805;R25;RESISTOR, European symbol;;;;;;652-CR0805-FX1003GLF ;;;;;;;;
+11;100nF;C-EUC0805;C0805;C4, C5, C6, C7, C8, C11, C12, C13, C16, C17, C18;CAPACITOR, European symbol;;;;;;710-885012207072;;;;;;;;
+8;10k;R-EU_M0805;M0805;R5, R6, R7, R8, R12, R13, R16, R17;RESISTOR, European symbol;;;;;;71-CRCW080510K0FKEAC ;;;;;;;;
+1;10uF;C-EUC1206;C1206;C9;CAPACITOR, European symbol;;;;;;77-VJ1206V106MXQTBC ;;;;;;;;
+5;1uF;C-EUC0805;C0805;C1, C2, C3, C10, C20;CAPACITOR, European symbol;;;;;;77-VJ0805Y105MXQTBC;;;;;;;;
+12;220R;R-EU_M0805;M0805;R9, R10, R11, R14, R15, R18, R19, R20, R21, R22, R23, R24;RESISTOR, European symbol;;;;;;652-CR0805-FX2200GLF ;;;;;;;;
+2;27p;C-EUC0805;C0805;C14, C15;CAPACITOR, European symbol;;;;;;77-VJ0805A270KXACBC ;;;;;;;;
+3;47k;R-EU_M0805;M0805;R1, R2, R4;RESISTOR, European symbol;;;;;;603-AC0805FR-1047KL ;;;;;;;;
+1;4k7;R-EU_M0805;M0805;R3;RESISTOR, European symbol;;;;;;652-CR0805-FX4701GLF ;;;;;;;;
+1;8MHz / LFXTAL020423Reel ;CRYSTALHC49UP;HC49UP;Q1;CRYSTAL;;;;;;449-LFXTAL020423REEL ;;unknown;unknown;;;;;
+2;BLUE;LEDCHIP-LED0805;CHIP-LED0805;LED1, LED3;LED;;;;;;710-150080BS75000 ;;;;;;;;
+1;BM70BLES1FC2-0B03AA;BM70BLES1FC2-0B03AA;BM78SPPS5NC2_1;IC2;Bluetooth / 802.15.1 Modules;Bluetooth / 802.15.1 Modules;mm;Microchip;BM70BLES1FC2-0B03AA;;579-70BLES1FC20B03AA ;;;;;;;;
+1;CSTCE12M0G15L99-R0 ;CSTCE8M00G52-R0;CSTCE;C19;;;;;CSTCE8M00G52R0;;81-CSTCE12M0G15L99R0 ;;;;;;;;Murata
+1;DMN3023L-7 ;BSS123;SOT23;Q3;N-CHANNEL MOS FET;;;;;;621-DMN3023L-7 ;;;;;;;;
+5;GREEN;LEDCHIP-LED0805;CHIP-LED0805;LED2, LED6, LED7, LED8, LED11;LED;;;;;;604-APT2012SGC ;;;;;;;;
+1;MCP111-XXXXX/TO;MCP111-XXXXX/TO;TO-92_MC;U1;;;;;MCP111XXXXXTO;;579-MCP111-195I/TO ;;;;;;;;Microchip
+1;MCP2200-I/SS;MCP2200-I/SS;SSOP20_MC;U3;;;;;mcp2200iss;;579-MCP2200-I/SS ;;;;;;;;Microchip
+21;PTR1B2,54;PTR1B2,54;B2,54;3V3, BTN_1, BTN_2, BTN_3, BTN_4, BTN_NRST, BT_RX, BT_TX, GPS_EXTINT, GPS_NRESET, GPS_RX, GPS_SCL, GPS_SDA, GPS_TX, NRST_MCU, SWD_RXD, SWD_TXD, USB_5V, USB_D+, USB_D-, VIBR;TEST PIN;;;;;;x;;;;;;;;
+3;RED;LEDCHIP-LED0805;CHIP-LED0805;LED5, LED9, LED12;LED;;;;;;604-AP2012EC ;;;;;;;;
+1;S8NC-13 ;DIODE-SMC;SMC;D1;DIODE;;;;;;621-S8NC-13 ;;;;;;;;
+1;SAM-M8Q;SAM-M8Q;SAM-M8Q;IC1;u-blox SAM GNSS antenna module;;;;;;;;;;;;;;
+1;STM32L073RZ;STM32L0X3RL;LQFP64-10X10MM;U2;;;;;stm32l0x3rl;;511-STM32L073RZT6 ;;;;;;;;STMicroelectronics
+1;SWD;PINHD-1X5;1X05;JP1;PIN HEADER;;;;;;x;;;;;;;;
+1;VIB_MOTOR, 619-28821;PINHD-1X2;1X02;JP2;PIN HEADER;;;;;;619-28821 ;;;;;;;;
+1;WHITE;LEDCHIP-LED0805;CHIP-LED0805;LED4;LED;;;;;;859-LTW-170TK ;;;;;;;;
+1;YELLOW;LEDCHIP-LED0805;CHIP-LED0805;LED10;LED;;;;;;604-APT2012YC ;;;;;;;;
