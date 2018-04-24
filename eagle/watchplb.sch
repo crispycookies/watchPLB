@@ -12294,33 +12294,6 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <library name="Hick">
 <description>Bibliothek von Teilen die ich verwende</description>
 <packages>
-<package name="U-DFN2020-6_TYPE_F">
-<wire x1="-1" y1="1" x2="-1" y2="-1" width="0.127" layer="51"/>
-<wire x1="1" y1="-1" x2="1" y2="1" width="0.127" layer="51"/>
-<wire x1="1.4" y1="1.25" x2="-1.4" y2="1.25" width="0.05" layer="39"/>
-<wire x1="-1.4" y1="1.25" x2="-1.4" y2="-1.25" width="0.05" layer="39"/>
-<wire x1="-1.4" y1="-1.25" x2="1.4" y2="-1.25" width="0.05" layer="39"/>
-<wire x1="1.4" y1="-1.25" x2="1.4" y2="1.25" width="0.05" layer="39"/>
-<circle x="-1.21951875" y="1.063340625" radius="0.07" width="0.1524" layer="21"/>
-<text x="-1.30643125" y="1.40691875" size="0.25525625" layer="25">&gt;NAME</text>
-<text x="-1.2031" y="-1.604140625" size="0.254659375" layer="27">&gt;VALUE</text>
-<rectangle x1="-1.20378125" y1="0.426340625" x2="-0.6" y2="0.875" layer="29"/>
-<rectangle x1="-0.552128125" y1="0.175678125" x2="0.55" y2="0.875" layer="29"/>
-<rectangle x1="-1.202709375" y1="-0.22550625" x2="-0.6" y2="0.225" layer="29"/>
-<rectangle x1="-0.552384375" y1="-0.878790625" x2="0.55" y2="-0.175" layer="29"/>
-<rectangle x1="0.6021875" y1="0.42655" x2="1.2" y2="0.875" layer="29"/>
-<rectangle x1="0.6012125" y1="-0.22545625" x2="1.2" y2="0.225" layer="29"/>
-<rectangle x1="0.60239375" y1="-0.878490625" x2="1.2" y2="-0.425" layer="29"/>
-<rectangle x1="-1.20278125" y1="-0.877028125" x2="-0.6" y2="-0.425" layer="29"/>
-<smd name="3" x="-0.9" y="-0.65" dx="0.4" dy="0.425" layer="1" rot="R90" stop="no"/>
-<smd name="2" x="-0.9" y="0" dx="0.4" dy="0.425" layer="1" rot="R90" stop="no"/>
-<smd name="1" x="-0.9" y="0.65" dx="0.4" dy="0.425" layer="1" rot="R90" stop="no"/>
-<smd name="6" x="0.9" y="0.65" dx="0.4" dy="0.425" layer="1" rot="R90" stop="no"/>
-<smd name="5" x="0.9" y="0" dx="0.4" dy="0.425" layer="1" rot="R90" stop="no"/>
-<smd name="4" x="0.9" y="-0.65" dx="0.4" dy="0.425" layer="1" rot="R90" stop="no"/>
-<smd name="8" x="0" y="-0.6" dx="0.48" dy="0.8" layer="1" rot="R90" stop="no"/>
-<smd name="7" x="0" y="0.35" dx="0.95" dy="1.15" layer="1" rot="R90" stop="no"/>
-</package>
 <package name="SMD_SWITCH">
 <description>&lt;b&gt;SMD SWITCH TL3305&lt;/b&gt;</description>
 <text x="-2.88925" y="2.88925" size="1.27" layer="25" ratio="10">&gt;NAME</text>
@@ -12351,24 +12324,6 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </package>
 </packages>
 <symbols>
-<symbol name="IGFET-EN-GDS">
-<wire x1="-2.54" y1="-2.54" x2="-1.2192" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="0.762" x2="0" y2="0" width="0.254" layer="94"/>
-<wire x1="0" y1="0" x2="0" y2="-0.762" width="0.254" layer="94"/>
-<wire x1="0" y1="3.683" x2="0" y2="1.397" width="0.254" layer="94"/>
-<wire x1="1.905" y1="0.635" x2="0.635" y2="0" width="0.254" layer="94"/>
-<wire x1="1.905" y1="-0.635" x2="0.635" y2="0" width="0.254" layer="94"/>
-<wire x1="0" y1="0" x2="0.635" y2="0" width="0.1524" layer="94"/>
-<wire x1="0.635" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="0" x2="2.54" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="-1.397" x2="0" y2="-3.683" width="0.254" layer="94"/>
-<wire x1="-1.143" y1="2.54" x2="-1.143" y2="-2.54" width="0.254" layer="94"/>
-<text x="-11.43" y="0" size="1.778" layer="96">&gt;VALUE</text>
-<text x="-11.43" y="2.54" size="1.778" layer="95">&gt;NAME</text>
-<pin name="D" x="5.08" y="2.54" visible="off" length="middle" direction="pas" rot="R180"/>
-<pin name="S" x="5.08" y="-2.54" visible="off" length="middle" direction="pas" rot="R180"/>
-<pin name="G" x="-5.08" y="-2.54" visible="off" length="short" direction="pas"/>
-</symbol>
 <symbol name="TS2">
 <wire x1="0" y1="1.905" x2="0" y2="2.54" width="0.254" layer="94"/>
 <wire x1="-4.445" y1="1.905" x2="-3.175" y2="1.905" width="0.254" layer="94"/>
@@ -12392,24 +12347,6 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="DMT5015LFDF" prefix="Q">
-<description>&lt;b&gt;N-Channel MOSFET&lt;/b&gt; 50Vds; 9.1A; 15mR</description>
-<gates>
-<gate name="G$1" symbol="IGFET-EN-GDS" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="U-DFN2020-6_TYPE_F">
-<connects>
-<connect gate="G$1" pin="D" pad="1 2 5 6 7"/>
-<connect gate="G$1" pin="G" pad="3"/>
-<connect gate="G$1" pin="S" pad="4 8"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="TL3305" prefix="S" uservalue="yes">
 <description>&lt;b&gt;OMRON SWITCH&lt;/b&gt;</description>
 <gates>
@@ -13143,6 +13080,94 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 </deviceset>
 </devicesets>
 </library>
+<library name="transistor-small-signal">
+<description>&lt;b&gt;Small Signal Transistors&lt;/b&gt;&lt;p&gt;
+Packages from :&lt;br&gt;
+www.infineon.com; &lt;br&gt;
+www.semiconductors.com;&lt;br&gt;
+www.irf.com&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SOT23">
+<description>&lt;b&gt;SOT-23&lt;/b&gt;</description>
+<wire x1="1.4224" y1="0.6604" x2="1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="1.4224" y1="-0.6604" x2="-1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="-0.6604" x2="-1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="0.6604" x2="1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<smd name="3" x="0" y="1.1" dx="1" dy="1.4" layer="1"/>
+<smd name="2" x="0.95" y="-1.1" dx="1" dy="1.4" layer="1"/>
+<smd name="1" x="-0.95" y="-1.1" dx="1" dy="1.4" layer="1"/>
+<text x="-1.905" y="1.905" size="1.27" layer="25">&gt;NAME</text>
+<text x="-1.905" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.2286" y1="0.7112" x2="0.2286" y2="1.2954" layer="51"/>
+<rectangle x1="0.7112" y1="-1.2954" x2="1.1684" y2="-0.7112" layer="51"/>
+<rectangle x1="-1.1684" y1="-1.2954" x2="-0.7112" y2="-0.7112" layer="51"/>
+</package>
+</packages>
+<symbols>
+<symbol name="N-MOS">
+<wire x1="-1.27" y1="0" x2="-0.254" y2="0.381" width="0.1524" layer="94"/>
+<wire x1="-0.254" y1="0.381" x2="-0.254" y2="-0.381" width="0.1524" layer="94"/>
+<wire x1="-0.254" y1="-0.381" x2="-1.27" y2="0" width="0.1524" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-1.016" y2="0" width="0.1524" layer="94"/>
+<wire x1="-1.016" y1="0" x2="-0.889" y2="0" width="0.1524" layer="94"/>
+<wire x1="-0.889" y1="0" x2="0" y2="0" width="0.1524" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="0" y1="-2.032" x2="0" y2="-2.794" width="0.1524" layer="94"/>
+<wire x1="-1.524" y1="0" x2="-1.27" y2="0" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="3.048" x2="1.27" y2="3.048" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="3.048" x2="1.27" y2="0.762" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="0.762" x2="1.27" y2="0.508" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="0.508" x2="1.27" y2="-2.794" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="-2.794" x2="0" y2="-2.794" width="0.1524" layer="94"/>
+<wire x1="1.778" y1="0" x2="0.762" y2="0" width="0.1524" layer="94"/>
+<wire x1="0.762" y1="0" x2="1.27" y2="0.762" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="0.762" x2="1.778" y2="0" width="0.1524" layer="94"/>
+<wire x1="1.778" y1="0.762" x2="0.762" y2="0.762" width="0.1524" layer="94"/>
+<wire x1="-1.524" y1="2.032" x2="0" y2="2.032" width="0.1524" layer="94"/>
+<wire x1="0" y1="2.032" x2="0" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="-1.524" y1="-2.032" x2="0" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="-1.016" y1="0" x2="-0.381" y2="-0.254" width="0.254" layer="94"/>
+<wire x1="-0.381" y1="-0.254" x2="-0.381" y2="0.254" width="0.254" layer="94"/>
+<wire x1="-0.381" y1="0.254" x2="-0.889" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0.508" x2="1.016" y2="0.127" width="0.254" layer="94"/>
+<wire x1="1.016" y1="0.127" x2="1.524" y2="0.127" width="0.254" layer="94"/>
+<wire x1="1.524" y1="0.127" x2="1.27" y2="0.508" width="0.254" layer="94"/>
+<circle x="0" y="-2.794" radius="0.3592" width="0" layer="94"/>
+<circle x="0" y="-2.032" radius="0.3592" width="0" layer="94"/>
+<circle x="0" y="3.048" radius="0.3592" width="0" layer="94"/>
+<text x="2.54" y="0" size="1.778" layer="95">&gt;NAME</text>
+<text x="2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+<rectangle x1="-2.032" y1="1.27" x2="-1.524" y2="2.54" layer="94"/>
+<rectangle x1="-2.032" y1="-2.54" x2="-1.524" y2="-1.27" layer="94"/>
+<rectangle x1="-2.032" y1="-0.762" x2="-1.524" y2="0.762" layer="94"/>
+<pin name="G" x="-5.08" y="-2.54" visible="off" length="short" direction="pas"/>
+<pin name="D" x="0" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
+<pin name="S" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BSS123" prefix="Q">
+<description>&lt;b&gt;N-CHANNEL MOS FET&lt;/b&gt;</description>
+<gates>
+<gate name="G$1" symbol="N-MOS" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23">
+<connects>
+<connect gate="G$1" pin="D" pad="3"/>
+<connect gate="G$1" pin="G" pad="1"/>
+<connect gate="G$1" pin="S" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -13277,7 +13302,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="JP2" library="pinhead" deviceset="PINHD-1X2" device="" value="VIB_MOTOR, 619-28821"/>
 <part name="D1" library="diode" deviceset="DIODE-" device="SMC" value="S8NC-13 "/>
 <part name="P+2" library="supply1" deviceset="V+" device=""/>
-<part name="Q2" library="Hick" deviceset="DMT5015LFDF" device=""/>
 <part name="GND25" library="supply1" deviceset="GND" device=""/>
 <part name="R25" library="resistor" deviceset="R-EU_" device="M0805" value="100k"/>
 <part name="VIBR" library="testpad" deviceset="PTR1" device="B2,54"/>
@@ -13306,6 +13330,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="BTN_3" library="testpad" deviceset="PTR1" device="B2,54"/>
 <part name="BTN_4" library="testpad" deviceset="PTR1" device="B2,54"/>
 <part name="BTN_NRST" library="testpad" deviceset="PTR1" device="B2,54"/>
+<part name="Q3" library="transistor-small-signal" deviceset="BSS123" device="" value="DMN3023L-7 "/>
 </parts>
 <sheets>
 <sheet>
@@ -13448,9 +13473,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="JP2" gate="G$1" x="764.54" y="86.36"/>
 <instance part="D1" gate="G$1" x="772.16" y="86.36" rot="R90"/>
 <instance part="P+2" gate="1" x="772.16" y="104.14"/>
-<instance part="Q2" gate="G$1" x="762" y="68.58"/>
 <instance part="GND25" gate="1" x="772.16" y="45.72"/>
-<instance part="R25" gate="G$1" x="754.38" y="58.42" rot="MR270"/>
+<instance part="R25" gate="G$1" x="764.54" y="58.42" rot="MR270"/>
 <instance part="VIBR" gate="G$1" x="195.58" y="287.02" smashed="yes" rot="R90">
 <attribute name="NAME" x="201.93" y="286.258" size="1.778" layer="95"/>
 <attribute name="TP_SIGNAL_NAME" x="198.12" y="288.29" size="1.778" layer="97" rot="R90"/>
@@ -13540,6 +13564,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <attribute name="NAME" x="740.41" y="158.75" size="1.778" layer="95" rot="R90"/>
 <attribute name="TP_SIGNAL_NAME" x="737.87" y="154.94" size="1.778" layer="97" rot="R180"/>
 </instance>
+<instance part="Q3" gate="G$1" x="772.16" y="68.58"/>
 </instances>
 <busses>
 </busses>
@@ -14091,15 +14116,14 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="332.74" y="266.7"/>
 </segment>
 <segment>
-<pinref part="Q2" gate="G$1" pin="S"/>
-<wire x1="767.08" y1="66.04" x2="772.16" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="772.16" y1="66.04" x2="772.16" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="772.16" y1="63.5" x2="772.16" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="GND25" gate="1" pin="GND"/>
 <pinref part="R25" gate="G$1" pin="2"/>
 <wire x1="772.16" y1="50.8" x2="772.16" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="754.38" y1="53.34" x2="754.38" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="754.38" y1="50.8" x2="772.16" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="764.54" y1="53.34" x2="764.54" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="764.54" y1="50.8" x2="772.16" y2="50.8" width="0.1524" layer="91"/>
 <junction x="772.16" y="50.8"/>
+<pinref part="Q3" gate="G$1" pin="S"/>
 </segment>
 </net>
 <net name="BT_NRST" class="0">
@@ -14710,10 +14734,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="D1" gate="G$1" pin="A"/>
 <wire x1="762" y1="81.28" x2="772.16" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="772.16" y1="81.28" x2="772.16" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="Q2" gate="G$1" pin="D"/>
-<wire x1="767.08" y1="71.12" x2="772.16" y2="71.12" width="0.1524" layer="91"/>
-<wire x1="772.16" y1="71.12" x2="772.16" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="772.16" y1="73.66" x2="772.16" y2="81.28" width="0.1524" layer="91"/>
 <junction x="772.16" y="81.28"/>
+<pinref part="Q3" gate="G$1" pin="D"/>
 </segment>
 </net>
 <net name="V+" class="0">
@@ -14730,13 +14753,13 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 </net>
 <net name="VIBRATOR" class="0">
 <segment>
-<pinref part="Q2" gate="G$1" pin="G"/>
 <pinref part="R25" gate="G$1" pin="1"/>
-<wire x1="756.92" y1="66.04" x2="754.38" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="754.38" y1="66.04" x2="754.38" y2="63.5" width="0.1524" layer="91"/>
-<wire x1="754.38" y1="66.04" x2="739.14" y2="66.04" width="0.1524" layer="91"/>
-<junction x="754.38" y="66.04"/>
-<label x="739.14" y="66.04" size="1.778" layer="95"/>
+<wire x1="767.08" y1="66.04" x2="764.54" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="764.54" y1="66.04" x2="764.54" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="764.54" y1="66.04" x2="749.3" y2="66.04" width="0.1524" layer="91"/>
+<junction x="764.54" y="66.04"/>
+<label x="749.3" y="66.04" size="1.778" layer="95"/>
+<pinref part="Q3" gate="G$1" pin="G"/>
 </segment>
 <segment>
 <pinref part="U2" gate="A" pin="PA11"/>
