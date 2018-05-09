@@ -12,15 +12,16 @@
 #define UART_RXBUFFER_SIZE 256
 
 typedef enum {
-	BAUD_9600,
-	BAUD_19200,
-	BAUD_38400,
-	BAUD_57600,
-	BAUD_115200
+	BAUD_9600 = 9600,
+	BAUD_19200 = 19200,
+	BAUD_38400 = 38400,
+	BAUD_57600 = 57600,
+	BAUD_115200 = 115200
 } UART_BaudRate;
 
 typedef struct {
-	USART_TypeDef* usart;
+	UART_HandleTypeDef uart;
+	DMA_HandleTypeDef dma;
 
 	uint8_t  rxBuf[UART_RXBUFFER_SIZE];
 	uint16_t rxHead;
@@ -34,12 +35,15 @@ typedef struct {
 } UART_Instance;
 
 typedef struct {
-	USART_TypeDef* usart;
-	GPIO_TypeDef* txBoard;
-	GPIO_TypeDef* rxBoard;
-	uint16_t      txPin;
-	uint16_t      rxPin;
-	UART_BaudRate baud;
+	USART_TypeDef*	uart;
+	DMA_TypeDef*	dma;
+	GPIO_TypeDef* 	txBoard;
+	GPIO_TypeDef* 	rxBoard;
+	uint16_t      	txPin;
+	uint16_t      	rxPin;
+	uint32_t		txAF;
+	uint32_t		rxAF;
+	UART_BaudRate 	baud;
 } UART_Config;
 
 void UART_Init(UART_Instance* inst, UART_Config* conf);
