@@ -1562,6 +1562,65 @@ Source: http://www.osram.convergy.de/ ... lb_r99a.pdf</description>
 <text x="-5.715" y="-4.191" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
 <rectangle x1="-6.604" y1="-3.048" x2="6.604" y2="3.048" layer="43"/>
 </package>
+<package name="SMA_EDGELAUNCH">
+<wire x1="-9.2075" y1="2.54" x2="-8.255" y2="2.54" width="0.2032" layer="51"/>
+<wire x1="-8.255" y1="2.54" x2="-8.255" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-8.255" y1="3.175" x2="-7.62" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-7.62" y1="3.175" x2="-6.985" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-6.985" y1="3.175" x2="-6.35" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-6.35" y1="3.175" x2="-5.715" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-5.715" y1="3.175" x2="-5.08" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-5.08" y1="3.175" x2="-4.445" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-4.445" y1="3.175" x2="-3.4925" y2="3.175" width="0.2032" layer="51"/>
+<wire x1="-3.4925" y1="3.175" x2="-3.4925" y2="2.54" width="0.2032" layer="51"/>
+<wire x1="-3.4925" y1="2.54" x2="-1.5875" y2="2.54" width="0.2032" layer="51"/>
+<wire x1="-1.5875" y1="2.54" x2="-1.5875" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="-1.5875" y1="-2.54" x2="-3.4925" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="-3.4925" y1="-2.54" x2="-3.4925" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-3.4925" y1="-3.175" x2="-4.445" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-4.445" y1="-3.175" x2="-5.08" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-5.08" y1="-3.175" x2="-5.715" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-5.715" y1="-3.175" x2="-6.35" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-6.35" y1="-3.175" x2="-6.985" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-6.985" y1="-3.175" x2="-7.62" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-7.62" y1="-3.175" x2="-8.255" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-8.255" y1="-3.175" x2="-8.255" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="-8.255" y1="-2.54" x2="-9.2075" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="-9.2075" y1="-2.54" x2="-9.2075" y2="2.54" width="0.2032" layer="51"/>
+<wire x1="-8.255" y1="2.54" x2="-8.255" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="-8.255" y1="3.175" x2="-7.62" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-7.62" y1="3.175" x2="-6.985" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-6.985" y1="3.175" x2="-6.35" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-6.35" y1="3.175" x2="-5.715" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-5.715" y1="3.175" x2="-5.08" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-5.08" y1="3.175" x2="-4.445" y2="-3.175" width="0.2032" layer="51"/>
+<wire x1="-4.445" y1="3.175" x2="-3.81" y2="-3.175" width="0.2032" layer="51"/>
+<smd name="GND@2" x="2.032" y="2.54" dx="1.524" dy="4.064" layer="1" rot="R90" cream="no"/>
+<smd name="GND@1" x="2.032" y="-2.54" dx="1.524" dy="4.064" layer="1" rot="R90" cream="no"/>
+<smd name="P" x="2.032" y="0" dx="1.27" dy="4.064" layer="1" rot="R90" thermals="no" cream="no"/>
+<smd name="GND@3" x="2.032" y="2.54" dx="1.524" dy="4.064" layer="16" rot="R90" cream="no"/>
+<smd name="GND@4" x="2.032" y="-2.54" dx="1.524" dy="4.064" layer="16" rot="R90" cream="no"/>
+<text x="5.08" y="6.985" size="1.016" layer="25" ratio="18" rot="R180">&gt;NAME</text>
+<text x="5.08" y="-7.62" size="0.8128" layer="27" ratio="10" rot="R180">&gt;VALUE</text>
+<text x="5.08" y="-6.35" size="1.016" layer="25" ratio="18" rot="R180">&gt;LABEL</text>
+<rectangle x1="0" y1="-0.3175" x2="3.175" y2="0.3175" layer="51"/>
+<polygon width="0.127" layer="51">
+<vertex x="-1.524" y="3.048"/>
+<vertex x="3.81" y="3.048"/>
+<vertex x="3.81" y="2.032"/>
+<vertex x="0" y="2.032"/>
+<vertex x="0" y="-2.032"/>
+<vertex x="3.81" y="-2.032"/>
+<vertex x="3.81" y="-3.048"/>
+<vertex x="-1.524" y="-3.048"/>
+</polygon>
+<polygon width="0.127" layer="51">
+<vertex x="-1.524" y="5.08"/>
+<vertex x="0" y="5.08"/>
+<vertex x="0" y="-5.08"/>
+<vertex x="-1.524" y="-5.08"/>
+</polygon>
+</package>
 </packages>
 </library>
 <library name="pinhead">
@@ -2149,6 +2208,20 @@ Based on the following sources:
 <text x="-2.6475" y="-1.3575" size="0.8128" layer="25" ratio="18" rot="R90">&gt;NAME</text>
 <text x="3.3175" y="-1.405" size="0.8128" layer="27" rot="R90">&gt;VALUE</text>
 <smd name="PAD" x="0" y="0" dx="2.15" dy="2.15" layer="1"/>
+</package>
+<package name="RA07H4047M">
+<pad name="1" x="6.1" y="1.75" drill="1.6" diameter="2.54" shape="octagon"/>
+<pad name="2" x="13.7" y="1.75" drill="1.6" diameter="2.54" shape="octagon"/>
+<pad name="3" x="18.8" y="1.75" drill="1.6" diameter="2.54" shape="octagon"/>
+<pad name="4" x="23.9" y="1.75" drill="1.6" diameter="2.54" shape="octagon"/>
+<wire x1="0" y1="0" x2="30" y2="0" width="0.4064" layer="21"/>
+<wire x1="30" y1="0" x2="30" y2="3.5" width="0.4064" layer="21"/>
+<wire x1="30" y1="3.5" x2="0" y2="3.5" width="0.4064" layer="21"/>
+<wire x1="0" y1="3.5" x2="0" y2="0" width="0.4064" layer="21"/>
+<text x="5.334" y="4.064" size="0.6096" layer="51">attention fcking stupid pin position tolerance of +- 1mm
+thats why the holes are so big</text>
+<smd name="5_L" x="1.778" y="1.778" dx="2.54" dy="2.54" layer="1" rot="R270"/>
+<smd name="5_R" x="28.194" y="1.778" dx="2.54" dy="2.54" layer="1" rot="R270"/>
 </package>
 </packages>
 </library>
@@ -2778,6 +2851,8 @@ design rules under a new name.</description>
 <attribute name="PROD_ID" value="NDUC-13076" x="-135.89" y="-835.66" size="1.778" layer="27" display="off"/>
 </element>
 <element name="C37" library="resistor" package="C0805" value="" x="-135.89" y="-843.28"/>
+<element name="U$2" library="Hick" package="RA07H4047M" value="RA07H4047M" x="-138.43" y="-850.9"/>
+<element name="X1" library="adafruit" package="SMA_EDGELAUNCH" value="" x="-146.05" y="-842.01"/>
 </elements>
 <signals>
 <signal name="+3V3">
@@ -2823,6 +2898,9 @@ design rules under a new name.</description>
 <contactref element="U2" pad="19"/>
 <contactref element="3V3" pad="TP"/>
 <contactref element="Q2" pad="C"/>
+<contactref element="U$2" pad="3"/>
+<contactref element="U$1" pad="15"/>
+<contactref element="C24" pad="2"/>
 <wire x1="-74.08" y1="-193.04" x2="-67.31" y2="-185.42" width="0" layer="19" extent="1-1"/>
 <wire x1="-81.09" y1="-216.13" x2="-74.08" y2="-193.04" width="0" layer="19" extent="1-1"/>
 <wire x1="-89.09" y1="-213.13" x2="-81.09" y2="-216.13" width="0" layer="19" extent="1-1"/>
@@ -2864,6 +2942,9 @@ design rules under a new name.</description>
 <wire x1="-111.44" y1="-377.19" x2="-111.44" y2="-370.84" width="0" layer="19" extent="1-1"/>
 <wire x1="-121.92" y1="-521.97" x2="-111.44" y2="-377.19" width="0" layer="19" extent="1-1"/>
 <wire x1="-135.89" y1="-646.6" x2="-121.92" y2="-521.97" width="0" layer="19" extent="1-1"/>
+<wire x1="-135.62" y1="-672.57" x2="-135.89" y2="-646.6" width="0" layer="19" extent="1-1"/>
+<wire x1="-135.04" y1="-698.5" x2="-135.62" y2="-672.57" width="0" layer="19" extent="1-1"/>
+<wire x1="-119.63" y1="-849.15" x2="-135.04" y2="-698.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GPS_RXD">
 <contactref element="IC1" pad="14"/>
@@ -2995,6 +3076,12 @@ design rules under a new name.</description>
 <contactref element="C32" pad="1"/>
 <contactref element="C36" pad="1"/>
 <contactref element="C37" pad="1"/>
+<contactref element="X1" pad="GND@2"/>
+<contactref element="X1" pad="GND@1"/>
+<contactref element="X1" pad="GND@4"/>
+<contactref element="X1" pad="GND@3"/>
+<contactref element="U$2" pad="5_L"/>
+<contactref element="U$2" pad="5_R"/>
 <wire x1="-74.08" y1="-166.37" x2="-74.08" y2="-172.72" width="0" layer="19" extent="1-1"/>
 <wire x1="-74.93" y1="-185.42" x2="-74.08" y2="-172.72" width="0" layer="19" extent="1-1"/>
 <wire x1="-75.78" y1="-193.04" x2="-74.93" y2="-185.42" width="0" layer="19" extent="1-1"/>
@@ -3076,7 +3163,13 @@ design rules under a new name.</description>
 <wire x1="-136.74" y1="-816.61" x2="-135.04" y2="-812.8" width="0" layer="19" extent="1-1"/>
 <wire x1="-136.79" y1="-820.42" x2="-136.74" y2="-816.61" width="0" layer="19" extent="1-1"/>
 <wire x1="-136.74" y1="-831.85" x2="-136.79" y2="-820.42" width="0" layer="19" extent="1-1"/>
-<wire x1="-136.74" y1="-843.28" x2="-136.74" y2="-831.85" width="0" layer="19" extent="1-1"/>
+<wire x1="-144.018" y1="-839.47" x2="-136.74" y2="-831.85" width="0" layer="19" extent="1-1"/>
+<wire x1="-144.018" y1="-839.47" x2="-144.018" y2="-839.47" width="0" layer="19" extent="1-16"/>
+<wire x1="-144.018" y1="-844.55" x2="-144.018" y2="-839.47" width="0" layer="19" extent="1-1"/>
+<wire x1="-144.018" y1="-844.55" x2="-144.018" y2="-844.55" width="0" layer="19" extent="1-16"/>
+<wire x1="-136.74" y1="-843.28" x2="-144.018" y2="-844.55" width="0" layer="19" extent="1-1"/>
+<wire x1="-136.652" y1="-849.122" x2="-136.74" y2="-843.28" width="0" layer="19" extent="1-1"/>
+<wire x1="-110.236" y1="-849.122" x2="-136.652" y2="-849.122" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BT_NRST">
 <contactref element="IC2" pad="21"/>
@@ -3501,11 +3594,6 @@ design rules under a new name.</description>
 <wire x1="-136.84" y1="-661.67" x2="-134.94" y2="-668.02" width="0" layer="19" extent="1-1"/>
 <wire x1="-136.84" y1="-648.8" x2="-136.84" y2="-661.67" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="N$38">
-<contactref element="U$1" pad="15"/>
-<contactref element="C24" pad="2"/>
-<wire x1="-135.62" y1="-672.57" x2="-135.04" y2="-698.5" width="0" layer="19" extent="1-1"/>
-</signal>
 <signal name="INT_POWER">
 <contactref element="U$1" pad="17"/>
 <contactref element="C23" pad="2"/>
@@ -3641,9 +3729,25 @@ design rules under a new name.</description>
 <signal name="RF_SIGNAL">
 <contactref element="L7" pad="2"/>
 <contactref element="C37" pad="2"/>
+<contactref element="U$2" pad="1"/>
+<wire x1="-135.04" y1="-843.28" x2="-132.33" y2="-849.15" width="0" layer="19" extent="1-1"/>
 <wire x1="-134.99" y1="-835.66" x2="-135.04" y2="-843.28" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="RF_SIGNAL_AMPLIFIED">
+<contactref element="U$2" pad="4"/>
+<contactref element="X1" pad="P"/>
+<wire x1="-114.53" y1="-849.15" x2="-144.018" y2="-842.01" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="+12V">
+<contactref element="U$2" pad="2"/>
 </signal>
 </signals>
 </board>
 </drawing>
+<compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
+</compatibility>
 </eagle>
