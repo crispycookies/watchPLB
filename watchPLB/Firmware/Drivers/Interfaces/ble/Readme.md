@@ -1,0 +1,1 @@
+This directory contains the Bluetooth LE driver
