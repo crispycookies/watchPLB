@@ -8,7 +8,14 @@
 #
 ###############################################################################
 
-SHELL=cmd
+ifeq ($(OS),Windows_NT)
+	SHELL=cmd
+	MKDIR=@mkdir $(subst /,\,$(dir $@)) 2> NUL || echo off
+else
+	SHELL=/bin/sh
+	MKDIR=@mkdir -p $(dir $@)
+endif
+
 
 # System configuration
 CC = arm-atollic-eabi-gcc
@@ -70,14 +77,14 @@ clean:
 # Implicit targets
 ##################
 $(OBJECT_DIR)/%.o: %.c
-	@mkdir $(subst /,\,$(dir $@)) 2> NUL || echo off
+	$(MKDIR)
 	$(CC) $(COMPILER_FLAGS) $(INCLUDES) $< -o $@
 
 $(OBJECT_DIR)/%.o: %.s
-	@mkdir $(subst /,\,$(dir $@)) 2> NUL || echo off
+	$(MKDIR)
 	$(CC) $(ASSEMBLER_FLAGS) $(INCLUDES) $< -o $@
 	
 $(OBJECT_DIR)/%.o: %.S
-	@mkdir $(subst /,\,$(dir $@)) 2> NUL || echo off
+	$(MKDIR)
 	$(CC) $(ASSEMBLER_FLAGS) $(INCLUDES) $< -o $@
 	
