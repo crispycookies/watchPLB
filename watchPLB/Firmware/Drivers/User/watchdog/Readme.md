@@ -1,1 +1,0 @@
-This directory contains the watchdog-driver

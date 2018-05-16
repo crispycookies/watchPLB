@@ -1,1 +1,0 @@
-emergencyCall module. Handles emergency call transmission
