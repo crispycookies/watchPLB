@@ -191,6 +191,8 @@ void led_deinit(void) {
 	__HAL_RCC_GPIOA_CLK_DISABLE();
 	__HAL_RCC_GPIOB_CLK_DISABLE();
 	__HAL_RCC_GPIOC_CLK_DISABLE();
+
+#warning "Do not Call if you are unsure"
 }
 
 // Timer

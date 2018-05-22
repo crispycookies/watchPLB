@@ -11,11 +11,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-enum LED_ACTION{
-	led_enum_on  = 0,
-	led_enum_off = 1,
-	led_enum_toggle = 2
-};
 typedef enum {
 	led_pa4 = 0,
 	led_pa5 = 1,
