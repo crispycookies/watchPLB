@@ -4278,6 +4278,7 @@ design rules under a new name.</description>
 <element name="R58" library="resistor" package="M0805" value="47k" x="-228.6" y="173.99"/>
 <element name="C61" library="rcl" package="PANASONIC_E" value="NP" x="-241.3" y="175.26"/>
 <element name="JP3" library="pinhead" package="1X02" value="Power Disconnect" x="-242.57" y="-1234.44"/>
+<element name="C62" library="resistor" package="C0805" value="4.7uF" x="-243.84" y="-1242.06"/>
 </elements>
 <signals>
 <signal name="+3V3">
@@ -4501,6 +4502,7 @@ design rules under a new name.</description>
 <contactref element="C59" pad="-"/>
 <contactref element="C60" pad="-"/>
 <contactref element="C61" pad="-"/>
+<contactref element="C62" pad="2"/>
 <wire x1="-74.08" y1="-166.37" x2="-74.08" y2="-172.72" width="0" layer="19" extent="1-1"/>
 <wire x1="-74.93" y1="-185.42" x2="-74.08" y2="-172.72" width="0" layer="19" extent="1-1"/>
 <wire x1="-75.78" y1="-193.04" x2="-74.93" y2="-185.42" width="0" layer="19" extent="1-1"/>
@@ -4609,6 +4611,7 @@ design rules under a new name.</description>
 <wire x1="-244.3" y1="-1203.96" x2="-244.3" y2="-1195.07" width="0" layer="19" extent="1-1"/>
 <wire x1="-242.89" y1="-1217.93" x2="-244.3" y2="-1203.96" width="0" layer="19" extent="1-1"/>
 <wire x1="-244.3" y1="-1225.55" x2="-242.89" y2="-1217.93" width="0" layer="19" extent="1-1"/>
+<wire x1="-242.99" y1="-1242.06" x2="-244.3" y2="-1225.55" width="0" layer="19" extent="1-1"/>
 <wire x1="-227.65" y1="124.46" x2="-43.18" y2="-21.59" width="0" layer="19" extent="1-1"/>
 <wire x1="-244.3" y1="125.73" x2="-227.65" y2="124.46" width="0" layer="19" extent="1-1"/>
 <wire x1="-244.3" y1="116.84" x2="-244.3" y2="125.73" width="0" layer="19" extent="1-1"/>
@@ -5520,7 +5523,9 @@ design rules under a new name.</description>
 <contactref element="B2" pad="2"/>
 <contactref element="R1" pad="1"/>
 <contactref element="R2" pad="1"/>
-<wire x1="54.86" y1="46.35" x2="-242.99" y2="-1162.05" width="0" layer="19" extent="1-16"/>
+<contactref element="C62" pad="1"/>
+<wire x1="-242.99" y1="-1162.05" x2="-244.69" y2="-1242.06" width="0" layer="19" extent="1-1"/>
+<wire x1="54.86" y1="46.35" x2="-244.69" y2="-1242.06" width="0" layer="19" extent="1-16"/>
 <wire x1="54.86" y1="44.45" x2="54.86" y2="46.35" width="0" layer="19" extent="16-16"/>
 <wire x1="46.36" y1="51.05" x2="54.86" y2="46.35" width="0" layer="19" extent="16-16"/>
 <wire x1="-16.19" y1="20.32" x2="46.36" y2="51.05" width="0" layer="19" extent="1-16"/>

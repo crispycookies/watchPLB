@@ -25601,6 +25601,7 @@ by exp-lbrs.ulp</description>
 <part name="GND38" library="supply1" deviceset="GND" device=""/>
 <part name="JP3" library="pinhead" deviceset="PINHD-1X2" device="" value="Power Disconnect"/>
 <part name="+3V3" library="supply1" deviceset="+3V3" device=""/>
+<part name="C62" library="resistor" deviceset="C-EU" device="C0805" value="4.7uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -25619,6 +25620,7 @@ by exp-lbrs.ulp</description>
 <text x="955.04" y="243.84" size="1.778" layer="91">caps for crysta integrated in chip</text>
 <text x="937.26" y="307.34" size="1.778" layer="91">kabel mouser nr 601-606BBP wird ebenfalls benötigt</text>
 <text x="119.38" y="167.64" size="1.778" layer="91">V+STM is 3V3 after ferrite</text>
+<text x="586.74" y="81.28" size="1.778" layer="91">devboard uses 4.7 uF, so i added one of those</text>
 </plain>
 <instances>
 <instance part="IC1" gate="G$1" x="662.94" y="76.2"/>
@@ -26029,6 +26031,7 @@ by exp-lbrs.ulp</description>
 <instance part="GND38" gate="1" x="462.28" y="312.42"/>
 <instance part="JP3" gate="G$1" x="292.1" y="358.14"/>
 <instance part="+3V3" gate="G$1" x="480.06" y="353.06"/>
+<instance part="C62" gate="G$1" x="604.52" y="91.44"/>
 </instances>
 <busses>
 </busses>
@@ -26276,6 +26279,9 @@ by exp-lbrs.ulp</description>
 <pinref part="C1" gate="G$1" pin="2"/>
 <wire x1="622.3" y1="86.36" x2="612.14" y2="86.36" width="0.1524" layer="91"/>
 <junction x="622.3" y="86.36"/>
+<pinref part="C62" gate="G$1" pin="2"/>
+<wire x1="612.14" y1="86.36" x2="604.52" y2="86.36" width="0.1524" layer="91"/>
+<junction x="612.14" y="86.36"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="GND(1)"/>
@@ -28438,6 +28444,10 @@ by exp-lbrs.ulp</description>
 <junction x="739.14" y="101.6"/>
 <wire x1="683.26" y1="124.46" x2="739.14" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="739.14" y1="124.46" x2="739.14" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="C62" gate="G$1" pin="1"/>
+<wire x1="604.52" y1="93.98" x2="604.52" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="604.52" y1="96.52" x2="612.14" y2="96.52" width="0.1524" layer="91"/>
+<junction x="612.14" y="96.52"/>
 </segment>
 </net>
 <net name="N$78" class="0">
