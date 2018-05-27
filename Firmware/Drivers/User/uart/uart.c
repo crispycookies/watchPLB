@@ -7,10 +7,13 @@
 
 
 #include "uart.h"
+#include "dma.h"
 #include <string.h>
 
-#define TRUE 1;
-#define FALSE 0;
+#define TRUE 1
+#define FALSE 0
+
+static void startTransmit(UART_Instance* inst);
 
 void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	//enable GPIO clock
@@ -70,28 +73,44 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 
 	HAL_UART_Init(&(inst->uart));
 
-
 	//TX
-	inst->dma.Init.Direction = DMA_MEMORY_TO_PERIPH;
-	inst->dma.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-	inst->dma.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-	inst->dma.Init.MemInc = DMA_MINC_ENABLE;
-	inst->dma.Init.PeriphInc = DMA_PINC_DISABLE;
-	inst->dma.Init.Mode
-	HAL_DMA_Init(&(inst->dma));
+	inst->txDma.Instance = conf->txDmaChannel;
+	inst->txDma.Parent = inst;
+	inst->txDma.Init.Direction = DMA_MEMORY_TO_PERIPH;
+	inst->txDma.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+	inst->txDma.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+	inst->txDma.Init.MemInc = DMA_MINC_ENABLE;
+	inst->txDma.Init.PeriphInc = DMA_PINC_DISABLE;
+	inst->txDma.Init.Mode = DMA_NORMAL;
+	HAL_DMA_Init(&(inst->txDma));
+	__HAL_LINKDMA((&inst->uart), hdmatx, inst->txDma);
+	DMA_RegisterInterrupt(&(inst->txDma));
 
-	//TODO: DMA
-	//TODO: Interrupt
+	//RX
+	inst->rxDma.Instance = conf->txDmaChannel;
+	inst->rxDma.Parent = inst;
+	inst->rxDma.Init.Direction = DMA_MEMORY_TO_PERIPH;
+	inst->rxDma.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+	inst->rxDma.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+	inst->rxDma.Init.MemInc = DMA_MINC_ENABLE;
+	inst->rxDma.Init.PeriphInc = DMA_PINC_DISABLE;
+	inst->rxDma.Init.Mode = DMA_NORMAL;
+	HAL_DMA_Init(&(inst->rxDma));
+	__HAL_LINKDMA((&inst->uart), hdmarx, inst->rxDma);
+	DMA_RegisterInterrupt(&(inst->txDma));
+
+
+
 }
 
 void UART_SendByte(UART_Instance* inst, uint8_t byte) {
-	if (inst->txWrap && inst->txHead == inst->txTail) {
+	if (inst->txCircWrap && inst->txCircHead == inst->txCircTail) {
 		return;	//TODO: Do ERROR (e.g return false)
 	}
-	inst->txBuf[inst->txHead++] = byte;
-	if (inst->txHead >= UART_TXBUFFER_SIZE) {
-		inst->txHead = 0;
-		inst->txWrap = TRUE;
+	inst->txCircBuf[inst->txCircHead++] = byte;
+	if (inst->txCircHead >= UART_TXBUFFER_SIZE) {
+		inst->txCircHead = 0;
+		inst->txCircWrap = TRUE;
 	}
 
 	//TODO: if no transmission is in progress start transmission
@@ -100,20 +119,20 @@ void UART_SendByte(UART_Instance* inst, uint8_t byte) {
 void UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 	if (len > UART_TXBUFFER_SIZE) {
 		return; //TODO: Do ERROR (e.g return false)
-	} else if (inst->txWrap) {
-		if ((inst->txTail - inst->txHead) < len) {
+	} else if (inst->txCircWrap) {
+		if ((inst->txCircTail - inst->txCircHead) < len) {
 			return; //TODO: Do ERROR (e.g return false)
 		}
-	} else if ((UART_TXBUFFER_SIZE - inst->txTail + inst->rxHead) < len) {
+	} else if ((UART_TXBUFFER_SIZE - inst->txCircTail + inst->rxCircHead) < len) {
 		return; //TODO: Do ERROR (e.g return false)
 	}
-	if (len > (UART_TXBUFFER_SIZE - inst->txHead)) {
-		inst->txWrap = TRUE;
+	if (len > (UART_TXBUFFER_SIZE - inst->txCircHead)) {
+		inst->txCircWrap = TRUE;
 	}
 	for (uint16_t i = 0; i < len; i++) {
-		inst->txBuf[(inst->txHead+i)%UART_TXBUFFER_SIZE] = data[i];
+		inst->txCircBuf[(inst->txCircHead+i)%UART_TXBUFFER_SIZE] = data[i];
 	}
-	inst->txHead = (inst->txHead+len)%UART_TXBUFFER_SIZE;
+	inst->txCircHead = (inst->txCircHead+len)%UART_TXBUFFER_SIZE;
 
 	//TODO: if no transmission is in progress start transmission
 }
@@ -123,10 +142,10 @@ void UART_SendString(UART_Instance* inst, uint8_t *byte) {
 }
 
 uint16_t UART_GetAvailableBytes(UART_Instance* inst) {
-	if (inst->rxWrap) {
-		return UART_RXBUFFER_SIZE - inst->rxTail + inst->rxHead;
+	if (inst->rxCircWrap) {
+		return UART_RXBUFFER_SIZE - inst->rxCircTail + inst->rxCircHead;
 	} else {
-		return inst->rxHead - inst->rxTail;
+		return inst->rxCircHead - inst->rxCircTail;
 	}
 }
 
@@ -134,10 +153,10 @@ uint8_t UART_GetByte(UART_Instance* inst) {
 	if (UART_GetAvailableBytes(inst) < 1) {
 		return 0;	//ERROR
 	}
-	uint8_t byte = inst->rxBuf[inst->rxTail++];
-	if (inst->rxTail >= UART_RXBUFFER_SIZE) {
-		inst->rxWrap = FALSE;
-		inst->rxTail = 0;
+	uint8_t byte = inst->rxCircBuf[inst->rxCircTail++];
+	if (inst->rxCircTail >= UART_RXBUFFER_SIZE) {
+		inst->rxCircWrap = FALSE;
+		inst->rxCircTail = 0;
 	}
 	return byte;
 }
@@ -147,11 +166,15 @@ uint16_t UART_GetData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 		len = UART_GetAvailableBytes(inst);
 	}
 	for (uint16_t i = 0; i < len; i++) {
-		data[i] = inst->rxBuf[(inst->rxTail+i)%UART_RXBUFFER_SIZE];
+		data[i] = inst->rxCircBuf[(inst->rxCircTail+i)%UART_RXBUFFER_SIZE];
 	}
-	if ((UART_RXBUFFER_SIZE - inst->rxTail) < len) {
-		inst->rxWrap = FALSE;
+	if ((UART_RXBUFFER_SIZE - inst->rxCircTail) < len) {
+		inst->rxCircWrap = FALSE;
 	}
-	inst->rxTail = (inst->rxTail + len) % UART_RXBUFFER_SIZE;
+	inst->rxCircTail = (inst->rxCircTail + len) % UART_RXBUFFER_SIZE;
 	return len;
+}
+
+static void startTransmit(UART_Instance* inst) {
+	if ()
 }

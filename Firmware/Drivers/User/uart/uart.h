@@ -21,29 +21,33 @@ typedef enum {
 
 typedef struct {
 	UART_HandleTypeDef uart;
-	DMA_HandleTypeDef dma;
 
-	uint8_t  rxBuf[UART_RXBUFFER_SIZE];
-	uint16_t rxHead;
-	uint16_t rxTail;
-	uint8_t  rxWrap;
+	DMA_HandleTypeDef rxDma;
+	uint8_t  rxCircBuf[UART_RXBUFFER_SIZE];
+	uint16_t rxCircHead;
+	uint16_t rxCircTail;
+	uint8_t  rxCircWrap;
+	uint16_t rxCount;
 
-	uint8_t  txBuf[UART_RXBUFFER_SIZE];
-	uint16_t txHead;
-	uint16_t txTail;
-	uint8_t  txWrap;
+	DMA_HandleTypeDef txDma;
+	uint8_t  txCircBuf[UART_RXBUFFER_SIZE];
+	uint16_t txCircHead;
+	uint16_t txCircTail;
+	uint8_t  txCircWrap;
+	uint16_t txCount;
 } UART_Instance;
 
 typedef struct {
-	USART_TypeDef*	uart;
-	DMA_TypeDef*	dma;
-	GPIO_TypeDef* 	txBoard;
-	GPIO_TypeDef* 	rxBoard;
-	uint16_t      	txPin;
-	uint16_t      	rxPin;
-	uint32_t		txAF;
-	uint32_t		rxAF;
-	UART_BaudRate 	baud;
+	USART_TypeDef*			uart;
+	DMA_Channel_TypeDef*	txDmaChannel;
+	DMA_Channel_TypeDef*	rxDmaChannel;
+	GPIO_TypeDef* 			txBoard;
+	GPIO_TypeDef* 			rxBoard;
+	uint16_t      			txPin;
+	uint16_t      			rxPin;
+	uint32_t				txAF;
+	uint32_t				rxAF;
+	UART_BaudRate 			baud;
 } UART_Config;
 
 void UART_Init(UART_Instance* inst, UART_Config* conf);
