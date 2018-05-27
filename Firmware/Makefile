@@ -37,6 +37,7 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/User/led \
 	-IDrivers/User/rfTx \
 	-IDrivers/User/uart \
+	-IDrivers/User/dma \
 	-IDrivers/User/watchdog \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/gps \
