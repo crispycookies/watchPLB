@@ -13,9 +13,24 @@
 #define TRUE 1
 #define FALSE 0
 
+#define UART_MODULE_COUNT 4
+
+typedef enum {
+	UART_1 = 0,
+	UART_2 = 1,
+	UART_4 = 2,
+	UART_5 = 3
+} UART_Modules;
+
+static UART_Instance* instances[UART_MODULE_COUNT];
+
 static void startTransmit(UART_Instance* inst);
 
 void UART_Init(UART_Instance* inst, UART_Config* conf) {
+	for (uint8_t i = 0; i < UART_MODULE_COUNT; i++) {
+		instances[i] = 0;
+	}
+
 	//enable GPIO clock
 	if (conf->txBoard == GPIOA) {
 		__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -41,12 +56,16 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 
 	if (conf->uart == USART1) {
 		__HAL_RCC_USART1_CLK_ENABLE();
+		instances[UART_1] = inst;
 	} else if (conf->uart == USART2) {
 		__HAL_RCC_USART2_CLK_ENABLE();
+		instances[UART_2] = inst;
 	} else if (conf->uart == USART4) {
 		__HAL_RCC_USART4_CLK_ENABLE();
+		instances[UART_4] = inst;
 	} else if (conf->uart == USART5) {
 		__HAL_RCC_USART5_CLK_ENABLE();
+		instances[UART_5] = inst;
 	}
 
 	//config rx pin
@@ -75,7 +94,6 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 
 	//TX
 	inst->txDma.Instance = conf->txDmaChannel;
-	inst->txDma.Parent = inst;
 	inst->txDma.Init.Direction = DMA_MEMORY_TO_PERIPH;
 	inst->txDma.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
 	inst->txDma.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
@@ -88,7 +106,6 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 
 	//RX
 	inst->rxDma.Instance = conf->txDmaChannel;
-	inst->rxDma.Parent = inst;
 	inst->rxDma.Init.Direction = DMA_MEMORY_TO_PERIPH;
 	inst->rxDma.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
 	inst->rxDma.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
@@ -98,9 +115,6 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	HAL_DMA_Init(&(inst->rxDma));
 	__HAL_LINKDMA((&inst->uart), hdmarx, inst->rxDma);
 	DMA_RegisterInterrupt(&(inst->txDma));
-
-
-
 }
 
 void UART_SendByte(UART_Instance* inst, uint8_t byte) {
@@ -113,7 +127,7 @@ void UART_SendByte(UART_Instance* inst, uint8_t byte) {
 		inst->txCircWrap = TRUE;
 	}
 
-	//TODO: if no transmission is in progress start transmission
+	startTransmit(inst);
 }
 
 void UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data) {
@@ -134,7 +148,7 @@ void UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 	}
 	inst->txCircHead = (inst->txCircHead+len)%UART_TXBUFFER_SIZE;
 
-	//TODO: if no transmission is in progress start transmission
+	startTransmit(inst);
 }
 
 void UART_SendString(UART_Instance* inst, uint8_t *byte) {
@@ -176,5 +190,33 @@ uint16_t UART_GetData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 }
 
 static void startTransmit(UART_Instance* inst) {
-	if ()
+	if (HAL_UART_GetState(&(inst->uart)) != HAL_UART_STATE_READY) {
+		return;
+	}
+	inst->txCount = inst->txCircWrap == FALSE
+			? inst->txCircHead - inst->txCircTail
+			: UART_TXBUFFER_SIZE - inst->txCircTail;
+	if (inst->txCount > 0)
+		HAL_UART_Transmit_DMA(&(inst->uart), inst->txCircBuf + inst->txCircTail, inst->txCount);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+
+}
+
+void USART1_IRQHandler() {
+	if (instances[UART_1] != 0)
+		HAL_UART_IRQHandler(&(instances[UART_1]->uart));
+}
+
+void USART2_IRQHandler() {
+	if (instances[UART_2] != 0)
+		HAL_UART_IRQHandler(&(instances[UART_2]->uart));
+}
+
+void USART4_5_IRQHandler() {
+	if (instances[UART_4] != 0)
+		HAL_UART_IRQHandler(&(instances[UART_4]->uart));
+	if (instances[UART_5] != 0)
+		HAL_UART_IRQHandler(&(instances[UART_5]->uart));
 }
