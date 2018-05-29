@@ -25,6 +25,7 @@ typedef enum {
 static UART_Instance* instances[UART_MODULE_COUNT];
 
 static void startTransmit(UART_Instance* inst);
+static void startReceive(UART_Instance* inst);
 
 void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	for (uint8_t i = 0; i < UART_MODULE_COUNT; i++) {
@@ -115,6 +116,8 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	HAL_DMA_Init(&(inst->rxDma));
 	__HAL_LINKDMA((&inst->uart), hdmarx, inst->rxDma);
 	DMA_RegisterInterrupt(&(inst->txDma));
+
+	startReceive(inst);
 }
 
 void UART_SendByte(UART_Instance* inst, uint8_t byte) {
@@ -190,7 +193,7 @@ uint16_t UART_GetData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 }
 
 static void startTransmit(UART_Instance* inst) {
-	if (HAL_UART_GetState(&(inst->uart)) != HAL_UART_STATE_READY) {
+	if (HAL_UART_GetState(&(inst->uart)) == HAL_UART_STATE_BUSY_TX) {
 		return;
 	}
 	inst->txCount = inst->txCircWrap == FALSE
@@ -200,8 +203,70 @@ static void startTransmit(UART_Instance* inst) {
 		HAL_UART_Transmit_DMA(&(inst->uart), inst->txCircBuf + inst->txCircTail, inst->txCount);
 }
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+static void startReceive(UART_Instance* inst) {
+	if (HAL_UART_GetState(&(inst->uart)) == HAL_UART_STATE_BUSY_RX) {
+		return;
+	}
+	inst->rxCount = inst->rxCircWrap == FALSE
+			? UART_RXBUFFER_SIZE - inst->rxCircHead
+			: inst->rxCircTail - inst->rxCircHead;
 
+	if (inst->rxCount > 0)
+		HAL_UART_Receive_DMA(&(inst->uart), inst->rxCircBuf + inst->rxCircHead, inst->rxCount);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *uart) {
+	UART_Instance *inst = 0;
+	if (uart->Instance == USART1) {
+		inst = instances[UART_1];
+	} else if (uart->Instance == USART2) {
+		inst = instances[UART_2];
+	} else if (uart->Instance == USART4) {
+		inst = instances[UART_4];
+	} else if (uart->Instance == USART5) {
+		inst = instances[UART_5];
+	} else {
+		return;
+	}
+
+	uint16_t cnt = inst->rxCount - __HAL_DMA_GET_COUNTER(&(inst->rxDma));
+
+	inst->rxCircHead += cnt;
+	if (inst->rxCircHead >= UART_RXBUFFER_SIZE) {
+		inst->rxCircHead = 0;
+		inst->rxCircHead = TRUE;
+	}
+
+	startReceive(inst);
+}
+
+void UART_DMARxOnlyAbortCallback(DMA_HandleTypeDef *dma) {
+	HAL_UART_RxCpltCallback(dma->Parent);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *uart) {
+	UART_Instance *inst = 0;
+	if (uart->Instance == USART1) {
+		inst = instances[UART_1];
+	} else if (uart->Instance == USART2) {
+		inst = instances[UART_2];
+	} else if (uart->Instance == USART4) {
+		inst = instances[UART_4];
+	} else if (uart->Instance == USART5) {
+		inst = instances[UART_5];
+	} else {
+		return;
+	}
+
+	uint16_t cnt = inst->txCount - __HAL_DMA_GET_COUNTER(&(inst->txDma));
+
+	inst->txCircTail += cnt;
+	if (inst->txCircTail >= UART_TXBUFFER_SIZE) {
+		inst->txCircTail = 0;
+		inst->txCircWrap = FALSE;
+	}
+
+	startTransmit(inst);
 }
 
 void USART1_IRQHandler() {
