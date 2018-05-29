@@ -22,10 +22,18 @@ typedef enum {
 	UART_5 = 3
 } UART_Modules;
 
-static UART_Instance* instances[UART_MODULE_COUNT];
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *uart);
+void UART_DMARxOnlyAbortCallback(DMA_HandleTypeDef *dma);
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *uart);
+
+void USART1_IRQHandler();
+void USART2_IRQHandler();
+void USART4_5_IRQHandler();
 
 static void startTransmit(UART_Instance* inst);
 static void startReceive(UART_Instance* inst);
+
+static UART_Instance* instances[UART_MODULE_COUNT];
 
 void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	for (uint8_t i = 0; i < UART_MODULE_COUNT; i++) {
@@ -120,9 +128,9 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	startReceive(inst);
 }
 
-void UART_SendByte(UART_Instance* inst, uint8_t byte) {
+uint8_t UART_SendByte(UART_Instance* inst, uint8_t byte) {
 	if (inst->txCircWrap && inst->txCircHead == inst->txCircTail) {
-		return;	//TODO: Do ERROR (e.g return false)
+		return FALSE;
 	}
 	inst->txCircBuf[inst->txCircHead++] = byte;
 	if (inst->txCircHead >= UART_TXBUFFER_SIZE) {
@@ -131,17 +139,18 @@ void UART_SendByte(UART_Instance* inst, uint8_t byte) {
 	}
 
 	startTransmit(inst);
+	return TRUE;
 }
 
-void UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data) {
+uint8_t UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 	if (len > UART_TXBUFFER_SIZE) {
-		return; //TODO: Do ERROR (e.g return false)
+		return FALSE;
 	} else if (inst->txCircWrap) {
 		if ((inst->txCircTail - inst->txCircHead) < len) {
-			return; //TODO: Do ERROR (e.g return false)
+			return FALSE;
 		}
 	} else if ((UART_TXBUFFER_SIZE - inst->txCircTail + inst->rxCircHead) < len) {
-		return; //TODO: Do ERROR (e.g return false)
+		return FALSE;
 	}
 	if (len > (UART_TXBUFFER_SIZE - inst->txCircHead)) {
 		inst->txCircWrap = TRUE;
@@ -152,10 +161,11 @@ void UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 	inst->txCircHead = (inst->txCircHead+len)%UART_TXBUFFER_SIZE;
 
 	startTransmit(inst);
+	return TRUE;
 }
 
-void UART_SendString(UART_Instance* inst, uint8_t *byte) {
-	UART_SendData(inst, strlen((char*)byte), byte);
+uint8_t UART_SendString(UART_Instance* inst, uint8_t *byte) {
+	return UART_SendData(inst, strlen((char*)byte), byte);
 }
 
 uint16_t UART_GetAvailableBytes(UART_Instance* inst) {
@@ -270,18 +280,42 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *uart) {
 }
 
 void USART1_IRQHandler() {
-	if (instances[UART_1] != 0)
-		HAL_UART_IRQHandler(&(instances[UART_1]->uart));
+	if (instances[UART_1] != 0) {
+		if (__HAL_UART_GET_IT(&(instances[UART_1]->uart),UART_IT_IDLE) != FALSE) {
+			__HAL_UART_CLEAR_IT(&(instances[UART_1]->uart),UART_IT_IDLE);
+			HAL_DMA_Abort_IT(&(instances[UART_1]->rxDma));
+		} else {
+			HAL_UART_IRQHandler(&(instances[UART_1]->uart));
+		}
+	}
 }
 
 void USART2_IRQHandler() {
-	if (instances[UART_2] != 0)
-		HAL_UART_IRQHandler(&(instances[UART_2]->uart));
+	if (instances[UART_2] != 0) {
+		if (__HAL_UART_GET_IT(&(instances[UART_2]->uart),UART_IT_IDLE) != FALSE) {
+			__HAL_UART_CLEAR_IT(&(instances[UART_2]->uart),UART_IT_IDLE);
+			HAL_DMA_Abort_IT(&(instances[UART_2]->rxDma));
+		} else {
+			HAL_UART_IRQHandler(&(instances[UART_2]->uart));
+		}
+	}
 }
 
 void USART4_5_IRQHandler() {
-	if (instances[UART_4] != 0)
-		HAL_UART_IRQHandler(&(instances[UART_4]->uart));
-	if (instances[UART_5] != 0)
-		HAL_UART_IRQHandler(&(instances[UART_5]->uart));
+	if (instances[UART_4] != 0) {
+		if (__HAL_UART_GET_IT(&(instances[UART_4]->uart),UART_IT_IDLE) != FALSE) {
+			__HAL_UART_CLEAR_IT(&(instances[UART_4]->uart),UART_IT_IDLE);
+			HAL_DMA_Abort_IT(&(instances[UART_4]->rxDma));
+		} else {
+			HAL_UART_IRQHandler(&(instances[UART_4]->uart));
+		}
+	}
+	if (instances[UART_5] != 0) {
+		if (__HAL_UART_GET_IT(&(instances[UART_5]->uart),UART_IT_IDLE) != FALSE) {
+			__HAL_UART_CLEAR_IT(&(instances[UART_5]->uart),UART_IT_IDLE);
+			HAL_DMA_Abort_IT(&(instances[UART_5]->rxDma));
+		} else {
+			HAL_UART_IRQHandler(&(instances[UART_5]->uart));
+		}
+	}
 }

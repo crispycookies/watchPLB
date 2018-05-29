@@ -52,11 +52,11 @@ typedef struct {
 
 void UART_Init(UART_Instance* inst, UART_Config* conf);
 
-void UART_SendByte(UART_Instance* inst, uint8_t byte);
+uint8_t UART_SendByte(UART_Instance* inst, uint8_t byte);
 
-void UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data);
+uint8_t UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data);
 
-void UART_SendString(UART_Instance* inst, uint8_t *byte);
+uint8_t UART_SendString(UART_Instance* inst, uint8_t *byte);
 
 uint16_t UART_GetAvailableBytes(UART_Instance* inst);
 
