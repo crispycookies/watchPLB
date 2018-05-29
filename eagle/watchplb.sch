@@ -25621,9 +25621,13 @@ by exp-lbrs.ulp</description>
 <text x="937.26" y="307.34" size="1.778" layer="91">kabel mouser nr 601-606BBP wird ebenfalls benötigt</text>
 <text x="119.38" y="167.64" size="1.778" layer="91">V+STM is 3V3 after ferrite</text>
 <text x="586.74" y="81.28" size="1.778" layer="91">devboard uses 4.7 uF, so i added one of those</text>
+<text x="657.86" y="71.12" size="1.778" layer="91">SAM-M8Q</text>
+<text x="960.12" y="254" size="1.778" layer="91">AX5031</text>
+<text x="899.16" y="360.68" size="1.778" layer="91">RA07H4047M</text>
+<text x="116.84" y="299.72" size="1.778" layer="91">BQ7790504</text>
 </plain>
 <instances>
-<instance part="IC1" gate="G$1" x="662.94" y="76.2"/>
+<instance part="IC1" gate="G$1" x="662.94" y="76.2" smashed="yes"/>
 <instance part="+3V2" gate="G$1" x="683.26" y="142.24"/>
 <instance part="GND1" gate="1" x="647.7" y="81.28"/>
 <instance part="R1" gate="G$1" x="734.06" y="91.44" rot="MR270"/>
@@ -25631,7 +25635,10 @@ by exp-lbrs.ulp</description>
 <instance part="C1" gate="G$1" x="612.14" y="91.44"/>
 <instance part="C2" gate="G$1" x="622.3" y="91.44"/>
 <instance part="C3" gate="G$1" x="632.46" y="91.44"/>
-<instance part="IC2" gate="G$1" x="878.84" y="132.08"/>
+<instance part="IC2" gate="G$1" x="878.84" y="132.08" smashed="yes">
+<attribute name="NAME" x="918.21" y="139.7" size="1.778" layer="95" align="center-left"/>
+<attribute name="VALUE" x="885.19" y="139.7" size="1.778" layer="96" align="center-left"/>
+</instance>
 <instance part="GND2" gate="1" x="853.44" y="121.92"/>
 <instance part="+3V4" gate="G$1" x="866.14" y="162.56"/>
 <instance part="GND3" gate="1" x="929.64" y="81.28"/>
@@ -25736,7 +25743,10 @@ by exp-lbrs.ulp</description>
 <instance part="LED12" gate="G$1" x="406.4" y="58.42"/>
 <instance part="+3V22" gate="G$1" x="396.24" y="81.28"/>
 <instance part="FRAME5" gate="G$1" x="553.72" y="193.04"/>
-<instance part="JP2" gate="G$1" x="764.54" y="279.4"/>
+<instance part="JP2" gate="G$1" x="764.54" y="279.4" smashed="yes">
+<attribute name="NAME" x="758.19" y="285.115" size="1.778" layer="95"/>
+<attribute name="VALUE" x="765.81" y="289.56" size="1.778" layer="96" rot="R180"/>
+</instance>
 <instance part="D1" gate="G$1" x="772.16" y="279.4" rot="R90"/>
 <instance part="GND25" gate="1" x="772.16" y="238.76"/>
 <instance part="R25" gate="G$1" x="764.54" y="251.46" rot="MR270"/>
@@ -25954,10 +25964,13 @@ by exp-lbrs.ulp</description>
 <attribute name="TP_SIGNAL_NAME" x="624.84" y="273.05" size="1.778" layer="97" rot="R90"/>
 </instance>
 <instance part="J3" gate="G$1" x="922.02" y="309.88" rot="MR0"/>
-<instance part="U$3" gate="G$1" x="381" y="256.54"/>
+<instance part="U$3" gate="G$1" x="381" y="256.54" smashed="yes"/>
 <instance part="GND34" gate="1" x="243.84" y="327.66"/>
 <instance part="L8" gate="A" x="375.92" y="271.78" rot="R90"/>
-<instance part="C48" gate="G$1" x="347.98" y="259.08"/>
+<instance part="C48" gate="G$1" x="347.98" y="259.08" smashed="yes">
+<attribute name="NAME" x="349.123" y="259.5626" size="1.778" layer="95"/>
+<attribute name="VALUE" x="349.377" y="266.2174" size="1.778" layer="96" rot="R180"/>
+</instance>
 <instance part="GND35" gate="1" x="381" y="218.44"/>
 <instance part="Q7" gate="G$1" x="340.36" y="231.14"/>
 <instance part="R45" gate="G$1" x="363.22" y="243.84" rot="R270"/>
@@ -25972,8 +25985,14 @@ by exp-lbrs.ulp</description>
 <instance part="C50" gate="G$1" x="406.4" y="261.62" rot="R270"/>
 <instance part="R51" gate="G$1" x="429.26" y="254" rot="R90"/>
 <instance part="R52" gate="G$1" x="429.26" y="231.14" rot="R90"/>
-<instance part="C51" gate="G$1" x="439.42" y="243.84"/>
-<instance part="C52" gate="G$1" x="444.5" y="243.84"/>
+<instance part="C51" gate="G$1" x="439.42" y="243.84" smashed="yes">
+<attribute name="NAME" x="440.563" y="244.3226" size="1.778" layer="95"/>
+<attribute name="VALUE" x="440.563" y="236.7026" size="1.778" layer="96"/>
+</instance>
+<instance part="C52" gate="G$1" x="444.5" y="243.84" smashed="yes">
+<attribute name="NAME" x="445.643" y="244.3226" size="1.778" layer="95"/>
+<attribute name="VALUE" x="445.643" y="239.2426" size="1.778" layer="96"/>
+</instance>
 <instance part="D10" gate="G$1" x="421.64" y="261.62"/>
 <instance part="J4" gate="G$1" x="289.56" y="254"/>
 <instance part="B1" gate="G$1" x="106.68" y="152.4"/>
