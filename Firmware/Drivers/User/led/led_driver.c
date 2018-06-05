@@ -224,18 +224,15 @@ void TIM7_IRQHandler(){
 }
 
 
-void led_timer_init(uint32_t time_intervall) {
-
-
-	//const int sysclock = 32000000;
-
+void led_timer_init(TIME time_intervall) {
 	__HAL_RCC_TIM7_CLK_ENABLE();
 
 	SystemCoreClockUpdate();
+	const double factor = 3;
 
-	led_tim7_base.Prescaler = SystemCoreClock/(clkdivider);
+	led_tim7_base.Prescaler = SystemCoreClock/(clkdivider)*4;
 	led_tim7_base.CounterMode = TIM_COUNTERMODE_UP;
-	led_tim7_base.Period = time_intervall*3;
+	led_tim7_base.Period = time_intervall*factor;
 	led_tim7_base.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 
 	led_tim7_hdl.Init = led_tim7_base;

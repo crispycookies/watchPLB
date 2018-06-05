@@ -2,7 +2,7 @@
  * led_driver.h
  *
  *  Created on: 15.05.2018
- *      Author: tobilinux
+ *      Author: Tobias Egger
  */
 
 #ifndef USER_LED_LED_DRIVER_H_
@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/*public enums*/
 typedef enum {
 	led_pa4 = 0,
 	led_pa5 = 1,
@@ -25,7 +26,7 @@ typedef enum {
 	led_pb11 = 10
 } LED_PIN;
 
-// Led Init
+/*Basic LED- Driver Block*/
 
 void led_init(void);
 
@@ -37,11 +38,12 @@ bool led_toggle(LED_PIN led);
 
 void led_deinit(void);
 
-// Timer
+/*Advanced LED- Driver Block*/
 
 typedef uint16_t REGISTER;
+typedef uint16_t TIME;
 
-void led_timer_init(uint32_t time_intervall);
+void led_timer_init(TIME time_intervall);
 
 bool led_timer_start(void);
 
