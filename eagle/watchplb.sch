@@ -26406,6 +26406,14 @@ by exp-lbrs.ulp</description>
 <wire x1="134.62" y1="48.26" x2="134.62" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="38.1" x2="132.08" y2="38.1" width="0.1524" layer="91"/>
 <junction x="134.62" y="48.26"/>
+<pinref part="LED5" gate="G$1" pin="C"/>
+<wire x1="132.08" y1="17.78" x2="134.62" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="134.62" y1="17.78" x2="134.62" y2="27.94" width="0.1524" layer="91"/>
+<junction x="134.62" y="38.1"/>
+<pinref part="LED4" gate="G$1" pin="C"/>
+<wire x1="134.62" y1="27.94" x2="134.62" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="27.94" x2="134.62" y2="27.94" width="0.1524" layer="91"/>
+<junction x="134.62" y="27.94"/>
 </segment>
 <segment>
 <pinref part="C18" gate="G$1" pin="1"/>
@@ -27033,13 +27041,6 @@ by exp-lbrs.ulp</description>
 <wire x1="91.44" y1="78.74" x2="111.76" y2="78.74" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="GND1" class="0">
-<segment>
-<pinref part="LED4" gate="G$1" pin="C"/>
-<wire x1="134.62" y1="38.1" x2="134.62" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="134.62" y1="27.94" x2="132.08" y2="27.94" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$12" class="0">
 <segment>
 <pinref part="LED4" gate="G$1" pin="A"/>
@@ -27058,13 +27059,6 @@ by exp-lbrs.ulp</description>
 <wire x1="88.9" y1="76.2" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="GND2" class="0">
-<segment>
-<pinref part="LED5" gate="G$1" pin="C"/>
-<wire x1="134.62" y1="27.94" x2="134.62" y2="17.78" width="0.1524" layer="91"/>
-<wire x1="134.62" y1="17.78" x2="132.08" y2="17.78" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$16" class="0">
 <segment>
 <pinref part="LED5" gate="G$1" pin="A"/>
@@ -27075,8 +27069,8 @@ by exp-lbrs.ulp</description>
 <net name="IND_LED_R" class="0">
 <segment>
 <pinref part="R15" gate="G$1" pin="2"/>
-<wire x1="111.76" y1="17.78" x2="86.36" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="86.36" y1="7.62" x2="86.36" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="17.78" x2="86.36" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="17.78" x2="86.36" y2="71.12" width="0.1524" layer="91"/>
 <label x="96.52" y="73.66" size="1.778" layer="95"/>
 <pinref part="U2" gate="A" pin="PB2"/>
 <wire x1="86.36" y1="71.12" x2="86.36" y2="73.66" width="0.1524" layer="91"/>
