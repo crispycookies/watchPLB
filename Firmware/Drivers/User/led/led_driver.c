@@ -7,8 +7,9 @@
 
 // Include Block
 #include "led_driver.h"
+#include <assert.h>
 
-#define clkdivider 100000;
+#define clkdivider 10000
 
 #define PA4 GPIO_PIN_4
 #define PA5 GPIO_PIN_5
@@ -82,7 +83,7 @@ bool led_on(LED_PIN led) {
 		int i = 0;
 		for (; i < LUT_SIZE; i++) {
 			if (look_up[i].pseudo_pin == led) {
-				HAL_GPIO_WritePin(GPIOC, look_up[i].real_pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOA, look_up[i].real_pin, GPIO_PIN_SET);
 				break;
 			}
 		}
@@ -98,7 +99,7 @@ bool led_on(LED_PIN led) {
 		int i = 0;
 		for (; i < LUT_SIZE; i++) {
 			if (look_up[i].pseudo_pin == led) {
-				HAL_GPIO_WritePin(GPIOC, look_up[i].real_pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOB, look_up[i].real_pin, GPIO_PIN_SET);
 				break;
 			}
 		}
@@ -113,7 +114,7 @@ bool led_off(LED_PIN led) {
 		int i = 0;
 		for (; i < LUT_SIZE; i++) {
 			if (look_up[i].pseudo_pin == led) {
-				HAL_GPIO_WritePin(GPIOC, look_up[i].real_pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(GPIOA, look_up[i].real_pin, GPIO_PIN_RESET);
 				break;
 			}
 		}
@@ -129,7 +130,7 @@ bool led_off(LED_PIN led) {
 		int i = 0;
 		for (; i < LUT_SIZE; i++) {
 			if (look_up[i].pseudo_pin == led) {
-				HAL_GPIO_WritePin(GPIOC, look_up[i].real_pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(GPIOB, look_up[i].real_pin, GPIO_PIN_RESET);
 				break;
 			}
 		}
@@ -147,7 +148,7 @@ bool led_toggle(LED_PIN led) {
 		int i = 0;
 		for (; i < LUT_SIZE; i++) {
 			if (look_up[i].pseudo_pin == led) {
-				HAL_GPIO_TogglePin(GPIOC, look_up[i].real_pin);
+				HAL_GPIO_TogglePin(GPIOA, look_up[i].real_pin);
 				break;
 			}
 		}
@@ -163,7 +164,7 @@ bool led_toggle(LED_PIN led) {
 		int i = 0;
 		for (; i < LUT_SIZE; i++) {
 			if (look_up[i].pseudo_pin == led) {
-				HAL_GPIO_TogglePin(GPIOC, look_up[i].real_pin);
+				HAL_GPIO_TogglePin(GPIOB, look_up[i].real_pin);
 				break;
 			}
 		}
@@ -207,39 +208,40 @@ REGISTER tim_shift_reg[REG_SIZE] = {0};
 
 void TIM7_IRQHandler(){
 	// Shifter
+	static const REGISTER n_bit= 1<<(sizeof(REGISTER)*8-1);
 	for(int i = 0; i < REG_SIZE; i++){
 		if((tim_shift_reg[i] & 1)){
-			led_toggle(i);
-		}
-		tim_shift_reg[i]= tim_shift_reg[i]>>1;
-	}
+			led_on(i);
+			tim_shift_reg[i]=n_bit |tim_shift_reg[i]>>1;
 
+		}else{
+			led_off(i);
+			tim_shift_reg[i]= tim_shift_reg[i]>>1;
+		}
+
+	}
+	TIM7->SR = 0;
 }
 
 
-void led_timer_init(uint8_t time_intervall) {
+void led_timer_init(uint32_t time_intervall) {
+
+
+	//const int sysclock = 32000000;
 
 	__HAL_RCC_TIM7_CLK_ENABLE();
-	led_tim7_base.Prescaler = SystemCoreClock/clkdivider;
+
+	SystemCoreClockUpdate();
+
+	led_tim7_base.Prescaler = SystemCoreClock/(clkdivider);
 	led_tim7_base.CounterMode = TIM_COUNTERMODE_UP;
-	led_tim7_base.Period = time_intervall;
+	led_tim7_base.Period = time_intervall*3;
 	led_tim7_base.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 
 	led_tim7_hdl.Init = led_tim7_base;
 	led_tim7_hdl.Instance = TIM7;
 
 	HAL_TIM_Base_Init(&led_tim7_hdl);
-
-	/*
-	//RCC->APB1ENR |= RCC_APB1ENR_TIM7EN;
-	TIM7->PSC = SystemCoreClock/clkdivider;
-	TIM7->ARR = time_intervall;
-	TIM7->SR = 0;
-	TIM7->DIER = TIM_DIER_UIE;
-	TIM7->CNT = 0;
-	TIM7->CR1 &= ~1;
-	*/
-	NVIC_EnableIRQ(TIM7_IRQn);
 }
 
 bool led_timer_start(void) {

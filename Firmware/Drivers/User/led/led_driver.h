@@ -41,7 +41,7 @@ void led_deinit(void);
 
 typedef uint16_t REGISTER;
 
-void led_timer_init(uint8_t time_intervall);
+void led_timer_init(uint32_t time_intervall);
 
 bool led_timer_start(void);
 
