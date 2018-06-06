@@ -48,7 +48,7 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IApp/system \
 	-IApp/userInterface
 	
-HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex
+HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr
 
 # Define output directory
 OBJECT_DIR = Debug
