@@ -26,24 +26,31 @@ void DMA_RegisterInterrupt(DMA_HandleTypeDef *dma) {
 	if (dma->Instance == DMA1_Channel1) {
 		dma_handles[0] = dma;
 	    NVIC_SetPriority(DMA1_Channel1_IRQn, 0x01);
+	    HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 	} else if (dma->Instance == DMA1_Channel2) {
 		dma_handles[1] = dma;
 	    NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0x01);
+	    HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
 	} else if (dma->Instance == DMA1_Channel3) {
 		dma_handles[2] = dma;
 	    NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0x01);
+	    HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
 	} else if (dma->Instance == DMA1_Channel4) {
 		dma_handles[3] = dma;
 	    NVIC_SetPriority(DMA1_Channel4_5_6_7_IRQn, 0x01);
+	    HAL_NVIC_EnableIRQ(DMA1_Channel4_5_6_7_IRQn);
 	} else if (dma->Instance == DMA1_Channel5) {
 		dma_handles[4] = dma;
 	    NVIC_SetPriority(DMA1_Channel4_5_6_7_IRQn, 0x01);
+	    HAL_NVIC_EnableIRQ(DMA1_Channel4_5_6_7_IRQn);
 	} else if (dma->Instance == DMA1_Channel6) {
 		dma_handles[5] = dma;
 	    NVIC_SetPriority(DMA1_Channel4_5_6_7_IRQn, 0x01);
+	    HAL_NVIC_EnableIRQ(DMA1_Channel4_5_6_7_IRQn);
 	} else if (dma->Instance == DMA1_Channel7) {
 		dma_handles[6] = dma;
 	    NVIC_SetPriority(DMA1_Channel4_5_6_7_IRQn, 0x01);
+	    HAL_NVIC_EnableIRQ(DMA1_Channel4_5_6_7_IRQn);
 	}
 }
 
