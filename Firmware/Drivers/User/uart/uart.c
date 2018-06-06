@@ -244,8 +244,11 @@ static void startReceive(UART_Instance* inst) {
 			? UART_RXBUFFER_SIZE - inst->rxCircHead
 			: inst->rxCircTail - inst->rxCircHead;
 
-	if (inst->rxCount > 0)
+	if (inst->rxCount > 0) {
 		HAL_UART_Receive_DMA(&(inst->uart), inst->rxCircBuf + inst->rxCircHead, inst->rxCount);
+		__HAL_UART_CLEAR_IT(&(inst->uart),UART_CLEAR_IDLEF);
+		__HAL_UART_ENABLE_IT(&(inst->uart), UART_IT_IDLE);
+	}
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *uart) {
