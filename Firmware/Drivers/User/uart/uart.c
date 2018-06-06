@@ -305,7 +305,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *uart) {
 void USART1_IRQHandler() {
 	if (instances[UART_1] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_1]->uart),UART_IT_IDLE) != FALSE) {
-			__HAL_UART_CLEAR_IT(&(instances[UART_1]->uart),UART_IT_IDLE);
+			__HAL_UART_CLEAR_IT(&(instances[UART_1]->uart),UART_CLEAR_IDLEF);
 			HAL_DMA_Abort_IT(&(instances[UART_1]->rxDma));
 		} else {
 			HAL_UART_IRQHandler(&(instances[UART_1]->uart));
@@ -316,18 +316,17 @@ void USART1_IRQHandler() {
 void USART2_IRQHandler() {
 	if (instances[UART_2] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_2]->uart),UART_IT_IDLE) != FALSE) {
-			__HAL_UART_CLEAR_IT(&(instances[UART_2]->uart),UART_IT_IDLE);
+			__HAL_UART_CLEAR_IT(&(instances[UART_2]->uart),UART_CLEAR_IDLEF);
 			HAL_DMA_Abort_IT(&(instances[UART_2]->rxDma));
-		} else {
-			HAL_UART_IRQHandler(&(instances[UART_2]->uart));
 		}
 	}
+	HAL_UART_IRQHandler(&(instances[UART_2]->uart));
 }
 
 void USART4_5_IRQHandler() {
 	if (instances[UART_4] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_4]->uart),UART_IT_IDLE) != FALSE) {
-			__HAL_UART_CLEAR_IT(&(instances[UART_4]->uart),UART_IT_IDLE);
+			__HAL_UART_CLEAR_IT(&(instances[UART_4]->uart),UART_CLEAR_IDLEF);
 			HAL_DMA_Abort_IT(&(instances[UART_4]->rxDma));
 		} else {
 			HAL_UART_IRQHandler(&(instances[UART_4]->uart));
@@ -335,7 +334,7 @@ void USART4_5_IRQHandler() {
 	}
 	if (instances[UART_5] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_5]->uart),UART_IT_IDLE) != FALSE) {
-			__HAL_UART_CLEAR_IT(&(instances[UART_5]->uart),UART_IT_IDLE);
+			__HAL_UART_CLEAR_IT(&(instances[UART_5]->uart),UART_CLEAR_IDLEF);
 			HAL_DMA_Abort_IT(&(instances[UART_5]->rxDma));
 		} else {
 			HAL_UART_IRQHandler(&(instances[UART_5]->uart));
