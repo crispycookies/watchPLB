@@ -102,6 +102,7 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	gpio.Alternate = conf->txAF;
 	HAL_GPIO_Init(conf->txBoard, &gpio);
 
+	inst->uart.Instance = conf->uart;
 	inst->uart.Init.BaudRate = conf->baud;
 	inst->uart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
 	inst->uart.Init.Mode = UART_MODE_TX_RX;
