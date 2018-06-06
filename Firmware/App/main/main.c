@@ -29,14 +29,19 @@ SOFTWARE.
 
 /* Includes */
 #include <stddef.h>
-#include "stm32l0xx.h"
-#include "stm32l0xx_hal_gpio.h"
+#include "uart.h"
+#include "stm32l0xx_hal.h"
 
 /* Private macro */
 /* Private variables */
 /* Private function prototypes */
 /* Private functions */
 
+
+#define BUFSIZE 100
+uint8_t buf[BUFSIZE];
+
+void SystemClock_Config(void);
 /**
 **===========================================================================
 **
@@ -44,29 +49,115 @@ SOFTWARE.
 **
 **===========================================================================
 */
-int main(void)
+int main(void) {
+	__HAL_RCC_SYSCFG_CLK_ENABLE();
+	__HAL_RCC_PWR_CLK_ENABLE();
+
+	/* System interrupt init*/
+	/* SVC_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(SVC_IRQn, 0, 0);
+	/* PendSV_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(PendSV_IRQn, 0, 0);
+	/* SysTick_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
+
+	HAL_Init();
+	SystemClock_Config();
+
+	UART_Config conf;
+	UART_Instance inst;
+
+	conf.baud = BAUD_9600;
+	conf.uart = USART2;
+	conf.rxBoard = GPIOA;
+	conf.rxPin = GPIO_PIN_3;
+	conf.rxAF = GPIO_AF4_USART2;
+	conf.rxDmaChannel = DMA1_Channel5;
+	conf.txBoard = GPIOA;
+	conf.txPin = GPIO_PIN_2;
+	conf.txAF = GPIO_AF4_USART2;
+	conf.txDmaChannel = DMA1_Channel4;
+
+	UART_Init(&inst, &conf);
+
+	UART_SendString(&inst, (uint8_t*)"UART READY");
+
+	while (1) {
+		if (UART_GetAvailableBytes(&inst) > 0) {
+			uint16_t len;
+			len = UART_GetData(&inst, BUFSIZE, buf);
+			UART_SendData(&inst, len, buf);
+		}
+	}
+	return 0;
+}
+
+void _Error_Handler(char *file, int line)
 {
-  uint32_t ii = 0;
-  GPIO_InitTypeDef initStruct;
-
-  /* GPIO Ports Clock Enable */
-  RCC->IOPENR |= RCC_IOPENR_GPIOAEN;
-
-  /* disable the LEDs before activating output driver */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
-
-  /* Configure GPIO pins: PC0 PC1 PC2 */
-  initStruct.Pin = GPIO_PIN_5;
-  initStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  HAL_GPIO_Init(GPIOA, &initStruct);
-
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
-
-  /* TODO - Add your application code here */
-  while (1)
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  while(1)
   {
-       ii++;
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+
+  RCC_OscInitTypeDef RCC_OscInitStruct;
+  RCC_ClkInitTypeDef RCC_ClkInitStruct;
+  RCC_PeriphCLKInitTypeDef PeriphClkInit;
+
+    /**Configure the main internal regulator output voltage
+    */
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+    /**Initializes the CPU, AHB and APB busses clocks
+    */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
+  RCC_OscInitStruct.MSIState = RCC_MSI_ON;
+  RCC_OscInitStruct.MSICalibrationValue = 0;
+  RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_5;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
   }
 
-  return 0;
+    /**Initializes the CPU, AHB and APB busses clocks
+    */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1;
+  PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+    /**Configure the Systick interrupt time
+    */
+  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+
+    /**Configure the Systick
+    */
+  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+
+  /* SysTick_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
