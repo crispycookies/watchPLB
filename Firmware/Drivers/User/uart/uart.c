@@ -40,6 +40,10 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 		instances[i] = 0;
 	}
 
+	memset(&(inst->txDma), 0, sizeof(DMA_HandleTypeDef));
+	memset(&(inst->rxDma), 0, sizeof(DMA_HandleTypeDef));
+	memset(&(inst->uart), 0, sizeof(UART_HandleTypeDef));
+
 	//enable GPIO clock
 	if (conf->txBoard == GPIOA) {
 		__HAL_RCC_GPIOA_CLK_ENABLE();
