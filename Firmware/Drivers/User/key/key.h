@@ -1,9 +1,13 @@
 /*
- * key.h
- *
- *  Created on: 15.05.2018
- *      Author: Michael
- */
+/**
+  **************************
+  * @file    key.h
+  * @author  Michael Neuhofer
+  * @version V1.0
+  * @date    15.05.2018
+  * @brief   key driver module
+  **************************
+  */
 #ifndef KEY_H
 #define KEY_H
 
@@ -16,10 +20,19 @@ typedef enum{
 	//BTN_TEST = GPIO_PIN_13		//PC13 on TESTBOARD
 }BTN_Pins;
 
-// initializes all Keys used
+
+/**
+ * @brief initializes all Keys used
+ * @param none
+ */
 void KEY_Init(void);
 
-// Returns the State of the given Button
+/**
+ * @brief initializes all Keys used
+ * @param BTN_Pins enum, to declare which Key is meant
+ * @return GPIO_PIN_RESET = 0U, if the key is pressed
+  	  	   GPIO_PIN_SET		  	if the key is not pressed
+ */
 GPIO_PinState KEY_Get(BTN_Pins btn);
 
 #endif //KEY_H

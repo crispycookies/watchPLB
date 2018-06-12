@@ -1,26 +1,19 @@
-/*
- * adc.h
- *
- *  Created on: 22.05.2018
- *      Author: Michael
- */
+/**
+  **************************
+  * @file    adc.h
+  * @author  Michael Neuhofer
+  * @version V1.0
+  * @date    12.06.2018
+  * @brief   adc driver module
+  **************************
+  */
 
 #ifndef ADC_H
 #define ADC_H
 
 
-/* Return values */
-/*
-typedef enum
-{
-  HAL_OK       = 0x00U,
-  HAL_ERROR    = 0x01U,
-  HAL_BUSY     = 0x02U,
-  HAL_TIMEOUT  = 0x03U
-} HAL_StatusTypeDef;
-*/
-
-#define ENABLE_AUTOPOWEROFF 	ENABLE;	//can be set to DISABLE to deset automatic poweroff at end/begin of conversation
+// if there are some problems with usage, first try to disable those two
+#define ENABLE_AUTOPOWEROFF 	ENABLE;	//can be set to DISABLE to deset automatic poweroff/on at end/begin of conversation
 #define ENABLE_AUTOPOWERWAIT	ENABLE; //can be set to DISABLE...
 
 
@@ -28,7 +21,7 @@ typedef enum
  * @brief Initializes the adc using 12 bit resolution.
  * @param channel The Adc hardware channel that should be used in conversions.
  * @return HAL_OK if the given channel is valid else
- * 			HAL_ERROR
+ * 		   HAL_ERROR
  */
 HAL_StatusTypeDef Adc_Init(uint8_t const channel);
 
@@ -48,11 +41,10 @@ int32_t Adc_GetValue(uint32_t const timeout);
 /**
  * @brief Selects the Adc hardware channel to use for conversion.
  * @param channel The Adc hardware channel that should be used in conversions.
+ * for list of channels: stm32l0xx_hal_adc.h   @defgroup ADC_channels
  * @return HAL_OK if the given channel is valid else
  *         HAL_ERROR
  */
-
-//for list of channels: stm32l0xx_hal_adc.h   @defgroup ADC_channels
 HAL_StatusTypeDef Adc_SetChannel(uint8_t const channel);
 
 

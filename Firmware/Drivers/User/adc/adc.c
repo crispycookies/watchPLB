@@ -17,8 +17,7 @@ HAL_StatusTypeDef Adc_Init(uint8_t const channel)
 
 
 	//clock init
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-
+	__HAL_RCC_ADC1_CLK_ENABLE();
 
 	/* Initialize Adc configuration structure */
 	adcinit.ClockPrescaler = 		ADC_CLOCK_ASYNC_DIV1;
@@ -68,7 +67,6 @@ int32_t Adc_GetValue(uint32_t const timeout)
 	{
 		adcvalue = HAL_ADC_GetValue(&hadc);
 	}
-
 	return adcvalue;
 }
 
