@@ -77,7 +77,6 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	inst->dma.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
 	inst->dma.Init.MemInc = DMA_MINC_ENABLE;
 	inst->dma.Init.PeriphInc = DMA_PINC_DISABLE;
-	//inst->dma.Init.Mode;
 	HAL_DMA_Init(&(inst->dma));
 
 	//TODO: DMA
