@@ -1,16 +1,22 @@
-/*
- * led_driver.c
- *
- *  Created on: 15.05.2018
- *      Author: tobilinux
- */
+/**
+  ******************************************************************************
+  * @file    led_driver.c
+  * @author  Tobias Egger
+  * @version V1.1
+  * @date    12-June-2018
+  * @brief   WatchPLB LED- Driver Implementation File
+  ******************************************************************************
+  */
 
-// Include Block
+/* Include Block*/
 #include "led_driver.h"
 #include <assert.h>
 
+/*Defines*/
+/*Timer Defines*/
 #define clkdivider 10000
 
+/*Pin Defines*/
 #define PA4 GPIO_PIN_4
 #define PA5 GPIO_PIN_5
 #define PA6 GPIO_PIN_6
@@ -23,10 +29,11 @@
 #define PB10 GPIO_PIN_10
 #define PB11 GPIO_PIN_11
 
+/*Defines for LUT and REGSITERs*/
 #define LUT_SIZE 11
 #define REG_SIZE LUT_SIZE
 
-// Global Init Variables for LED
+/* Global Init Variables for LED*/
 GPIO_InitTypeDef Led_Lights;
 
 typedef struct {
@@ -36,48 +43,57 @@ typedef struct {
 
 
 LUT look_up[LUT_SIZE] = { { PA4, led_pa4 },		//1
-		{ PA5, led_pa5 },		//2
-		{ PA6, led_pa6 },		//3
-		{ PA7, led_pa7 },		//4
-		{ PC4, led_pc4 },		//5
-		{ PC5, led_pc5 },		//6
-		{ PB0, led_pb0 },		//7
-		{ PB1, led_pb1 },		//8
-		{ PB2, led_pb2 },		//9
-		{ PB10, led_pb10 },		//10
-		{ PB11, led_pb11 },		//11
+		{ PA5, led_pa5 },						//2
+		{ PA6, led_pa6 },						//3
+		{ PA7, led_pa7 },						//4
+		{ PC4, led_pc4 },						//5
+		{ PC5, led_pc5 },						//6
+		{ PB0, led_pb0 },						//7
+		{ PB1, led_pb1 },						//8
+		{ PB2, led_pb2 },						//9
+		{ PB10, led_pb10 },						//10
+		{ PB11, led_pb11 },						//11
 		};
 
-// Led Init
+/* Led Init */
 
-
+/**
+  * @brief Initialize GPIOs for LEDs
+  * @param  None
+  * @retval None
+*/
 void led_init(void) {
-	// Clock Block
+	/* Clock Block*/
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	__HAL_RCC_GPIOC_CLK_ENABLE();
 
-	//General Init
+	/*General Init*/
 	Led_Lights.Mode = GPIO_MODE_OUTPUT_PP;
 	Led_Lights.Pull = GPIO_PULLDOWN;
 	Led_Lights.Speed = GPIO_SPEED_FREQ_LOW;
 
-	//Init GPIOA
+	/*Init GPIOA*/
 	Led_Lights.Pin |= (GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7);
 	HAL_GPIO_Init(GPIOA, &Led_Lights);
 
-	//Init GPIOC
+	/*Init GPIOC*/
 	Led_Lights.Pin &= ~(GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7);
 	Led_Lights.Pin |= (GPIO_PIN_4 | GPIO_PIN_5);
 	HAL_GPIO_Init(GPIOC, &Led_Lights);
 
-	//Init GPIOB
+	/*Init GPIOB*/
 	Led_Lights.Pin &= ~(GPIO_PIN_4 | GPIO_PIN_5);
 	Led_Lights.Pin |= (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_10
 			| GPIO_PIN_11);
 	HAL_GPIO_Init(GPIOC, &Led_Lights);
 }
 
+/**
+  * @brief Turn on LED
+  * @param  led: The LED to be turned on
+  * @retval true if succeeded and false if not
+*/
 bool led_on(LED_PIN led) {
 	if (led < led_pc4) {
 		int i = 0;
@@ -109,6 +125,11 @@ bool led_on(LED_PIN led) {
 	return true;
 }
 
+/**
+  * @brief Turn off LED
+  * @param  led: The LED to be turned off
+  * @retval true if succeeded and false if not
+*/
 bool led_off(LED_PIN led) {
 	if (led < led_pc4) {
 		int i = 0;
@@ -143,6 +164,11 @@ bool led_off(LED_PIN led) {
 	return true;
 }
 
+/**
+  * @brief Toggle LED
+  * @param  led: The LED to be toggled
+  * @retval true if succeeded and false if not
+*/
 bool led_toggle(LED_PIN led) {
 	if (led < led_pc4) {
 		int i = 0;
@@ -177,37 +203,50 @@ bool led_toggle(LED_PIN led) {
 	return true;
 }
 
+/**
+  * @brief Deinitializes GPIOs and turns of Clocks
+  * @warning Only use this Function if you are sure about the Consequences
+  * @param  none
+  * @retval none
+*/
 void led_deinit(void) {
-	//Init GPIOA
+
+#warning "Do not Call if you are unsure"
+
+	/*Init GPIOA*/
 	HAL_GPIO_DeInit(GPIOA, (GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7));
 
-	//Init GPIOC
+	/*Init GPIOC*/
 	HAL_GPIO_DeInit(GPIOC, (GPIO_PIN_4 | GPIO_PIN_5));
 
-	//Init GPIOB
+	/*Init GPIOB*/
 	HAL_GPIO_DeInit(GPIOB,
 			(GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_10 | GPIO_PIN_11));
 
-	// Clock Block
+	/* Clock Block*/
 	__HAL_RCC_GPIOA_CLK_DISABLE();
 	__HAL_RCC_GPIOB_CLK_DISABLE();
 	__HAL_RCC_GPIOC_CLK_DISABLE();
-
-#warning "Do not Call if you are unsure"
 }
 
-// Timer
+/* Timer*/
 
-// Global Init Variables for Timer
+/* Global Init Variables for Timer*/
 
 TIM_Base_InitTypeDef led_tim7_base;
 TIM_HandleTypeDef led_tim7_hdl;
 
-// Global Init Variables for Timer
+/* Global Init Variables for Timer*/
 REGISTER tim_shift_reg[REG_SIZE] = {0};
 
+/**
+  * @brief Interrupt Handler for Timer 7
+  * @brief Shifts Registers and Enables/Disables LED
+  * @param  none
+  * @retval none
+*/
 void TIM7_IRQHandler(){
-	// Shifter
+	/* Shifter */
 	static const REGISTER n_bit= 1<<(sizeof(REGISTER)*8-1);
 	for(int i = 0; i < REG_SIZE; i++){
 		if((tim_shift_reg[i] & 1)){
@@ -223,7 +262,12 @@ void TIM7_IRQHandler(){
 	TIM7->SR = 0;
 }
 
-
+/**
+  * @brief Initializes the Timer and sets the Interval in which the Timer throws an interrupt
+  * @brief led_init must be called first
+  * @param  time_intervall: The LED to be turned on
+  * @retval none
+*/
 void led_timer_init(TIME time_intervall) {
 	__HAL_RCC_TIM7_CLK_ENABLE();
 
@@ -241,16 +285,32 @@ void led_timer_init(TIME time_intervall) {
 	HAL_TIM_Base_Init(&led_tim7_hdl);
 }
 
+/**
+  * @brief Starts the Timer and its Interrupt
+  * @param  none
+  * @retval true if succeeded and false if not
+*/
 bool led_timer_start(void) {
 	NVIC_EnableIRQ(TIM7_IRQn);
 	return HAL_TIM_Base_Start_IT(&led_tim7_hdl);
 }
 
+/**
+  * @brief Stops the Timer and its Interrupt
+  * @param  none
+  * @retval true if succeeded and false if not
+*/
 bool led_timer_stop(void) {
 	NVIC_DisableIRQ(TIM7_IRQn);
 	return HAL_TIM_Base_Stop_IT(&led_tim7_hdl);
 }
 
+/**
+  * @brief Stops the Timer and its Interrupt
+  * @param led: the LED for which the REGISTER value has to be set
+  * @param value: the Register Value. Interrupt shifts this Value by 1 and checks if Bit is set. If Set, it enables LED, otherwise it disables.
+  * @retval true if succeeded and false if not
+*/
 void led_action_time(LED_PIN led, REGISTER value ) {
 	tim_shift_reg[led]  = value;
 }
