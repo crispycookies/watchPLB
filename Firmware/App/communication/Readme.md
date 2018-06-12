@@ -1,0 +1,1 @@
+Communication module. Handles communication to app and pc

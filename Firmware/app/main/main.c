@@ -32,6 +32,8 @@ SOFTWARE.
 #include "stm32l0xx.h"
 #include "stm32l0xx_hal_gpio.h"
 
+#include "key.h"
+
 /* Private macro */
 /* Private variables */
 /* Private function prototypes */
@@ -61,6 +63,8 @@ int main(void)
   HAL_GPIO_Init(GPIOA, &initStruct);
 
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
+
+  KEY_Init();
 
   /* TODO - Add your application code here */
   while (1)
