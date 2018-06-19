@@ -1,0 +1,13 @@
+*.aux
+*.lof
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.pdf
+Firmware/.settings/
+*.o
+Firmware/.metadata/
+Firmware/Debug/
+.metadata/
+Firmware/.vscode/
