@@ -70,29 +70,55 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	__HAL_RCC_DMA1_CLK_ENABLE();
 
 	uint8_t irq = 0;
+	uint32_t txRequest = 0;
+	uint32_t rxRequest = 0;
 
 	if (conf->uart == USART1) {
 		__HAL_RCC_USART1_CLK_ENABLE();
 		irq = USART1_IRQn;
 		instances[UART_1] = inst;
+		if ((conf->txDmaChannel == DMA1_Channel2) || ((conf->txDmaChannel == DMA1_Channel4))) {
+			txRequest = DMA_REQUEST_3;
+		}
+		if ((conf->rxDmaChannel == DMA1_Channel3) || ((conf->rxDmaChannel == DMA1_Channel5))) {
+			rxRequest = DMA_REQUEST_3;
+		}
 	} else if (conf->uart == USART2) {
 		__HAL_RCC_USART2_CLK_ENABLE();
 		irq = USART2_IRQn;
 		instances[UART_2] = inst;
+		if ((conf->txDmaChannel == DMA1_Channel4) || ((conf->txDmaChannel == DMA1_Channel7))) {
+			txRequest = DMA_REQUEST_4;
+		}
+		if ((conf->rxDmaChannel == DMA1_Channel5) || ((conf->rxDmaChannel == DMA1_Channel6))) {
+			rxRequest = DMA_REQUEST_4;
+		}
 	} else if (conf->uart == USART4) {
 		__HAL_RCC_USART4_CLK_ENABLE();
 		irq = USART4_5_IRQn;
 		instances[UART_4] = inst;
+		if ((conf->txDmaChannel == DMA1_Channel3) || ((conf->txDmaChannel == DMA1_Channel7))) {
+			txRequest = DMA_REQUEST_4;
+		}
+		if ((conf->rxDmaChannel == DMA1_Channel4) || ((conf->rxDmaChannel == DMA1_Channel6))) {
+			rxRequest = DMA_REQUEST_4;
+		}
 	} else if (conf->uart == USART5) {
 		__HAL_RCC_USART5_CLK_ENABLE();
 		irq = USART4_5_IRQn;
 		instances[UART_5] = inst;
+		if ((conf->txDmaChannel == DMA1_Channel3) || ((conf->txDmaChannel == DMA1_Channel7))) {
+			txRequest = DMA_REQUEST_4;
+		}
+		if ((conf->rxDmaChannel == DMA1_Channel4) || ((conf->rxDmaChannel == DMA1_Channel6))) {
+			rxRequest = DMA_REQUEST_4;
+		}
 	}
 
 	//config rx pin
 	GPIO_InitTypeDef gpio;
 	gpio.Pin = conf->rxPin;
-	gpio.Mode = GPIO_MODE_AF_OD;
+	gpio.Mode = GPIO_MODE_AF_PP;
 	gpio.Pull = GPIO_NOPULL;
 	gpio.Speed = GPIO_SPEED_FREQ_LOW;
 	gpio.Alternate = conf->rxAF;
@@ -122,21 +148,23 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 	inst->txDma.Init.MemInc = DMA_MINC_ENABLE;
 	inst->txDma.Init.PeriphInc = DMA_PINC_DISABLE;
 	inst->txDma.Init.Mode = DMA_NORMAL;
+	inst->txDma.Init.Request = txRequest;
 	HAL_DMA_Init(&(inst->txDma));
-	__HAL_LINKDMA((&inst->uart), hdmatx, inst->txDma);
+	__HAL_LINKDMA(&(inst->uart), hdmatx, inst->txDma);
 	DMA_RegisterInterrupt(&(inst->txDma));
 
 	//RX
-	inst->rxDma.Instance = conf->txDmaChannel;
-	inst->rxDma.Init.Direction = DMA_MEMORY_TO_PERIPH;
+	inst->rxDma.Instance = conf->rxDmaChannel;
+	inst->rxDma.Init.Direction = DMA_PERIPH_TO_MEMORY;
 	inst->rxDma.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
 	inst->rxDma.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
 	inst->rxDma.Init.MemInc = DMA_MINC_ENABLE;
 	inst->rxDma.Init.PeriphInc = DMA_PINC_DISABLE;
 	inst->rxDma.Init.Mode = DMA_NORMAL;
+	inst->rxDma.Init.Request = rxRequest;
 	HAL_DMA_Init(&(inst->rxDma));
-	__HAL_LINKDMA((&inst->uart), hdmarx, inst->rxDma);
-	DMA_RegisterInterrupt(&(inst->txDma));
+	__HAL_LINKDMA(&(inst->uart), hdmarx, inst->rxDma);
+	DMA_RegisterInterrupt(&(inst->rxDma));
 
     HAL_NVIC_EnableIRQ(irq);
 
@@ -218,10 +246,11 @@ uint16_t UART_GetData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 	for (uint16_t i = 0; i < len; i++) {
 		data[i] = inst->rxCircBuf[(inst->rxCircTail+i)%UART_RXBUFFER_SIZE];
 	}
-	if ((UART_RXBUFFER_SIZE - inst->rxCircTail) < len) {
+	if ((inst->rxCircTail + len) >= UART_RXBUFFER_SIZE) {
 		inst->rxCircWrap = FALSE;
 	}
 	inst->rxCircTail = (inst->rxCircTail + len) % UART_RXBUFFER_SIZE;
+	startReceive(inst);
 	return len;
 }
 
@@ -232,8 +261,9 @@ static void startTransmit(UART_Instance* inst) {
 	inst->txCount = inst->txCircWrap == FALSE
 			? inst->txCircHead - inst->txCircTail
 			: UART_TXBUFFER_SIZE - inst->txCircTail;
-	if (inst->txCount > 0)
+	if (inst->txCount > 0) {
 		HAL_UART_Transmit_DMA(&(inst->uart), inst->txCircBuf + inst->txCircTail, inst->txCount);
+	}
 }
 
 static void startReceive(UART_Instance* inst) {
@@ -270,14 +300,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *uart) {
 	inst->rxCircHead += cnt;
 	if (inst->rxCircHead >= UART_RXBUFFER_SIZE) {
 		inst->rxCircHead = 0;
-		inst->rxCircHead = TRUE;
+		inst->rxCircWrap = TRUE;
 	}
 
 	startReceive(inst);
 }
 
-void UART_DMARxOnlyAbortCallback(DMA_HandleTypeDef *dma) {
-	HAL_UART_RxCpltCallback(dma->Parent);
+void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *uart) {
+	HAL_UART_RxCpltCallback(uart);
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *uart) {
@@ -309,7 +339,7 @@ void USART1_IRQHandler() {
 	if (instances[UART_1] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_1]->uart),UART_IT_IDLE) != FALSE) {
 			__HAL_UART_CLEAR_IT(&(instances[UART_1]->uart),UART_CLEAR_IDLEF);
-			HAL_DMA_Abort_IT(&(instances[UART_1]->rxDma));
+			HAL_UART_AbortReceive_IT(&(instances[UART_1]->uart));
 		} else {
 			HAL_UART_IRQHandler(&(instances[UART_1]->uart));
 		}
@@ -320,7 +350,7 @@ void USART2_IRQHandler() {
 	if (instances[UART_2] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_2]->uart),UART_IT_IDLE) != FALSE) {
 			__HAL_UART_CLEAR_IT(&(instances[UART_2]->uart),UART_CLEAR_IDLEF);
-			HAL_DMA_Abort_IT(&(instances[UART_2]->rxDma));
+			HAL_UART_AbortReceive_IT(&(instances[UART_2]->uart));
 		}
 	}
 	HAL_UART_IRQHandler(&(instances[UART_2]->uart));
@@ -330,7 +360,7 @@ void USART4_5_IRQHandler() {
 	if (instances[UART_4] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_4]->uart),UART_IT_IDLE) != FALSE) {
 			__HAL_UART_CLEAR_IT(&(instances[UART_4]->uart),UART_CLEAR_IDLEF);
-			HAL_DMA_Abort_IT(&(instances[UART_4]->rxDma));
+			HAL_UART_AbortReceive_IT(&(instances[UART_4]->uart));
 		} else {
 			HAL_UART_IRQHandler(&(instances[UART_4]->uart));
 		}
@@ -338,7 +368,7 @@ void USART4_5_IRQHandler() {
 	if (instances[UART_5] != 0) {
 		if (__HAL_UART_GET_IT(&(instances[UART_5]->uart),UART_IT_IDLE) != FALSE) {
 			__HAL_UART_CLEAR_IT(&(instances[UART_5]->uart),UART_CLEAR_IDLEF);
-			HAL_DMA_Abort_IT(&(instances[UART_5]->rxDma));
+			HAL_UART_AbortReceive_IT(&(instances[UART_5]->uart));
 		} else {
 			HAL_UART_IRQHandler(&(instances[UART_5]->uart));
 		}
