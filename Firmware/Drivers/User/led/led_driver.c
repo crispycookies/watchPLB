@@ -224,9 +224,9 @@ void led_deinit(void) {
 			(GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_10 | GPIO_PIN_11));
 
 	/* Clock Block*/
-	__HAL_RCC_GPIOA_CLK_DISABLE();
-	__HAL_RCC_GPIOB_CLK_DISABLE();
-	__HAL_RCC_GPIOC_CLK_DISABLE();
+	//__HAL_RCC_GPIOA_CLK_DISABLE();
+	//__HAL_RCC_GPIOB_CLK_DISABLE();
+	//__HAL_RCC_GPIOC_CLK_DISABLE();
 }
 
 /* Timer*/

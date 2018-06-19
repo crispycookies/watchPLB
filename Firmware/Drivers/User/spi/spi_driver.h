@@ -9,10 +9,15 @@
 #define USER_SPI_SPI_DRIVER_H_
 
 typedef uint8_t GPIO_PinType;
-typedef uint32_t SPI_BaudType;
 
 typedef enum {
-	SPI_RET_OK = 0, SPI_RET_NOK = 1, SPI_RET_INVALID_PARAM = 2, SPI_RET_TIMEOUT = 3, SPI_RET_INVALID_BANK = 4, SPI_RET_FAILED_INIT = 5
+	SPI_RET_NOK = 0,
+	SPI_RET_OK = 1,
+	SPI_RET_INVALID_PARAM = 2,
+	SPI_RET_TIMEOUT = 3,
+	SPI_RET_INVALID_BANK = 4,
+	SPI_RET_FAILED_INIT = 5,
+	SPI_RET_OP_FAILED = 6
 } SPI_RetType;
 
 typedef struct{
