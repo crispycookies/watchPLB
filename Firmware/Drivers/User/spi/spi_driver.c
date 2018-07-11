@@ -9,11 +9,19 @@
 
 #include "spi_driver.h"
 
+/*Private Structs*/
+/**
+ * @brief Pin and its AF for use in the LUT
+ */
 typedef struct {
 	SPI_GPIO_Pair gp;
 	uint32_t AF;
 } spi_init_lut_tdef;
 
+/*Private Global Variables*/
+/**
+ * @brief A Look- Up- Table(LUT) to find out which PIN Corresponds to what AF.
+ */
 spi_init_lut_tdef spi_init_lut[LUT_SIZE] = { { { GPIO_PIN_4, GPIOA },
 		GPIO_AF0_SPI1 }, { { GPIO_PIN_5, GPIOA }, GPIO_AF0_SPI1 }, { {
 		GPIO_PIN_6, GPIOA }, GPIO_AF0_SPI1 }, { { GPIO_PIN_7, GPIOA },
@@ -33,7 +41,30 @@ spi_init_lut_tdef spi_init_lut[LUT_SIZE] = { { { GPIO_PIN_4, GPIOA },
 		GPIO_PIN_13, GPIOE }, GPIO_AF2_SPI1 }, { { GPIO_PIN_14, GPIOE },
 		GPIO_AF2_SPI1 }, { { GPIO_PIN_15, GPIOE }, GPIO_AF2_SPI1 } };
 
+static void SPI_GPIO_CLK_Enable(const GPIO_TypeDef * bank) {
+	if (bank == GPIOA) {
+		__HAL_RCC_GPIOA_CLK_ENABLE();
+	} else if (bank == GPIOB) {
+		__HAL_RCC_GPIOB_CLK_ENABLE();
+	} else if (bank == GPIOC) {
+		__HAL_RCC_GPIOC_CLK_ENABLE();
+	} else if (bank == GPIOD) {
+		__HAL_RCC_GPIOD_CLK_ENABLE();
+	} else if (bank == GPIOE) {
+		__HAL_RCC_GPIOE_CLK_ENABLE();
+	}
+}
+
+/**
+ * @brief Initializes PIN for AF
+ * @param  gp: The Pins and Location to Initialize
+ * @retval none
+ */
 static void SPI_AF_INIT(const SPI_GPIO_Pair gp) {
+
+	SPI_GPIO_CLK_Enable(gp.bank);
+
+	/*
 	if (gp.bank == GPIOA) {
 		__HAL_RCC_GPIOA_CLK_ENABLE();
 	} else if (gp.bank == GPIOB) {
@@ -45,11 +76,12 @@ static void SPI_AF_INIT(const SPI_GPIO_Pair gp) {
 	} else if (gp.bank == GPIOE) {
 		__HAL_RCC_GPIOE_CLK_ENABLE();
 	}
+	*/
 
 	GPIO_InitTypeDef spi_init_def;
 	spi_init_def.Pin = gp.pin;
 	spi_init_def.Mode = GPIO_MODE_AF_PP;
-	spi_init_def.Pull = GPIO_PULLDOWN;
+	spi_init_def.Pull = GPIO_NOPULL;
 	spi_init_def.Speed = GPIO_SPEED_FREQ_HIGH;
 
 	for (int i = 0; i < LUT_SIZE; i++) {
@@ -63,24 +95,67 @@ static void SPI_AF_INIT(const SPI_GPIO_Pair gp) {
 	HAL_GPIO_Init(gp.bank, &spi_init_def);
 
 }
+/**
+ * @brief Initializes PIN for CS
+ * @param  gp: The Pin and Location to Initialize
+ * @retval none
+ */
 static void SPI_Init_CS(const SPI_GPIO_Pair gp) {
+
+	SPI_GPIO_CLK_Enable(gp.bank);
+
+	/*
+	if (gp.bank == GPIOA) {
+		__HAL_RCC_GPIOA_CLK_ENABLE();
+	} else if (gp.bank == GPIOB) {
+		__HAL_RCC_GPIOB_CLK_ENABLE();
+	} else if (gp.bank == GPIOC) {
+		__HAL_RCC_GPIOC_CLK_ENABLE();
+	} else if (gp.bank == GPIOD) {
+		__HAL_RCC_GPIOD_CLK_ENABLE();
+	} else if (gp.bank == GPIOE) {
+		__HAL_RCC_GPIOE_CLK_ENABLE();
+	}
+	*/
+
 	GPIO_InitTypeDef spi_init_def;
 	spi_init_def.Mode = GPIO_MODE_OUTPUT_PP;
 	spi_init_def.Pin = gp.pin;
-	spi_init_def.Pull = GPIO_PULLDOWN;
-	spi_init_def.Speed = GPIO_SPEED_FREQ_LOW;
+	spi_init_def.Pull = GPIO_NOPULL;
+	spi_init_def.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(gp.bank, &spi_init_def);
 }
-
+/**
+ * @brief Enable CS
+ * @param  gp: The Pin and the Location of the Pin to use
+ * @retval none
+ */
 void SPI_CS_Enable(const SPI_GPIO_Pair gp) {
-	HAL_GPIO_WritePin(gp.bank, gp.pin, GPIO_PIN_SET);
-}
-void SPI_CS_Disable(const SPI_GPIO_Pair gp) {
 	HAL_GPIO_WritePin(gp.bank, gp.pin, GPIO_PIN_RESET);
 }
-
+/**
+ * @brief Disable CS
+ * @param  gp: The Pin and the Location of the Pin to use
+ * @retval none
+ */
+void SPI_CS_Disable(const SPI_GPIO_Pair gp) {
+	HAL_GPIO_WritePin(gp.bank, gp.pin, GPIO_PIN_SET);
+}
+/**
+ * @brief Initialize SPI and GPIOs; Enables CS
+ * @param  spi_init: The Pins and SPI to initialize
+ * @retval Result of Operation
+ */
 SPI_RetType SPI_Init(SPI_Init_Struct * spi_init) {
 	if (spi_init == 0) {
+		return SPI_RET_INVALID_PARAM;
+	}
+
+	if (spi_init->SPI->Instance == SPI1) {
+		__HAL_RCC_SPI1_CLK_ENABLE();
+	} else if (spi_init->SPI->Instance == SPI2) {
+		__HAL_RCC_SPI2_CLK_ENABLE();
+	} else {
 		return SPI_RET_INVALID_PARAM;
 	}
 
@@ -91,12 +166,24 @@ SPI_RetType SPI_Init(SPI_Init_Struct * spi_init) {
 	SPI_Init_CS(spi_init->CS);
 	SPI_CS_Enable(spi_init->CS);
 
+	__HAL_SPI_DISABLE(spi_init->SPI);
+
 	if (HAL_SPI_Init(spi_init->SPI) != HAL_OK) {
 		return SPI_RET_FAILED_INIT;
 	}
 	HAL_SPI_MspInit(spi_init->SPI);
+
+	__HAL_SPI_ENABLE(spi_init->SPI);
+
 	return SPI_RET_OK;
 }
+/**
+ * @brief Send Data via given SPI
+ * @param spi_init: The Pins and SPI to use
+ * @param tx_buffer: The Data to send
+ * @param timeout: Timeout
+ * @retval Result of Operation
+ */
 SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, void * tx_buffer,
 		uint8_t timeout) {
 	if (spi_init == 0) {
@@ -110,6 +197,13 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, void * tx_buffer,
 
 	return SPI_RET_OK;
 }
+/**
+ * @brief Receive Data via given SPI
+ * @param spi_init: The Pins and SPI to use
+ * @param rx_buffer: The Data to Receive
+ * @param timeout: Timeout
+ * @retval Result of Operation
+ */
 SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, void * rx_buffer,
 		uint8_t timeout) {
 	if (spi_init == 0) {
@@ -123,6 +217,12 @@ SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, void * rx_buffer,
 
 	return SPI_RET_OK;
 }
+
+/**
+ * @brief Deinitialize SPI and GPIOs; Disables CS
+ * @param spi_init: The Pins and SPI to deinitialize
+ * @retval Result of Operation
+ */
 SPI_RetType SPI_DeInit(SPI_Init_Struct * spi_init) {
 	if (spi_init == 0) {
 		return SPI_RET_INVALID_PARAM;

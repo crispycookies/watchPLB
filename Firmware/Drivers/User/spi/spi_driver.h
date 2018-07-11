@@ -1,15 +1,24 @@
-/*
- * spi_driver.h
- *
- *  Created on: 29.05.2018
- *      Author: tobilinux
- */
+/**
+  ******************************************************************************
+  * @file    spi_driver.h
+  * @author  Tobias Egger
+  * @version V1.1
+  * @date    11-July-2018
+  * @brief   WatchPLB SPI- Driver Interface File
+  ******************************************************************************
+  */
 
 #ifndef USER_SPI_SPI_DRIVER_H_
 #define USER_SPI_SPI_DRIVER_H_
 
-typedef uint8_t GPIO_PinType;
+/*Global Typedefs*/
+typedef uint16_t GPIO_PinType;
 
+/*Global Enums*/
+
+/**
+ * @brief Public Enum for Return Values
+*/
 typedef enum {
 	SPI_RET_NOK = 0,
 	SPI_RET_OK = 1,
@@ -20,11 +29,18 @@ typedef enum {
 	SPI_RET_OP_FAILED = 6
 } SPI_RetType;
 
+/*Global Structs*/
+/**
+ * @brief Public Struct for GPIO PIN/BANK Pair
+*/
 typedef struct{
 	GPIO_PinType pin;
 	GPIO_TypeDef * bank;
 } SPI_GPIO_Pair;
 
+/*
+ * @brief Public Struct for Pins to Use and SPI to Initialize
+ * */
 typedef struct {
 	SPI_GPIO_Pair MOSI;
 	SPI_GPIO_Pair MISO;
@@ -33,12 +49,47 @@ typedef struct {
 	SPI_HandleTypeDef * SPI;
 } SPI_Init_Struct;
 
+/*Basic LED- Driver Block*/
+/**
+  * @brief Initialize SPI and GPIOs; Enables CS
+  * @param  spi_init: The Pins and SPI to initialize
+  * @retval Result of Operation
+*/
 SPI_RetType SPI_Init(SPI_Init_Struct * spi_init);
+/**
+  * @brief Send Data via given SPI
+  * @param spi_init: The Pins and SPI to use
+  * @param tx_buffer: The Data to send
+  * @param timeout: Timeout
+  * @retval Result of Operation
+*/
 SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, void * tx_buffer,uint8_t timeout);
+/**
+  * @brief Receive Data via given SPI
+  * @param spi_init: The Pins and SPI to use
+  * @param rx_buffer: The Data to Receive
+  * @param timeout: Timeout
+  * @retval Result of Operation
+*/
 SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, void * rx_buffer,uint8_t timeout);
+/**
+  * @brief Deinitialize SPI and GPIOs; Disables CS
+  * @param spi_init: The Pins and SPI to deinitialize
+  * @retval Result of Operation
+*/
 SPI_RetType SPI_DeInit(SPI_Init_Struct * spi_init);
 
+/**
+  * @brief Enable CS
+  * @param  gp: The Pin and the Location of the Pin to use
+  * @retval none
+*/
 void SPI_CS_Enable(const SPI_GPIO_Pair gp);
+/**
+  * @brief Disable CS
+  * @param  gp: The Pin and the Location of the Pin to use
+  * @retval none
+*/
 void SPI_CS_Disable(const SPI_GPIO_Pair gp);
 
 #endif /* USER_SPI_SPI_DRIVER_H_ */
