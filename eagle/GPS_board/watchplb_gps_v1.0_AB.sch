@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="7.6.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -6018,7 +6018,7 @@ by exp-lbrs.ulp</description>
 <part name="C3" library="resistor" deviceset="C-EU" device="C0805" value="1uF"/>
 <part name="FRAME1" library="frames" deviceset="A4L-LOC" device=""/>
 <part name="B2" library="PCB4_Demoboard" deviceset="B-EU_" device="B0603" value="BLM18KG601SN1D"/>
-<part name="C62" library="resistor" deviceset="C-EU" device="C0805" value="4.7uF"/>
+<part name="C4" library="resistor" deviceset="C-EU" device="C0805" value="4.7uF"/>
 <part name="+3V5" library="supply1" deviceset="+3V3" device=""/>
 <part name="&lt;GPS" library="pinhead" deviceset="PINHD-1X8" device=""/>
 </parts>
@@ -6041,7 +6041,7 @@ by exp-lbrs.ulp</description>
 <instance part="C3" gate="G$1" x="78.486" y="92.202"/>
 <instance part="FRAME1" gate="G$1" x="-0.254" y="0.762"/>
 <instance part="B2" gate="G$1" x="129.286" y="132.842"/>
-<instance part="C62" gate="G$1" x="50.546" y="92.202"/>
+<instance part="C4" gate="G$1" x="50.546" y="92.202"/>
 <instance part="+3V5" gate="G$1" x="185.166" y="127.762"/>
 <instance part="&lt;GPS" gate="A" x="40.386" y="143.002"/>
 </instances>
@@ -6165,7 +6165,7 @@ by exp-lbrs.ulp</description>
 <pinref part="C1" gate="G$1" pin="2"/>
 <wire x1="68.326" y1="87.122" x2="58.166" y2="87.122" width="0.1524" layer="91"/>
 <junction x="68.326" y="87.122"/>
-<pinref part="C62" gate="G$1" pin="2"/>
+<pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="58.166" y1="87.122" x2="50.546" y2="87.122" width="0.1524" layer="91"/>
 <junction x="58.166" y="87.122"/>
 </segment>
@@ -6201,7 +6201,7 @@ by exp-lbrs.ulp</description>
 <wire x1="78.486" y1="97.282" x2="78.486" y2="125.222" width="0.1524" layer="91"/>
 <wire x1="78.486" y1="125.222" x2="129.286" y2="125.222" width="0.1524" layer="91"/>
 <junction x="129.286" y="125.222"/>
-<pinref part="C62" gate="G$1" pin="1"/>
+<pinref part="C4" gate="G$1" pin="1"/>
 <wire x1="50.546" y1="94.742" x2="50.546" y2="97.282" width="0.1524" layer="91"/>
 <wire x1="50.546" y1="97.282" x2="58.166" y2="97.282" width="0.1524" layer="91"/>
 <junction x="58.166" y="97.282"/>
