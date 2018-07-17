@@ -200,7 +200,7 @@ uint8_t UART_SendData(UART_Instance* inst, uint16_t len, uint8_t *data) {
 		if ((inst->txCircTail - inst->txCircHead) < len) {
 			return FALSE;
 		}
-	} else if ((UART_TXBUFFER_SIZE - inst->txCircTail + inst->rxCircHead) < len) {
+	} else if ((UART_TXBUFFER_SIZE - inst->txCircTail + inst->txCircHead) < len) {
 		return FALSE;
 	}
 	if (len > (UART_TXBUFFER_SIZE - inst->txCircHead)) {
