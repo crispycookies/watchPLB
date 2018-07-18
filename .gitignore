@@ -24,22 +24,22 @@ eagle.epf
 
 # CAM files
 *.$$$
-*.cmp
+#*.cmp
 *.ly2
 *.l15
-*.sol
-*.plc
-*.stc
-*.sts
+#*.sol
+#*.plc
+#*.stc
+#*.sts
 *.crc
 *.crs
 
-*.dri
+#*.dri
 *.drl
-*.gpi
-*.pls
+#*.gpi
+#*.pls
 
-*.drd
+#*.drd
 *.drd.*
 
 *.info
