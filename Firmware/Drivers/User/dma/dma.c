@@ -13,16 +13,18 @@
 
 #define DMA_CHANNELS 7
 
-static uint8_t init = FALSE;
-static DMA_HandleTypeDef* dma_handles[DMA_CHANNELS];
+static uint8_t init = FALSE;	//module init flag
+static DMA_HandleTypeDef* dma_handles[DMA_CHANNELS];	//dma handle table (needed for interrupts)
 
 void DMA_RegisterInterrupt(DMA_HandleTypeDef *dma) {
+	//clear table once
 	if (init == FALSE) {
 		for (uint8_t i = 0; i < DMA_CHANNELS; i++)
 			dma_handles[i] = 0;
 		init = TRUE;
 	}
 
+	//configure dma channel interrupt
 	if (dma->Instance == DMA1_Channel1) {
 		dma_handles[0] = dma;
 	    NVIC_SetPriority(DMA1_Channel1_IRQn, 0x01);
@@ -58,6 +60,7 @@ void DMA_RegisterInterrupt(DMA_HandleTypeDef *dma) {
 * @brief This function handles DMA1 channel 1 interrupt.
 */
 void DMA1_Channel1_IRQHandler(void) {
+	//if dma handle in table, call HAL interrupt handler
 	if (dma_handles[0] != 0)
 		HAL_DMA_IRQHandler(dma_handles[0]);
 }
@@ -66,6 +69,7 @@ void DMA1_Channel1_IRQHandler(void) {
 * @brief This function handles DMA1 channel 2 and channel 3 interrupts.
 */
 void DMA1_Channel2_3_IRQHandler(void) {
+	//if dma handle in table, call HAL interrupt handler
 	if (dma_handles[1] != 0)
 		HAL_DMA_IRQHandler(dma_handles[1]);
 	if (dma_handles[2] != 0)
@@ -76,6 +80,7 @@ void DMA1_Channel2_3_IRQHandler(void) {
 * @brief This function handles DMA1 channel 4-7 interrupts.
 */
 void DMA1_Channel4_5_6_7_IRQHandler(void) {
+	//if dma handle in table, call HAL interrupt handler
 	if (dma_handles[3] != 0)
 		HAL_DMA_IRQHandler(dma_handles[3]);
 	if (dma_handles[4] != 0)
