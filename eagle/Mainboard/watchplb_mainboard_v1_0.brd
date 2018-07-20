@@ -12499,78 +12499,78 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="27.8384" y="20.3962" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="33.274" y="23.7998" size="0.0254" layer="27" rot="R180"/>
 </element>
-<element name="C29" library="resistor" package="C0805" value="" x="81.2292" y="69.4944" smashed="yes" rot="R180">
+<element name="C29" library="resistor" package="C0805" value="2.7pF" x="81.2292" y="69.4944" smashed="yes" rot="R180">
 <attribute name="NAME" x="79.502" y="73.279" size="1.016" layer="25" font="vector" rot="R270"/>
 <attribute name="VALUE" x="82.1182" y="71.7804" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="L2" library="SparkFun-Coils" package="0805" value="" x="81.2292" y="67.6656" smashed="yes">
+<element name="L2" library="SparkFun-Coils" package="0805" value="120nH" x="81.2292" y="67.6656" smashed="yes">
 <attribute name="PROD_ID" value="NDUC-13076" x="82.4992" y="67.6656" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="81.2292" y="66.1162" size="1.016" layer="25" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="81.2292" y="66.7766" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
-<element name="C30" library="resistor" package="C0805" value="" x="84.7344" y="69.4944" smashed="yes" rot="R180">
+<element name="C30" library="resistor" package="C0805" value="2.7pF" x="84.7344" y="69.4944" smashed="yes" rot="R180">
 <attribute name="NAME" x="88.138" y="68.1482" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="85.6234" y="71.7804" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="L3" library="SparkFun-Coils" package="0805" value="" x="84.582" y="67.6656" smashed="yes">
+<element name="L3" library="SparkFun-Coils" package="0805" value="120nH" x="84.582" y="67.6656" smashed="yes">
 <attribute name="PROD_ID" value="NDUC-13076" x="85.852" y="67.6656" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="84.582" y="65.8114" size="1.016" layer="25" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="84.582" y="66.7766" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
-<element name="L1" library="SparkFun-Coils" package="0805" value="" x="82.1436" y="72.2376" smashed="yes" rot="R270">
+<element name="L1" library="SparkFun-Coils" package="0805" value="39nH" x="82.1436" y="72.2376" smashed="yes" rot="R270">
 <attribute name="PROD_ID" value="NDUC-13076" x="82.1436" y="72.2376" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="80.4418" y="72.2376" size="1.016" layer="25" font="vector" rot="R270" align="bottom-center"/>
 <attribute name="VALUE" x="81.2546" y="72.2376" size="0.6096" layer="27" font="vector" ratio="20" rot="R270" align="top-center"/>
 </element>
-<element name="L4" library="SparkFun-Coils" package="0805" value="" x="83.9724" y="72.2376" smashed="yes" rot="R270">
+<element name="L4" library="SparkFun-Coils" package="0805" value="39nH" x="83.9724" y="72.2376" smashed="yes" rot="R270">
 <attribute name="PROD_ID" value="NDUC-13076" x="83.9724" y="72.2376" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="84.8614" y="72.5424" size="1.016" layer="25" font="vector" rot="R270" align="bottom-center"/>
 <attribute name="VALUE" x="83.0834" y="72.2376" size="0.6096" layer="27" font="vector" ratio="20" rot="R270" align="top-center"/>
 </element>
-<element name="C28" library="resistor" package="C0805" value="" x="84.1248" y="75.8952" smashed="yes" rot="R90">
+<element name="C28" library="resistor" package="C0805" value="7.5pF" x="84.1248" y="75.8952" smashed="yes" rot="R90">
 <attribute name="NAME" x="85.0646" y="75.3872" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="86.4108" y="75.0062" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="C31" library="resistor" package="C0805" value="" x="81.9912" y="75.8952" smashed="yes" rot="R90">
+<element name="C31" library="resistor" package="C0805" value="7.5pF" x="81.9912" y="75.8952" smashed="yes" rot="R90">
 <attribute name="NAME" x="77.7494" y="75.692" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="84.2772" y="75.0062" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="C32" library="resistor" package="C0805" value="" x="81.0768" y="79.0956" smashed="yes">
+<element name="C32" library="resistor" package="C0805" value="6pF" x="81.0768" y="79.0956" smashed="yes">
 <attribute name="NAME" x="78.9178" y="79.6036" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="80.1878" y="76.8096" size="1.27" layer="27"/>
 </element>
-<element name="C33" library="resistor" package="C0805" value="" x="84.7344" y="79.0956" smashed="yes">
+<element name="C33" library="resistor" package="C0805" value="6pF" x="84.7344" y="79.0956" smashed="yes">
 <attribute name="NAME" x="86.5886" y="78.4352" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="83.8454" y="76.8096" size="1.27" layer="27"/>
 </element>
-<element name="C34" library="resistor" package="C0805" value="" x="81.0768" y="81.0768" smashed="yes">
+<element name="C34" library="resistor" package="C0805" value="5.2pF" x="81.0768" y="81.0768" smashed="yes">
 <attribute name="NAME" x="79.2226" y="81.8896" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="80.1878" y="78.7908" size="1.27" layer="27"/>
 </element>
-<element name="L5" library="SparkFun-Coils" package="0805" value="" x="84.8868" y="81.0768" smashed="yes" rot="R180">
+<element name="L5" library="SparkFun-Coils" package="0805" value="27nH" x="84.8868" y="81.0768" smashed="yes" rot="R180">
 <attribute name="PROD_ID" value="NDUC-13076" x="84.8868" y="81.0768" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="87.4776" y="81.407" size="1.016" layer="25" font="vector" rot="R180" align="bottom-center"/>
 <attribute name="VALUE" x="84.8868" y="81.9658" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
-<element name="L6" library="SparkFun-Coils" package="0805" value="" x="81.9912" y="83.9724" smashed="yes" rot="R90">
+<element name="L6" library="SparkFun-Coils" package="0805" value="27nH" x="81.9912" y="83.9724" smashed="yes" rot="R90">
 <attribute name="PROD_ID" value="NDUC-13076" x="81.9912" y="83.9724" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="80.6196" y="84.1502" size="1.016" layer="25" font="vector" rot="R180" align="bottom-center"/>
 <attribute name="VALUE" x="82.8802" y="83.9724" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
-<element name="C35" library="resistor" package="C0805" value="" x="83.9724" y="83.9724" smashed="yes" rot="R270">
+<element name="C35" library="resistor" package="C0805" value="5.2pF" x="83.9724" y="83.9724" smashed="yes" rot="R270">
 <attribute name="NAME" x="84.9122" y="83.1596" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="81.6864" y="84.8614" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="C36" library="resistor" package="C0805" value="" x="84.8868" y="87.0204" smashed="yes" rot="R180">
+<element name="C36" library="resistor" package="C0805" value="NC" x="84.8868" y="87.0204" smashed="yes" rot="R180">
 <attribute name="NAME" x="82.7278" y="87.5284" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="85.7758" y="89.3064" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="L7" library="SparkFun-Coils" package="0805" value="" x="84.0486" y="89.6874" smashed="yes" rot="R90">
+<element name="L7" library="SparkFun-Coils" package="0805" value="0R" x="84.0486" y="89.6874" smashed="yes" rot="R90">
 <attribute name="PROD_ID" value="NDUC-13076" x="84.0486" y="89.6874" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="82.3722" y="89.5096" size="1.016" layer="25" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="84.9376" y="89.6874" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
-<element name="C37" library="resistor" package="C0805" value="" x="84.8868" y="92.202" smashed="yes" rot="R180">
+<element name="C37" library="resistor" package="C0805" value="NC" x="84.8868" y="92.202" smashed="yes" rot="R180">
 <attribute name="NAME" x="83.693" y="93.5228" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="85.7758" y="94.488" size="1.27" layer="27" rot="R180"/>
 </element>
