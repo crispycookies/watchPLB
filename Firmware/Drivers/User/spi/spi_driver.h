@@ -1,12 +1,12 @@
 /**
-  ******************************************************************************
-  * @file    spi_driver.h
-  * @author  Tobias Egger
-  * @version V1.1
-  * @date    11-July-2018
-  * @brief   WatchPLB SPI- Driver Interface File
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    spi_driver.h
+ * @author  Tobias Egger
+ * @version V1.1
+ * @date    11-July-2018
+ * @brief   WatchPLB SPI- Driver Interface File
+ ******************************************************************************
+ */
 
 #ifndef USER_SPI_SPI_DRIVER_H_
 #define USER_SPI_SPI_DRIVER_H_
@@ -18,7 +18,7 @@ typedef uint16_t GPIO_PinType;
 
 /**
  * @brief Public Enum for Return Values
-*/
+ */
 typedef enum {
 	SPI_RET_NOK = 0,
 	SPI_RET_OK = 1,
@@ -32,8 +32,8 @@ typedef enum {
 /*Global Structs*/
 /**
  * @brief Public Struct for GPIO PIN/BANK Pair
-*/
-typedef struct{
+ */
+typedef struct {
 	GPIO_PinType pin;
 	GPIO_TypeDef * bank;
 } SPI_GPIO_Pair;
@@ -51,45 +51,49 @@ typedef struct {
 
 /*Basic LED- Driver Block*/
 /**
-  * @brief Initialize SPI and GPIOs; Enables CS
-  * @param  spi_init: The Pins and SPI to initialize
-  * @retval Result of Operation
-*/
+ * @brief Initialize SPI and GPIOs; Enables CS
+ * @param  spi_init: The Pins and SPI to initialize
+ * @retval Result of Operation
+ */
 SPI_RetType SPI_Init(SPI_Init_Struct * spi_init);
 /**
-  * @brief Send Data via given SPI
-  * @param spi_init: The Pins and SPI to use
-  * @param tx_buffer: The Data to send
-  * @param timeout: Timeout
-  * @retval Result of Operation
-*/
-SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, void * tx_buffer,uint8_t timeout);
+ * @brief Send Data via given SPI
+ * @param spi_init: The Pins and SPI to use
+ * @param tx_buffer: The Data to send
+ * @param tx_buffer_size: The Length of the Buffer to be used
+ * @param timeout: Timeout
+ * @retval Result of Operation
+ */
+SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
+		uint8_t tx_buffer_size, uint8_t timeout);
 /**
-  * @brief Receive Data via given SPI
-  * @param spi_init: The Pins and SPI to use
-  * @param rx_buffer: The Data to Receive
-  * @param timeout: Timeout
-  * @retval Result of Operation
-*/
-SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, void * rx_buffer,uint8_t timeout);
+ * @brief Receive Data via given SPI
+ * @param spi_init: The Pins and SPI to use
+ * @param rx_buffer: The Data to Receive
+ * @param timeout: Timeout
+ * @param rx_buffer_size: The Length of the Buffer to be used
+ * @retval Result of Operation
+ */
+SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, uint8_t * rx_buffer,
+		uint8_t rx_buffer_size, uint8_t timeout);
 /**
-  * @brief Deinitialize SPI and GPIOs; Disables CS
-  * @param spi_init: The Pins and SPI to deinitialize
-  * @retval Result of Operation
-*/
+ * @brief Deinitialize SPI and GPIOs; Disables CS
+ * @param spi_init: The Pins and SPI to deinitialize
+ * @retval Result of Operation
+ */
 SPI_RetType SPI_DeInit(SPI_Init_Struct * spi_init);
 
 /**
-  * @brief Enable CS
-  * @param  gp: The Pin and the Location of the Pin to use
-  * @retval none
-*/
+ * @brief Enable CS
+ * @param  gp: The Pin and the Location of the Pin to use
+ * @retval none
+ */
 void SPI_CS_Enable(const SPI_GPIO_Pair gp);
 /**
-  * @brief Disable CS
-  * @param  gp: The Pin and the Location of the Pin to use
-  * @retval none
-*/
+ * @brief Disable CS
+ * @param  gp: The Pin and the Location of the Pin to use
+ * @retval none
+ */
 void SPI_CS_Disable(const SPI_GPIO_Pair gp);
 
 #endif /* USER_SPI_SPI_DRIVER_H_ */

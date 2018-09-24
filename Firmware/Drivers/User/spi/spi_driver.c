@@ -65,18 +65,18 @@ static void SPI_AF_INIT(const SPI_GPIO_Pair gp) {
 	SPI_GPIO_CLK_Enable(gp.bank);
 
 	/*
-	if (gp.bank == GPIOA) {
-		__HAL_RCC_GPIOA_CLK_ENABLE();
-	} else if (gp.bank == GPIOB) {
-		__HAL_RCC_GPIOB_CLK_ENABLE();
-	} else if (gp.bank == GPIOC) {
-		__HAL_RCC_GPIOC_CLK_ENABLE();
-	} else if (gp.bank == GPIOD) {
-		__HAL_RCC_GPIOD_CLK_ENABLE();
-	} else if (gp.bank == GPIOE) {
-		__HAL_RCC_GPIOE_CLK_ENABLE();
-	}
-	*/
+	 if (gp.bank == GPIOA) {
+	 __HAL_RCC_GPIOA_CLK_ENABLE();
+	 } else if (gp.bank == GPIOB) {
+	 __HAL_RCC_GPIOB_CLK_ENABLE();
+	 } else if (gp.bank == GPIOC) {
+	 __HAL_RCC_GPIOC_CLK_ENABLE();
+	 } else if (gp.bank == GPIOD) {
+	 __HAL_RCC_GPIOD_CLK_ENABLE();
+	 } else if (gp.bank == GPIOE) {
+	 __HAL_RCC_GPIOE_CLK_ENABLE();
+	 }
+	 */
 
 	GPIO_InitTypeDef spi_init_def;
 	spi_init_def.Pin = gp.pin;
@@ -105,18 +105,18 @@ static void SPI_Init_CS(const SPI_GPIO_Pair gp) {
 	SPI_GPIO_CLK_Enable(gp.bank);
 
 	/*
-	if (gp.bank == GPIOA) {
-		__HAL_RCC_GPIOA_CLK_ENABLE();
-	} else if (gp.bank == GPIOB) {
-		__HAL_RCC_GPIOB_CLK_ENABLE();
-	} else if (gp.bank == GPIOC) {
-		__HAL_RCC_GPIOC_CLK_ENABLE();
-	} else if (gp.bank == GPIOD) {
-		__HAL_RCC_GPIOD_CLK_ENABLE();
-	} else if (gp.bank == GPIOE) {
-		__HAL_RCC_GPIOE_CLK_ENABLE();
-	}
-	*/
+	 if (gp.bank == GPIOA) {
+	 __HAL_RCC_GPIOA_CLK_ENABLE();
+	 } else if (gp.bank == GPIOB) {
+	 __HAL_RCC_GPIOB_CLK_ENABLE();
+	 } else if (gp.bank == GPIOC) {
+	 __HAL_RCC_GPIOC_CLK_ENABLE();
+	 } else if (gp.bank == GPIOD) {
+	 __HAL_RCC_GPIOD_CLK_ENABLE();
+	 } else if (gp.bank == GPIOE) {
+	 __HAL_RCC_GPIOE_CLK_ENABLE();
+	 }
+	 */
 
 	GPIO_InitTypeDef spi_init_def;
 	spi_init_def.Mode = GPIO_MODE_OUTPUT_PP;
@@ -181,16 +181,17 @@ SPI_RetType SPI_Init(SPI_Init_Struct * spi_init) {
  * @brief Send Data via given SPI
  * @param spi_init: The Pins and SPI to use
  * @param tx_buffer: The Data to send
+ * @param tx_buffer_size: The Length of the Buffer to be used
  * @param timeout: Timeout
  * @retval Result of Operation
  */
-SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, void * tx_buffer,
-		uint8_t timeout) {
+SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
+		uint8_t tx_buffer_size, uint8_t timeout) {
 	if (spi_init == 0) {
 		return SPI_RET_INVALID_PARAM;
 	}
 
-	if (HAL_SPI_Transmit(spi_init->SPI, (uint8_t*) tx_buffer, sizeof(tx_buffer),
+	if (HAL_SPI_Transmit(spi_init->SPI, (uint8_t*) tx_buffer, tx_buffer_size,
 			timeout) != HAL_OK) {
 		return SPI_RET_OP_FAILED;
 	}
@@ -201,16 +202,17 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, void * tx_buffer,
  * @brief Receive Data via given SPI
  * @param spi_init: The Pins and SPI to use
  * @param rx_buffer: The Data to Receive
+ * @param rx_buffer_size: The Length of the Buffer to be used
  * @param timeout: Timeout
  * @retval Result of Operation
  */
-SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, void * rx_buffer,
-		uint8_t timeout) {
+SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, uint8_t * rx_buffer,
+		uint8_t rx_buffer_size, uint8_t timeout) {
 	if (spi_init == 0) {
 		return SPI_RET_INVALID_PARAM;
 	}
 
-	if (HAL_SPI_Receive(spi_init->SPI, (uint8_t*) rx_buffer, sizeof(rx_buffer),
+	if (HAL_SPI_Receive(spi_init->SPI, (uint8_t*) rx_buffer, rx_buffer_size,
 			timeout) != HAL_OK) {
 		return SPI_RET_OP_FAILED;
 	}
