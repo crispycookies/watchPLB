@@ -12834,11 +12834,11 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="57.7884" y="80.2432" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="67.1474" y="78.5148" size="1.016" layer="27" rot="R90"/>
 </element>
-<element name="R53" library="resistor" package="M0805" value="5k1" x="65.6844" y="89.916" smashed="yes">
+<element name="R53" library="resistor" package="M0805" value="47k" x="65.6844" y="89.916" smashed="yes">
 <attribute name="NAME" x="65.5828" y="90.932" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="64.6684" y="87.63" size="1.27" layer="27"/>
 </element>
-<element name="R54" library="resistor" package="M0805" value="47k" x="64.9224" y="97.536" smashed="yes" rot="R90">
+<element name="R54" library="resistor" package="M0805" value="5k1" x="64.9224" y="97.536" smashed="yes" rot="R90">
 <attribute name="NAME" x="63.2968" y="96.2152" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="67.2084" y="96.52" size="1.27" layer="27" rot="R90"/>
 </element>
@@ -12858,11 +12858,11 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="24.0504" y="84.5012" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="24.0504" y="88.0262" size="1.016" layer="27" rot="R180"/>
 </element>
-<element name="R55" library="resistor" package="M0805" value="5k1" x="12.4968" y="86.106" smashed="yes" rot="R90">
+<element name="R55" library="resistor" package="M0805" value="33k" x="12.4968" y="86.106" smashed="yes" rot="R90">
 <attribute name="NAME" x="11.4808" y="85.09" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="14.7828" y="85.09" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="R56" library="resistor" package="M0805" value="47k" x="4.8768" y="86.106" smashed="yes" rot="R180">
+<element name="R56" library="resistor" package="M0805" value="5k1" x="4.8768" y="86.106" smashed="yes" rot="R180">
 <attribute name="NAME" x="7.874" y="84.4804" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="5.8928" y="88.392" size="1.27" layer="27" rot="R180"/>
 </element>
@@ -12882,11 +12882,11 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="14.2968" y="61.0316" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="18.2592" y="67.9094" size="1.016" layer="27" rot="R180"/>
 </element>
-<element name="R57" library="resistor" package="M0805" value="5k1" x="26.67" y="73.6092" smashed="yes">
+<element name="R57" library="resistor" package="M0805" value="8k2" x="26.67" y="73.6092" smashed="yes">
 <attribute name="NAME" x="25.654" y="74.6252" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="25.654" y="71.3232" size="1.27" layer="27"/>
 </element>
-<element name="R58" library="resistor" package="M0805" value="47k" x="26.3652" y="80.9244" smashed="yes" rot="R90">
+<element name="R58" library="resistor" package="M0805" value="5k1" x="26.3652" y="80.9244" smashed="yes" rot="R90">
 <attribute name="NAME" x="25.3492" y="79.9084" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="28.6512" y="79.9084" size="1.27" layer="27" rot="R90"/>
 </element>

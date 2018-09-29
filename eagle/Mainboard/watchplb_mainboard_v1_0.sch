@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="20" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -25440,21 +25440,21 @@ by exp-lbrs.ulp</description>
 <part name="B7" library="PCB4_Demoboard" deviceset="B-EU_" device="B0603" value="BLM18KG601SN1D"/>
 <part name="C53" library="rcl" deviceset="CPOL-EU" device="E" value="10uF  80-EDK106M025A9DAA  "/>
 <part name="C54" library="rcl" deviceset="CPOL-EU" device="E" value="100uF  647-GYA1E101MCQ1GS "/>
-<part name="R53" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
-<part name="R54" library="resistor" deviceset="R-EU_" device="M0805" value="47k"/>
+<part name="R53" library="resistor" deviceset="R-EU_" device="M0805" value="47k"/>
+<part name="R54" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
 <part name="P+2" library="supply1" deviceset="+12V" device=""/>
 <part name="C55" library="rcl" deviceset="CPOL-EU" device="E" value="NP"/>
 <part name="IC5" library="lm1117" deviceset="LM1117DTX-ADJ" device="" value="LM1117DTX-ADJ-10V"/>
 <part name="C56" library="rcl" deviceset="CPOL-EU" device="E" value="10uF  80-EDK106M025A9DAA  "/>
 <part name="C57" library="rcl" deviceset="CPOL-EU" device="E" value="100uF  647-GYA1E101MCQ1GS "/>
-<part name="R55" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
-<part name="R56" library="resistor" deviceset="R-EU_" device="M0805" value="47k"/>
+<part name="R55" library="resistor" deviceset="R-EU_" device="M0805" value="33k"/>
+<part name="R56" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
 <part name="C58" library="rcl" deviceset="CPOL-EU" device="E" value="NP"/>
 <part name="IC6" library="lm1117" deviceset="LM1117DTX-ADJ" device="" value="LM1117DTX-ADJ-3V3"/>
 <part name="C59" library="rcl" deviceset="CPOL-EU" device="E" value="10uF  80-EDK106M025A9DAA  "/>
 <part name="C60" library="rcl" deviceset="CPOL-EU" device="E" value="100uF  647-GYA1E101MCQ1GS "/>
-<part name="R57" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
-<part name="R58" library="resistor" deviceset="R-EU_" device="M0805" value="47k"/>
+<part name="R57" library="resistor" deviceset="R-EU_" device="M0805" value="8k2"/>
+<part name="R58" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
 <part name="C61" library="rcl" deviceset="CPOL-EU" device="E" value="NP"/>
 <part name="GND36" library="supply1" deviceset="GND" device=""/>
 <part name="GND37" library="supply1" deviceset="GND" device=""/>
