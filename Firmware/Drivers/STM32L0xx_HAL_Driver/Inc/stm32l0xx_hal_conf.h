@@ -51,7 +51,7 @@
   * @brief This is the list of modules to be used in the HAL driver 
   */
 #define HAL_MODULE_ENABLED
-//#define HAL_ADC_MODULE_ENABLED   
+#define HAL_ADC_MODULE_ENABLED
 //#define HAL_COMP_MODULE_ENABLED 
 //#define HAL_CRC_MODULE_ENABLED  
 //#define HAL_CRYP_MODULE_ENABLED  
@@ -70,7 +70,7 @@
 //#define HAL_RNG_MODULE_ENABLED   
 //#define HAL_RTC_MODULE_ENABLED
 //#define HAL_SPI_MODULE_ENABLED   
-//#define HAL_TIM_MODULE_ENABLED
+#define HAL_TIM_MODULE_ENABLED
 //#define HAL_TSC_MODULE_ENABLED   
 #define HAL_UART_MODULE_ENABLED
 //#define HAL_USART_MODULE_ENABLED

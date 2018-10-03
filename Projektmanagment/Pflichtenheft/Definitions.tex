@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% @file		Definitions.tex
+%% @author		Christopher Reiterer
+%% @date		18.03.2015
+%% @brief		Definitions for the specification template
+%% @remarks		-
+%% @version		1.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,a4paper]{scrartcl}
+
+\usepackage[a4paper, left=2cm, right=2cm, bottom=1.5cm, top=1.3cm, includeheadfoot]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc} % comment this if you uncomment utf8x
+%\usepackage[utf8x]{inputenc} % uncomment this if there are problems with 'ä', 'ü', 'ö'
+\usepackage{ucs}
+\usepackage[usenames,dvipsnames,table]{xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage[pdftex]{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{courier}
+\usepackage{ctable}
+
+%Definitions of header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{<company name>}
+\cfoot{Software Pflichtenheft}
+\rfoot{\thepage}
+
+
+%color definitions
+\definecolor{lightgray}{rgb}{0.85,0.85,0.85}
+
+\addtokomafont{section}{\mysection}
+\newcommand{\mysection}[1]{%
+    \centering
+    \setlength{\fboxsep}{0cm}%already boxed
+    \colorbox{lightgray!80}{%
+        \begin{minipage}{\linewidth}%
+            \vspace*{3pt}%Space before
+            #1
+            \vspace*{0pt}%Space after
+        \end{minipage}%
+    }}
+	
+\newcommand{\csection}[1]{\section[#1]{\centering #1}} 		%command for centered section
+
+\newcommand{\HRule}{\rule{\linewidth}{0.3mm}}				%horizontal line definition
+\newcommand\VRule[1][\arrayrulewidth]{\vrule width #1}		%vertical line difinition

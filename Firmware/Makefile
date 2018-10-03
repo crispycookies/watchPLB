@@ -90,4 +90,3 @@ $(OBJECT_DIR)/%.o: %.s
 $(OBJECT_DIR)/%.o: %.S
 	$(MKDIR)
 	$(CC) $(ASSEMBLER_FLAGS) $(INCLUDES) $< -o $@
-	
