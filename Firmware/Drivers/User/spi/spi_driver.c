@@ -195,8 +195,6 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
 		return SPI_RET_INVALID_PARAM;
 	}
 
-	uint8_t penis[20] = {0};
-
 	if (HAL_SPI_Transmit(spi_init->SPI,  tx_buffer, tx_buffer_size,
 			timeout) != HAL_OK) {
 		return SPI_RET_OP_FAILED;
