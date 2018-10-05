@@ -93,6 +93,10 @@ static void SPI_AF_INIT(const SPI_GPIO_Pair gp) {
 	}
 
 	HAL_GPIO_Init(gp.bank, &spi_init_def);
+	/*
+	while(!(gp.bank->MODER & (GPIO_MODE_AF_PP<<(gp.pin<<1))) ){
+		/*Empty Loop*/
+	//}
 
 }
 /**
@@ -191,10 +195,13 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
 		return SPI_RET_INVALID_PARAM;
 	}
 
-	if (HAL_SPI_Transmit(spi_init->SPI, (uint8_t*) tx_buffer, tx_buffer_size,
+	uint8_t penis[20] = {0};
+
+	if (HAL_SPI_Transmit(spi_init->SPI,  tx_buffer, tx_buffer_size,
 			timeout) != HAL_OK) {
 		return SPI_RET_OP_FAILED;
 	}
+
 
 	return SPI_RET_OK;
 }

@@ -16,6 +16,9 @@ typedef uint16_t GPIO_PinType;
 
 /*Global Enums*/
 
+/*
+ * */
+
 /**
  * @brief Public Enum for Return Values
  */
