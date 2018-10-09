@@ -14,7 +14,6 @@ static uint8_t charToHex(uint8_t ch);
 static uint8_t toLower(uint8_t ch);
 static void parse(NMEA_Instance* nmea);
 static void parseGPGGL(NMEA_Instance* nmea);
-static uint8_t parseTime(uint8_t *buf, uint8_t *end, NMEA_Time *time);
 
 void NMEA_Init(NMEA_Instance* nmea) {
     if (nmea != 0) {
@@ -36,7 +35,7 @@ void NMEA_Process(NMEA_Instance* nmea, uint8_t byte) {
                 case NMEA_State_TYPE:
                     if (byte == ',') {
                         if (nmea->idx == NMEA_TYPE_STR_LENGTH) {
-                            if (strncmp(nmea->data, NMEA_TYPE_STR_GPGLL, NMEA_TYPE_STR_LENGTH) == 0) {
+                            if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GPGLL, NMEA_TYPE_STR_LENGTH) == 0) {
                                 nmea->type = NMEA_Type_GPGLL;
                             } else {
                                 nmea->type = NMEA_Type_NONE;
@@ -92,6 +91,7 @@ static uint8_t charToHex(uint8_t ch) {
     } else if (toLower(ch) >= 'a' && toLower(ch) <= 'f') {
         return 10 + toLower(ch) - 'a';
     }
+    return 0;
 }
 
 static uint8_t toLower(uint8_t ch) {
@@ -119,14 +119,14 @@ static void parseGPGGL(NMEA_Instance* nmea) {
         //read latitude
 
         //read degree
-        pos.latitude.degree = strtol(buf,buf+2, 10);
+        pos.latitude.degree = strtol((char*)buf, 0, 10);
         if (pos.latitude.degree > 90) {
             return;
         }
         buf += 2;
 
         //read minute
-        pos.latitude.minute = strtod(buf,buf+5);
+        pos.latitude.minute = strtod((char*)buf, 0);
         buf += 6; //skip delimiter ','
         
         //read flag
@@ -142,14 +142,14 @@ static void parseGPGGL(NMEA_Instance* nmea) {
         //read longitude
 
         //read degree
-        pos.longitude.degree = strtol(buf,buf+2, 10);
+        pos.longitude.degree = strtol((char*)buf, 0, 10);
         if (pos.longitude.degree > 180) {
             return;
         }
         buf += 2;
 
         //read minute
-        pos.longitude.minute = strtod(buf,buf+5);
+        pos.longitude.minute = strtod((char*)buf, 0);
         buf += 6; //skip delimiter ','
         
         //read flag
@@ -165,28 +165,28 @@ static void parseGPGGL(NMEA_Instance* nmea) {
         //read time
 
         //read hour
-        pos.time.hour = strtol(buf,buf+2, 10);
+        pos.time.hour = strtol((char*)buf, 0, 10);
         if (pos.time.hour > 23) {
             return;
         }
         buf += 2;
 
         //read minute
-        pos.time.minute = strtol(buf,buf+2, 10);
+        pos.time.minute = strtol((char*)buf, 0, 10);
         if (pos.time.minute > 59) {
             return;
         }
         buf += 2;
         
         //read second
-        pos.time.second = strtol(buf,buf+2, 10);
+        pos.time.second = strtol((char*)buf, 0, 10);
         if (pos.time.second > 59) {
             return;
         }
         buf += 3;   //also skip decimal point
 
         //read split-second
-        pos.time.split = strtol(buf,buf+2, 10);
+        pos.time.split = strtol((char*)buf, 0, 10);
         if (pos.time.split > 99) {
             return;
         }

@@ -40,7 +40,7 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/User/dma \
 	-IDrivers/User/watchdog \
 	-IDrivers/Interfaces/ble \
-	-IDrivers/Interfaces/gps \
+	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/usb \
 	-IApp/communication \
 	-IApp/emergencyCall \
