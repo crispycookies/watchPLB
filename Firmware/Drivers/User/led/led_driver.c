@@ -84,9 +84,8 @@ void led_init(void) {
 
 	/*Init GPIOB*/
 	Led_Lights.Pin &= ~(GPIO_PIN_4 | GPIO_PIN_5);
-	Led_Lights.Pin |= (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_10
-			| GPIO_PIN_11);
-	HAL_GPIO_Init(GPIOC, &Led_Lights);
+	Led_Lights.Pin |= (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 );
+	HAL_GPIO_Init(GPIOB, &Led_Lights);
 }
 
 /**
