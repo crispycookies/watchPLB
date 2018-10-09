@@ -1,5 +1,4 @@
 /*
-/**
   **************************
   * @file    key.h
   * @author  Michael Neuhofer
