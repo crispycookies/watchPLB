@@ -10,26 +10,27 @@
 
 #include "watchdog.h"
 
-	IWDG_HandleTypeDef *hiwdg;
-	IWDG_TypeDef *iwdgInstance;
+	IWDG_HandleTypeDef hiwdg;
 
 HAL_StatusTypeDef IWDG_Init(void){
 
-	IWDG_InitTypeDef iwdgInit;
-	iwdgInit.Prescaler = IWDG_PRESCALER_16;
-	iwdgInit.Reload = RELOAD_VAL;
-	iwdgInit.Window = IWDG_WINDOW_DISABLE;
+	// fill watchdog init structure
+	hiwdg.Init.Prescaler = IWDG_PRESCALER_16;
+	hiwdg.Init.Reload = RELOAD_VAL;
+	hiwdg.Init.Window = IWDG_WINDOW_DISABLE;
 
-	hiwdg->Init = iwdgInit;
-	hiwdg->Instance = iwdgInstance;
-
-
-	return HAL_IWDG_Init(hiwdg);
+	return HAL_IWDG_Init(&hiwdg);
 }
 
 
-
+// refreshes the watchdog counter (=set to 0)
 HAL_StatusTypeDef IWDG_Refresh(void){
 
-	return HAL_IWDG_Refresh(hiwdg);
+	return HAL_IWDG_Refresh(&hiwdg);
+}
+
+// starts the Watchdog
+void IWDG_Start(void){
+
+	__HAL_IWDG_START(&hiwdg);
 }

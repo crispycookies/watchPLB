@@ -48,7 +48,7 @@ HAL_StatusTypeDef Adc_Init(uint8_t const channel)
 }
 
 
-
+// gives you the value of the adc
 int32_t Adc_GetValue(uint32_t const timeout)
 {
 	uint32_t adcvalue = 0;
@@ -70,7 +70,7 @@ int32_t Adc_GetValue(uint32_t const timeout)
 	return adcvalue;
 }
 
-
+// change/ set the hardware channel used for conversion
 HAL_StatusTypeDef Adc_SetChannel(uint8_t const channel)
 {
 	uint8_t const numOfHardwareChannels = 19;
