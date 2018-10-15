@@ -34,7 +34,7 @@
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
@@ -12285,11 +12285,11 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="24.892" y="11.0744" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="25.5016" y="11.5316" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R23" library="resistor" package="M0805" value="220R" x="28.194" y="9.2964" smashed="yes" rot="R180">
+<element name="R23" library="resistor" package="M0805" value="470R" x="28.194" y="9.2964" smashed="yes" rot="R180">
 <attribute name="NAME" x="25.654" y="10.3124" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="29.21" y="11.5824" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R24" library="resistor" package="M0805" value="220R" x="28.194" y="7.0104" smashed="yes" rot="R180">
+<element name="R24" library="resistor" package="M0805" value="470R" x="28.194" y="7.0104" smashed="yes" rot="R180">
 <attribute name="NAME" x="29.3624" y="5.842" size="1.016" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="29.21" y="9.2964" size="1.27" layer="27" rot="R180"/>
 </element>

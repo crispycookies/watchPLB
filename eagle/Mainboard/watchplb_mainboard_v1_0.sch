@@ -25290,8 +25290,8 @@ by exp-lbrs.ulp</description>
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
 <part name="+3V20" library="supply1" deviceset="+3V3" device=""/>
 <part name="LED11" library="adafruit" deviceset="LED" device="CHIP-LED0805" value="GREEN"/>
-<part name="R23" library="resistor" deviceset="R-EU_" device="M0805" value="220R"/>
-<part name="R24" library="resistor" deviceset="R-EU_" device="M0805" value="220R"/>
+<part name="R23" library="resistor" deviceset="R-EU_" device="M0805" value="470R"/>
+<part name="R24" library="resistor" deviceset="R-EU_" device="M0805" value="470R"/>
 <part name="LED12" library="adafruit" deviceset="LED" device="CHIP-LED0805" value="RED"/>
 <part name="+3V22" library="supply1" deviceset="+3V3" device=""/>
 <part name="FRAME5" library="frames" deviceset="A4L-LOC" device=""/>
