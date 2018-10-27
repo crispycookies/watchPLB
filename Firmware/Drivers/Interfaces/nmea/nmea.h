@@ -68,7 +68,7 @@ typedef struct {
 } NMEA_Instance;
 
 void NMEA_Init(NMEA_Instance* nmea);
-void NMEA_SetPositionCallback(NMEA_Callback_Position cb);
+void NMEA_SetPositionCallback(NMEA_Instance* nmea, NMEA_Callback_Position cb);
 void NMEA_Process(NMEA_Instance* nmea, uint8_t byte);
 
 #endif //NMEA_H

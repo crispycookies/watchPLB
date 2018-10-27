@@ -85,6 +85,12 @@ void NMEA_Process(NMEA_Instance* nmea, uint8_t byte) {
     }
 }
 
+void NMEA_SetPositionCallback(NMEA_Instance* nmea, NMEA_Callback_Position cb) {
+    if (nmea != 0) {
+        nmea->cb_pos = cb;
+    }
+}
+
 static uint8_t charToHex(uint8_t ch) {
     if (ch >= '0' && ch <= '9') {
         return ch - '0';
