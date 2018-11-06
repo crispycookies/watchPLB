@@ -1,7 +1,7 @@
 #ifndef NMEA_H
 #define NMEA_H
 
-#include <stdint.h>
+#include "position.h"
 
 #define NMEA_DATA_LENGTH 72
 
@@ -20,43 +20,7 @@ typedef enum {
     NMEA_Type_GPGLL,
 } NMEA_Type;
 
-typedef enum {
-	NMEA_Latitude_Flag_S = 0,
-	NMEA_Latitude_Flag_N = 1
-} NMEA_Latitude_Flag;
-
-typedef enum {
-	NMEA_Longitude_Flag_W = 0,
-	NMEA_Longitude_Flag_E = 1
-} NMEA_Longitude_Flag;
-
-typedef struct {
-    uint8_t hour;
-    uint8_t minute;
-    uint8_t second;
-    uint8_t split;
-} NMEA_Time;
-
-typedef struct{
-	NMEA_Latitude_Flag direction;
-	uint16_t degree;
-	double minute;
-} NMEA_Latitude;
-
-typedef struct{
-	NMEA_Longitude_Flag direction;
-	uint16_t degree;
-	double minute;
-} NMEA_Longitude;
-
-typedef struct {
-    NMEA_Time time;
-	NMEA_Latitude latitude;
-	NMEA_Longitude longitude;
-	uint8_t valid;
-} NMEA_Position;
-
-typedef void (*NMEA_Callback_Position)(NMEA_Position *pos);
+typedef void (*NMEA_Callback_Position)(POS_Position *pos);
 
 typedef struct {
     NMEA_State state;

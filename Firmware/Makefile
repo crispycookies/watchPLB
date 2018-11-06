@@ -42,6 +42,8 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/usb \
+	-IDrivers/Interfaces/ubx \
+	-IDrivers/Interfaces/position \
 	-IApp/communication \
 	-IApp/emergencyCall \
 	-IApp/location \

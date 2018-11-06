@@ -1,8 +1,6 @@
 #ifndef UBX_H
 #define UBX_H
 
-#include <stdint.h>
-
 #define UBX_ACK_CB_Count 3
 #define UBX_CB_Count 5
 #define UBX_MSG_MAX_LENGTH 128

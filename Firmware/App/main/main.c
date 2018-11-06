@@ -67,7 +67,7 @@ int main(void) {
 	UART_Config conf;
 	UART_Instance inst;
 
-	conf.baud = BAUD_9600;
+	conf.baud = UART_BaudRate_9600;
 	conf.uart = USART2;
 	conf.rxBoard = GPIOA;
 	conf.rxPin = GPIO_PIN_3;

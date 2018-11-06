@@ -8,7 +8,7 @@
 
 #define NMEA_TYPE_STR_GPGLL "GPGLL"
 
-#define NMEA_GPGLL_LENGTH 60    // TODO:
+#define NMEA_GPGLL_LENGTH 60    // TODO: check real length
 
 static uint8_t charToHex(uint8_t ch);
 static uint8_t toLower(uint8_t ch);
@@ -119,7 +119,7 @@ static void parse(NMEA_Instance* nmea) {
 
 static void parseGPGGL(NMEA_Instance* nmea) {
     if (nmea != 0 && nmea->type == NMEA_Type_GPGLL && nmea->idx >= NMEA_GPGLL_LENGTH) {
-        NMEA_Position pos;
+        POS_Position pos;
         uint8_t *buf = nmea->data;
 
         //read latitude
@@ -137,9 +137,9 @@ static void parseGPGGL(NMEA_Instance* nmea) {
         
         //read flag
         if (*buf == 'N') {
-            pos.latitude.direction = NMEA_Latitude_Flag_N;
+            pos.latitude.direction = POS_Latitude_Flag_N;
         } else if (*buf == 'S') {
-            pos.latitude.direction = NMEA_Latitude_Flag_S;
+            pos.latitude.direction = POS_Latitude_Flag_S;
         } else {
             return;
         }
@@ -160,9 +160,9 @@ static void parseGPGGL(NMEA_Instance* nmea) {
         
         //read flag
         if (*buf == 'E') {
-            pos.longitude.direction = NMEA_Longitude_Flag_E;
+            pos.longitude.direction = POS_Longitude_Flag_E;
         } else if (*buf == 'W') {
-            pos.longitude.direction = NMEA_Longitude_Flag_E;
+            pos.longitude.direction = POS_Longitude_Flag_E;
         } else {
             return;
         }
@@ -199,12 +199,7 @@ static void parseGPGGL(NMEA_Instance* nmea) {
         buf += 2;
 
         if (*buf == ',' && *(buf+1) == 'A') {
-            pos.valid = 1;
-            buf += 2;
-        } else  {
-            pos.valid = 0;
+            nmea->cb_pos(&pos);
         }
-
-        nmea->cb_pos(&pos);
     }
 }
