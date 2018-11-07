@@ -9,26 +9,25 @@ static UBX_Instance ubx;
 static UART_Instance uart;
 
 static POS_Position position;
-static uint8_t posAvailable;
 
 static void positionCallback(POS_Position *pos);
 
 void LOC_Init() {
-    posAvailable = 0;
+    position.valid = 0;
 
     UART_Config uart_conf;
-    /* Needs to be configured
-    uart_conf.uart = ;
+    
+    uart_conf.uart = USART4;
     uart_conf.baud = UART_BaudRate_9600;
-    uart_conf.rxDmaChannel = ;
-    uart_conf.rxBoard = ;
-    uart_conf.rxPin = ;
-    uart_conf.rxAF = ;
-    uart_conf.txDmaChannel ;
-    uart_conf.txBoard = ;
-    uart_conf.txPin = ;
-    uart_conf.txAF = ;
-    */
+    uart_conf.rxDmaChannel = DMA1_Channel6;
+    uart_conf.rxBoard = GPIOC;
+    uart_conf.rxPin = 11;
+    uart_conf.rxAF = GPIO_AF6_USART4;
+    uart_conf.txDmaChannel = DMA1_Channel7;
+    uart_conf.txBoard = GPIOC;
+    uart_conf.txPin = 10;
+    uart_conf.txAF = GPIO_AF6_USART4;
+    
     UART_Init(&uart, &uart_conf);
 
     NMEA_Init(&nmea);
@@ -46,7 +45,7 @@ void LOC_Process() {
 }
 
 uint8_t LOC_PositionAvailable() {
-    return posAvailable;
+    return position.valid;
 }
 
 POS_Position* LOC_GetLastPosition() {
@@ -54,8 +53,7 @@ POS_Position* LOC_GetLastPosition() {
 }
 
 static void positionCallback(POS_Position *pos) {
-    if (pos != 0) {
+    if (pos != 0 && pos->valid != 0) {
         memcpy(&position, pos, sizeof(POS_Position));
-        posAvailable = 1;
     }
 }
