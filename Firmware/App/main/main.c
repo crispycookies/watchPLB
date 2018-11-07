@@ -29,17 +29,13 @@ SOFTWARE.
 
 /* Includes */
 #include <stddef.h>
-#include "uart.h"
 #include "stm32l0xx_hal.h"
+#include "location.h"
 
 /* Private macro */
 /* Private variables */
 /* Private function prototypes */
 /* Private functions */
-
-
-#define BUFSIZE 100
-uint8_t buf[BUFSIZE];
 
 void SystemClock_Config(void);
 /**
@@ -63,31 +59,11 @@ int main(void) {
 
 	HAL_Init();
 	SystemClock_Config();
-
-	UART_Config conf;
-	UART_Instance inst;
-
-	conf.baud = UART_BaudRate_9600;
-	conf.uart = USART2;
-	conf.rxBoard = GPIOA;
-	conf.rxPin = GPIO_PIN_3;
-	conf.rxAF = GPIO_AF4_USART2;
-	conf.rxDmaChannel = DMA1_Channel5;
-	conf.txBoard = GPIOA;
-	conf.txPin = GPIO_PIN_2;
-	conf.txAF = GPIO_AF4_USART2;
-	conf.txDmaChannel = DMA1_Channel4;
-
-	UART_Init(&inst, &conf);
-
-	UART_SendString(&inst, (uint8_t*)"UART READY");
+  
+  LOC_Init();
 
 	while (1) {
-		if (UART_GetAvailableBytes(&inst) > 0) {
-			uint16_t len;
-			len = UART_GetData(&inst, BUFSIZE, buf);
-			UART_SendData(&inst, len, buf);
-		}
+    LOC_Process();
 	}
 	return 0;
 }
