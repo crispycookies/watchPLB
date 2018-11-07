@@ -9,11 +9,19 @@
 #include <string.h>
 #include <math.h>
 #include "plb.h"
+#include "spi_driver.h"
+#include "gps.h"
 
-#define IQ_11             0xDADA
-#define IQ_01             0x26DA
-#define IQ_00             0x2626
-#define IQ_10             0xDA26
+/*
+#include <stddef.h>
+#include "stm32l0xx.h"
+#include "stm32l0xx_hal_gpio.h"
+
+#include "key.h"
+*/
+
+#define IQ_1             0xDA
+#define IQ_0             0x26
 #define LENPDF1           61
 #define LENPDF1_WITH_BCH1 82
 #define LENPDF2           26
@@ -27,6 +35,7 @@ typedef struct {
 } bitarray_t;
 
 static void bitarray_init(bitarray_t* bitArr, uint8_t* arr, uint16_t len);
+static void bitarray_addBit(bitarray_t* bitArr, uint8_t bit);
 static void bitarray_addBits(bitarray_t* bitArr, uint16_t bits, uint8_t cnt);
 static void bch_encode(uint8_t* data, uint8_t* g_poly, uint16_t n, uint16_t k);
 
@@ -44,8 +53,10 @@ static uint16_t const national_use = 0b0000000000; //from 64-73, if national not
 static uint16_t const certif_number = 0b1111111111; //from 74-83, random
 static uint8_t const radiolocating = 0b01; //from 84-85; 121,5MHz
 //BCH polynoms were generated with matlab function bchgenpoly
-static int const bch1_poly = 0b1001101101100111100011; //22 with matlab function bchgenpoly(127,106)
-static uint16_t const bch2_poly = 0b1010100111001; //13 with matlab function bchgenpoly(63,51)
+//static int const bch1_poly = 0b1001101101100111100011; //22 with matlab function bchgenpoly(127,106)
+static uint8_t  bch1_poly[22] = {1,0,0,1,1,0,1,1,0,1,1,0,0,1,1,1,1,0,0,0,1,1};
+static uint8_t bch2_poly[13] = {1,0,1,0,1,0,0,1,1,1,0,0,1};
+//static uint16_t const bch2_poly = 0b1010100111001; //13 with matlab function bchgenpoly(63,51)
 //PDF2
 static uint8_t const position_data_source = 0b1; //107; GPS internal
 uint8_t latitude_flag = 0b0; // N = '1'; S = '0'; pos.108
@@ -55,7 +66,55 @@ uint8_t longtitude_flag = 0b0; // E = '1'; W = '0'; pos.120
 uint8_t longtitude_degrees = 0b0; //from 121-128
 uint8_t longtitude_minutes = 0b0; //from 129-132;
 
+
+void plb_init(){
+    SPI_Init_Struct spi_for_send;
+    
+    SPI_GPIO_Pair miso;
+    miso.bank = GPIOA;
+    miso.pin = GPIO_PIN_6;
+    SPI_GPIO_Pair mosi;
+    mosi.bank = GPIOA;
+    mosi.pin = GPIO_PIN_7;
+    SPI_GPIO_Pair slclk;
+    slclk.bank = GPIOA;
+    slclk.pin = GPIO_PIN_5;
+    SPI_GPIO_Pair cs;
+    cs.bank = GPIOA;
+    cs.pin = GPIO_PIN_4;
+    
+    SPI_HandleTypeDef spidef;
+    spidef.Instance = SPI1;
+    spidef.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+    spidef.Init.Mode = SPI_MODE_MASTER;
+    spidef.Init.NSS = SPI_NSS_SOFT;
+    spidef.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+    spidef.Init.CRCPolynomial = 7;
+    spidef.Init.TIMode = SPI_TIMODE_DISABLE;
+    spidef.Init.Direction = SPI_DIRECTION_2LINES;
+    spidef.Init.DataSize = SPI_DATASIZE_8BIT;
+    spidef.Init.FirstBit = SPI_FIRSTBIT_LSB;
+    
+    spidef.Init.CLKPolarity = SPI_POLARITY_LOW;
+    spidef.Init.CLKPhase = SPI_PHASE_1EDGE;
+    
+    spidef.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+    
+    spidef.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+    
+    spi_for_send.CS = cs;
+    spi_for_send.MISO = miso;
+    spi_for_send.MOSI = mosi;
+    spi_for_send.SCLK = slclk;
+    spi_for_send.SPI = &spidef;
+    
+    SPI_Init(&spi_for_send);
+
+}
+
 void plb_protocol(){
+    
+    plb_init();
     
     //protocol
     uint8_t protocol_to_modulate[LEN_PROTOCOL];
@@ -97,7 +156,7 @@ void plb_protocol(){
     bch_encode(pdf2, bch2_poly, LENPDF2_WITH_BCH2, LENPDF2);
     
     for (int i = 0; i < LEN_PROTOCOL; i++) {
-        protocol_to_modulate[i] = protocol_to_modulate[i] == 0 ? 0x26 : 0xDA;
+        protocol_to_modulate[i] = protocol_to_modulate[i] == 0 ? IQ_0 : IQ_1;
     }
     
     SPI_Send(protocol_to_modulate, LEN_PROTOCOL);
@@ -116,6 +175,18 @@ static void bitarray_init(bitarray_t* bitArr, uint8_t* arr, uint16_t len){
         bitArr->data = arr;
         bitArr->len = len;
         bitArr->idx = 0;
+    }
+}
+
+/**
+ * @brief Add bit to bitarray
+ *
+ * @param bitArr bitarray container
+ * @param bit    bit to add
+ */
+static void bitarray_addBit(bitarray_t* bitArr, uint8_t bit) {
+    if (bitArr != NULL && bitArr->idx < bitArr->len) {
+        bitArr->data[bitArr->idx++] = bit & 1;
     }
 }
 
