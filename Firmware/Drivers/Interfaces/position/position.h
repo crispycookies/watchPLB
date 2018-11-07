@@ -36,6 +36,7 @@ typedef struct {
     POS_Time time;
 	POS_Latitude latitude;
 	POS_Longitude longitude;
+	uint8_t valid;
 } POS_Position;
 
 #endif //!POSITION_H

@@ -199,7 +199,11 @@ static void parseGPGGL(NMEA_Instance* nmea) {
         buf += 2;
 
         if (*buf == ',' && *(buf+1) == 'A') {
-            nmea->cb_pos(&pos);
+            pos.valid = 1;
+        } else {
+            pos.valid = 0;
         }
+        
+        nmea->cb_pos(&pos);
     }
 }
