@@ -9,6 +9,7 @@
 #include "uart.h"
 #include "dma.h"
 #include <string.h>
+#include "stm32l0xx_hal_conf.h"
 
 #define TRUE 1
 #define FALSE 0
