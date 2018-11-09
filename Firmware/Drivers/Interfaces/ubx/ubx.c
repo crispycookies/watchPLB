@@ -62,9 +62,6 @@ void UBX_Process(UBX_Instance* ubx, uint8_t byte) {
     if (ubx != 0) {
         if (byte == SYNC_CHAR_1) {
             ubx->state = UBX_State_Sync2;
-            ubx->idx = 0;
-            ubx->ck_a = 0;
-            ubx->ck_b = 0;
         } else {
             
             if (ubx->state != UBX_State_CK_A || ubx->state != UBX_State_CK_B) {
