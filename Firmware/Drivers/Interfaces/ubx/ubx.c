@@ -145,8 +145,8 @@ static void processAck(UBX_Instance* ubx) {
     if (ubx != 0 && ubx->msgClass == UBX_Class_ACK) {
         for(uint8_t i = 0; i < UBX_ACK_CB_Count; i++) {
             if (ubx->cb_ack[i].cb != 0 && 
-                    ubx->cb_ack[i].msgClass == ubx->msgClass && 
-                    ubx->cb_ack[i].id == ubx->id) {
+                    ubx->cb_ack[i].msgClass == ubx->msg[MSG_ACK_POS_CLS] && 
+                    ubx->cb_ack[i].id == ubx->msg[MSG_ACK_POS_ID]) {
                 ubx->cb_ack[i].cb((UBX_Class)ubx->msg[MSG_ACK_POS_CLS], (UBX_Id_Ack)ubx->msg[MSG_ACK_POS_ID], ubx->id);
                 ubx->cb_ack[i].cb = 0;
                 return;
