@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define NMEA_TYPE_STR_LENGTH 5
 
@@ -11,7 +12,7 @@
 #define NMEA_GPGLL_LENGTH 60    // TODO: check real length
 
 static uint8_t charToHex(uint8_t ch);
-static uint8_t toLower(uint8_t ch);
+
 static void parse(NMEA_Instance* nmea);
 static void parseGPGGL(NMEA_Instance* nmea);
 
@@ -98,10 +99,6 @@ static uint8_t charToHex(uint8_t ch) {
         return 10 + toLower(ch) - 'a';
     }
     return 0;
-}
-
-static uint8_t toLower(uint8_t ch) {
-    return ch >= 'A' && ch <= 'Z' ? ch - 'A' + 'a' : ch;
 }
 
 static void parse(NMEA_Instance* nmea) {
