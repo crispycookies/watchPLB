@@ -46,6 +46,7 @@ INCLUDES= \
 	-IDrivers/Interfaces/usb \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
+	-IDrivers/Interfaces/plb \
 	-IApp/communication \
 	-IApp/emergencyCall \
 	-IApp/location \
