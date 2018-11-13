@@ -39,6 +39,7 @@ INCLUDES= \
 	-IDrivers/User/led \
 	-IDrivers/User/rfTx \
 	-IDrivers/User/uart \
+	-IDrivers/User/spi \
 	-IDrivers/User/dma \
 	-IDrivers/User/watchdog \
 	-IDrivers/Interfaces/ble \
