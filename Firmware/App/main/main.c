@@ -30,7 +30,8 @@ SOFTWARE.
 /* Includes */
 #include <stddef.h>
 #include "stm32l0xx_hal.h"
-#include "location.h"
+#include "led_driver.h"
+#include "key.h"
 
 /* Private macro */
 /* Private variables */
@@ -60,10 +61,44 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
   
-  LOC_Init();
+  led_init();
+  KEY_Init();
+
+  uint32_t time = 0;
 
 	while (1) {
-    LOC_Process();
+    if (KEY_Get(BTN_1) == GPIO_PIN_SET) {
+      led_on(led_pa4);
+    } else {
+      led_off(led_pa4);
+    }
+    if (KEY_Get(BTN_2) == GPIO_PIN_SET) {
+      led_on(led_pa5);
+    } else {
+      led_off(led_pa5);
+    }
+    if (KEY_Get(BTN_3) == GPIO_PIN_SET) {
+      led_on(led_pa6);
+    } else {
+      led_off(led_pa6);
+    }
+    if (KEY_Get(BTN_4) == GPIO_PIN_SET) {
+      led_on(led_pa7);
+    } else {
+      led_off(led_pa7);
+    }
+
+    uint32_t newTime = HAL_GetTick();
+    if (newTime > time) {
+      time = newTime += 500;
+      led_toggle(led_pc4);
+      led_toggle(led_pc5);
+      led_toggle(led_pb0);
+      led_toggle(led_pb1);
+      led_toggle(led_pb2);
+      led_toggle(led_pb10);
+      led_toggle(led_pb11);
+    }
 	}
 	return 0;
 }
