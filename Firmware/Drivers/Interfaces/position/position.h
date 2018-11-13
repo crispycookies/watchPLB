@@ -39,4 +39,6 @@ typedef struct {
 	uint8_t valid;
 } POS_Position;
 
+int16_t POS_CmpTime(POS_Time *left, POS_Time *right);
+
 #endif //!POSITION_H
