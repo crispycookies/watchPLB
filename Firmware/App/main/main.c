@@ -64,6 +64,14 @@ int main(void) {
   led_init();
   KEY_Init();
 
+  GPIO_InitTypeDef gpio;
+  gpio.Mode = GPIO_MODE_OUTPUT_PP;
+  gpio.Pull = GPIO_PULLDOWN;
+  gpio.Speed = GPIO_SPEED_FREQ_LOW;
+  gpio.Pin = GPIO_PIN_12;
+  HAL_GPIO_Init(GPIOC, &gpio);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_SET);
+
   uint32_t time = 0;
 
 	while (1) {
