@@ -29,11 +29,15 @@ SOFTWARE.
 
 /* Includes */
 #include <stddef.h>
+#include <string.h>
 #include "stm32l0xx_hal.h"
 #include "location.h"
+#include "usb.h"
+#include "log.h"
 
 /* Private macro */
 /* Private variables */
+uint8_t receive_data[64];
 /* Private function prototypes */
 /* Private functions */
 
@@ -45,6 +49,9 @@ void SystemClock_Config(void);
 **
 **===========================================================================
 */
+
+uint8_t mystring[]="Hello world !!!\r";
+
 int main(void) {
 	__HAL_RCC_SYSCFG_CLK_ENABLE();
 	__HAL_RCC_PWR_CLK_ENABLE();
@@ -60,11 +67,16 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
   
-  LOC_Init();
+	LOG_Init();
+	USB_Init();
 
 	while (1) {
     LOC_Process();
+
+	USB_SendData(mystring, strlen((const char*)mystring));
+	HAL_Delay(1000);
 	}
+
 	return 0;
 }
 
