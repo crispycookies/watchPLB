@@ -144,8 +144,8 @@ void NMEA_SetPositionCallback(NMEA_Instance* nmea, NMEA_Callback_Position cb) {
 static uint8_t charToHex(uint8_t ch) {
     if (ch >= '0' && ch <= '9') {
         return ch - '0';
-    } else if (toLower(ch) >= 'a' && toLower(ch) <= 'f') {
-        return 10 + toLower(ch) - 'a';
+    } else if (tolower(ch) >= 'a' && tolower(ch) <= 'f') {
+        return 10 + tolower(ch) - 'a';
     }
     return 0;
 }

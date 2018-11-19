@@ -42,6 +42,7 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/usb \
+	-IDrivers/Interfaces/log \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
 	-IApp/communication \
@@ -50,7 +51,7 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IApp/system \
 	-IApp/userInterface
 	
-HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr
+HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr pcd pcd_ex
 
 # Define output directory
 OBJECT_DIR = Debug

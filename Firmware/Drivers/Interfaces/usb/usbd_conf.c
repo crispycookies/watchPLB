@@ -9,6 +9,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx.h"
 #include "stm32l0xx_hal.h"
+#include "stm32l0xx_hal_pcd.h"
 #include "usbd_def.h"
 #include "usbd_core.h"
 #include "usbd_cdc.h"
