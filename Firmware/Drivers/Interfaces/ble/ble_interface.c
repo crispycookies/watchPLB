@@ -1,16 +1,21 @@
-/*
- * ble_interface.c
- *
- *  Created on: 02.10.2018
- *      Author: tobi
- */
+/**
+  ******************************************************************************
+  * @file    ble_interface.c
+  * @author  Tobias Egger
+  * @version V0.9
+  * @date    20-November-2018
+  * @brief   WatchPLB BLE- Driver Interface File
+  ******************************************************************************
+  */
+ 
+ /*Include Block*/
 #include <stdlib.h>
 
 #include "ble_interface.h"
 #include "crc8.h"
-
 #include "uart.h"
 
+/*@brief Define Block*/
 #define UART_START_SEQ 0xAA
 /*@brief BLEDK3 CMDs*/
 /*@brief COMMON 1*/
@@ -80,18 +85,32 @@
 #define DEF_ENABLE_TRANSPARENT_PARAM 0x01
 #define DEF_DISABLE_TRANSPARENT_PARAM 0x00
 
+/*@brief Global Variables*/
 static UART_Config conf;
 static UART_Instance inst;
 
 #define maxbuffer 255
 static uint8_t * send_buffer = 0;
 static uint8_t * rec_buffer = 0;
-static uint8_t connhdl = 0xFF;
+static uint8_t connhdl = 0x01;
 
-static uint8_t ble_crc_hack(uint8_t * data, uint8_t data_len) {
-	return __crc8(data, data_len);
+/**
+  * @brief Calculate CRC
+  * @param data: The Data to use
+  * @param data_len: Length of the Data to use
+  * @retval Checksum
+*/
+static uint8_t ble_crc_hack(uint8_t * data, uint8_t data_length) {
+	return __crc8(data, data_length);
 }
 
+/**
+  * @brief Mask the Data for Sending
+  * @param command: The Command to be sent
+  * @param data: The Data to be sent
+  * @param data_length: Length of the Data to use
+  * @retval None
+*/
 static void ble_mask(uint8_t command, uint8_t * data, uint8_t data_length,
 		uint8_t * result, uint8_t result_length) {
 	if (result_length != data_length + 4) {
@@ -109,11 +128,25 @@ static void ble_mask(uint8_t command, uint8_t * data, uint8_t data_length,
 
 	result[i] = ble_crc_hack(result, data_length + 3);
 }
+
+/**
+  * @brief Zeros the Buffer
+  * @param None
+  * @retval None
+*/
 static void zero_arr(){
 	for(int i = 0; i < maxbuffer; i++){
 		send_buffer[i] = 0;
 	}
 }
+
+/**
+  * @brief Sends the Data
+  * @param command: The Command to be sent
+  * @param data: The Data to use
+  * @param data_length: Length of the Data to use
+  * @retval Result of Operation
+*/
 static bool ble_write(uint8_t command, uint8_t * data, uint8_t data_length){
 	zero_arr();
 	ble_mask(command, data, data_length, send_buffer, maxbuffer);
@@ -124,6 +157,11 @@ static bool ble_write(uint8_t command, uint8_t * data, uint8_t data_length){
 	return true;;
 }
 
+/**
+  * @brief Initialize the BLE- Module
+  * @param  None
+  * @retval None
+*/
 void ble_interface_init() {
 
 	//READY
@@ -141,6 +179,13 @@ void ble_interface_init() {
 
 	UART_Init(&inst, &conf);
 }
+
+/**
+  * @brief Send Data in Transparent Mode
+  * @param tx_buffer: pointer to tx buffer
+  * @param tx_buffer_length: length of tx buffer
+  * @retval None
+*/
 void ble_interface_send(uint8_t * tx_buffer, uint8_t tx_buffer_length) {
 	//TODO Get To Transparent Mode
 	uint8_t cmd_assembled[3] = {connhdl, DEF_ENABLE_TRANSPARENT_PARAM, 0};
@@ -152,11 +197,23 @@ void ble_interface_send(uint8_t * tx_buffer, uint8_t tx_buffer_length) {
 	ble_write(ENABLE_TRANSPARENT, cmd_assembled, 3 );
 }
 
+/**
+  * @brief Get Length of Received Data
+  * @param None
+  * @retval Length of Data
+*/
 uint16_t ble_interface_get_buffer_length(){
 	uint16_t bytes = 0;
 	if((bytes=UART_GetAvailableBytes(&inst))==0 || bytes <= 3) return 0;
 	return bytes - 3;
-};
+}
+
+/**
+  * @brief Get Received Data
+  * @param rx_buffer: Pointer to where the Data shall be stored  
+  * @param rx_buffer_length: Length of the Buffer
+  * @retval Remaining Bytes
+*/
 uint16_t ble_interface_get_buffer(uint8_t *rx_buffer, uint8_t rx_buffer_length){
 	if(rx_buffer_length +3 >= maxbuffer) return 0;
 	uint16_t len = UART_GetData(&inst, rx_buffer_length+3, rec_buffer)-3;
@@ -166,22 +223,51 @@ uint16_t ble_interface_get_buffer(uint8_t *rx_buffer, uint8_t rx_buffer_length){
 	return len;
 }
 
-void ble_interface_connect(const ble_interface_dev_id * dev_id){
-	
-}
-void ble_interface_disconnect(const ble_interface_dev_id * dev_id){
-	uint8_t buffer = 0;
-	ble_write(DC, &buffer, 1);
+/**
+  * @brief Connect - Empty
+  * @param None
+  * @retval None
+*/
+void ble_interface_connect(){
+	//---
 }
 
+/**
+  * @brief Disconnect
+  * @param None
+  * @retval None
+*/
+void ble_interface_disconnect(){
+	uint8_t buffer = 0;
+	ble_write(DC, &buffer, 1);
+	
+}
+
+/**
+  * @brief Free Bytes of Internal Buffers
+  * @param None
+  * @retval None
+*/
 void ble_interface_deinit(){
 	free(send_buffer);
 	free(rec_buffer);
 }
 
+/**
+  * @brief Set Name of Device for Advertizing
+  * @param ble_name: Name of the Device
+  * @param ble_name_len: Length of the Device Name
+  * @retval None
+*/
 void ble_interface_set_name(const uint8_t * ble_name, const uint8_t ble_name_len){
 	ble_write(W_DEV_NAME, ble_name, ble_name_len);
 }
+
+/**
+  * @brief Advertize Device
+  * @param ble_advertize: Advertize if true
+  * @retval None
+*/
 void ble_interface_advertize(const bool ble_advertize){
 	if(!ble_advertize){
 		uint8_t adv_ = 0x00;
