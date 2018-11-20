@@ -12,11 +12,10 @@
 
 
 typedef enum{
-	BTN_1 = GPIO_PIN_12, 		//PB12
-	BTN_2 = GPIO_PIN_7, 		//PC7
-	BTN_3 = GPIO_PIN_8,			//PC8
-	BTN_4 = GPIO_PIN_9			//PC9
-	//BTN_TEST = GPIO_PIN_13		//PC13 on TESTBOARD
+	BTN_1 = 0,
+	BTN_2,
+	BTN_3,
+	BTN_4
 }BTN_Pins;
 
 

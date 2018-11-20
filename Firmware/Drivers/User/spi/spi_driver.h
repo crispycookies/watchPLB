@@ -49,7 +49,7 @@ typedef struct {
 	SPI_GPIO_Pair MISO;
 	SPI_GPIO_Pair CS;
 	SPI_GPIO_Pair SCLK;
-	SPI_HandleTypeDef * SPI;
+	SPI_HandleTypeDef SPI;
 } SPI_Init_Struct;
 
 /*Basic LED- Driver Block*/
@@ -91,12 +91,12 @@ SPI_RetType SPI_DeInit(SPI_Init_Struct * spi_init);
  * @param  gp: The Pin and the Location of the Pin to use
  * @retval none
  */
-void SPI_CS_Enable(const SPI_GPIO_Pair gp);
+void SPI_CS_Enable(SPI_Init_Struct * spi_init);
 /**
  * @brief Disable CS
  * @param  gp: The Pin and the Location of the Pin to use
  * @retval none
  */
-void SPI_CS_Disable(const SPI_GPIO_Pair gp);
+void SPI_CS_Disable(SPI_Init_Struct * spi_init);
 
 #endif /* USER_SPI_SPI_DRIVER_H_ */
