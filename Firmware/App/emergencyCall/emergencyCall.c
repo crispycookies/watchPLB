@@ -3,7 +3,17 @@
 #include "location.h"
 #include "plb.h"
 
-#define SPI_TIMEOUT 100
+#define SPI_TIMEOUT   100
+
+#define TX_BUF_SIZE   2
+#define TX_BUF_ADDR   0
+#define TX_BUF_DATA   1
+
+#define SPI_READ      0
+#define SPI_WRITE     (1 << 7)
+
+#define ADDR_FIFOCTRL 4
+#define ADDR_FIFODATA 5
 
 //plb module
 
@@ -11,7 +21,9 @@ static uint8_t emergencyState;
 static SPI_Init_Struct spi;
 static PLB_Instance plb; 
 
-static void send(uint8_t *data, uint16_t length);
+static void plbTransmit(uint16_t data);
+
+static void SetReg(uint8_t addr, uint8_t data);
 
 void EMC_Init(void) {
     SPI_Init_Struct spi_for_send;
@@ -57,7 +69,7 @@ void EMC_Init(void) {
     SPI_Init(&spi_for_send);
 
     //init plb with spi
-    PLB_Init(&plb, send);
+    PLB_Init(&plb, plbTransmit);
 
     emergencyState = 0;
 }
@@ -81,6 +93,20 @@ void EMC_SetEmergency(uint8_t emc) {
     emergencyState = emc;
 }
 
-static void send(uint8_t *data, uint16_t length) {
-    SPI_SendData(&spi, data, length, SPI_TIMEOUT);
+static void plbTransmit(uint16_t data) {
+    SetReg(ADDR_FIFOCTRL, (data >> 8) & 0x03);
+    
+    //maybe wait 1ms??
+    
+    SetReg(ADDR_FIFODATA, data & 0xFF);
+}
+
+static void SetReg(uint8_t addr, uint8_t data) {
+    //chip select -> 0
+    SPI_CS_Enable(&spi);
+    uint8_t txBuf[TX_BUF_SIZE];
+    txBuf[TX_BUF_ADDR] = SPI_WRITE | (addr & 0x7F);
+    txBuf[TX_BUF_DATA] = data;
+    SPI_SendData(&spi, txBuf, TX_BUF_SIZE, SPI_TIMEOUT);
+    //chip select -> 1
 }

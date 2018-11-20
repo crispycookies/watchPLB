@@ -41,8 +41,8 @@ static uint8_t bch2_poly[13] = {1,0,1,0,1,0,0,1,1,1,0,0,1};
 static uint8_t const position_data_source = 0b1; //107; GPS internal
 
 
-void PLB_Init(PLB_Instance* plb, PLB_Send send){
-    plb->send = send;
+void PLB_Init(PLB_Instance* plb, PLB_Transmit transmit){
+    plb->transmit = transmit;
     plb->pos.valid = 0;
 }
 
@@ -90,11 +90,9 @@ void PLB_Process(PLB_Instance* plb){
     bch_encode(pdf2, bch2_poly, LENPDF2_WITH_BCH2, LENPDF2);
     
     for (int i = 0; i < LEN_PROTOCOL; i++) {
-        plb->data[i] = plb->data[i] == 0 ? IQ_0 : IQ_1;
+        uint16_t txData = plb->data[i] == 0 ? IQ_0 : IQ_1;
+        plb->transmit(txData);
     }
-    
-    plb->send(plb->data, LEN_PROTOCOL);
-    
 }
 
 POS_Position* PLB_GetPosition(PLB_Instance* plb) {
