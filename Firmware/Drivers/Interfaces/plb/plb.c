@@ -10,8 +10,8 @@
 #include "plb.h"
 #include "BitArray.h"
 
-#define IQ_1              0xDA
-#define IQ_0              0x26
+#define IQ_1              0x369
+#define IQ_0              0x259
 #define LENPDF1           61
 #define LENPDF1_WITH_BCH1 82
 #define LENPDF2           26
