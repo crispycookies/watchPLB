@@ -54,7 +54,7 @@ INCLUDES= \
 	-IApp/system \
 	-IApp/userInterface
 	
-HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr
+HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr spi iwdg wwdg
 
 # Define output directory
 OBJECT_DIR = Debug
@@ -66,6 +66,11 @@ SRC := $(wildcard App/*/*.c) \
 	$(wildcard Drivers/Interfaces/*/*.c) \
 	$(wildcard Tools/*/*.c) \
 	$(HAL_DIRECTORY)/Src/stm32l0xx_hal.c
+
+INC := $(wildcard *.h) \
+	$(wildcard */*.h) \
+	$(wildcard */*/*.h) \
+	$(wildcard */*/*/*.h)
 	
 SRCSASM := App/main/startup_stm32l073xx.s
 OBJS := $(SRC:%.c=$(OBJECT_DIR)/%.o) $(HAL_MODULES:%=$(OBJECT_DIR)/$(HAL_DIRECTORY)/Src/$(HAL_PREFIX)%.o) $(SRCSASM:%.s=$(OBJECT_DIR)/%.o)
@@ -77,7 +82,7 @@ OBJS := $(OBJS:%.S=$(OBJECT_DIR)/%.o)
 ###############
 all: buildelf
 
-buildelf: $(OBJS) 
+buildelf: $(OBJS) $(INC)
 	$(CC) -o "$(BIN_DIR)/WatchPLB.elf" $(OBJS) $(LINKER_FLAGS)
 
 clean:
@@ -86,14 +91,14 @@ clean:
 ##################
 # Implicit targets
 ##################
-$(OBJECT_DIR)/%.o: %.c
+$(OBJECT_DIR)/%.o: %.c $(INC)
 	$(MKDIR)
 	$(CC) $(COMPILER_FLAGS) $(INCLUDES) $< -o $@
 
-$(OBJECT_DIR)/%.o: %.s
+$(OBJECT_DIR)/%.o: %.s $(INC)
 	$(MKDIR)
 	$(CC) $(ASSEMBLER_FLAGS) $(INCLUDES) $< -o $@
 	
-$(OBJECT_DIR)/%.o: %.S
+$(OBJECT_DIR)/%.o: %.S $(INC)
 	$(MKDIR)
 	$(CC) $(ASSEMBLER_FLAGS) $(INCLUDES) $< -o $@
