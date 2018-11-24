@@ -10,14 +10,12 @@
 #include "plb.h"
 #include "BitArray.h"
 
-#define IQ_1              0x369
-#define IQ_0              0x259
+#define LENSYNC           24
 #define LENPDF1           61
 #define LENPDF1_WITH_BCH1 82
 #define LENPDF2           26
 #define LENPDF2_WITH_BCH2 38
-
-static void bch_encode(uint8_t* data, uint8_t* g_poly, uint16_t n, uint16_t k);
+#define LENALL            (LENSYNC + LENPDF1_WITH_BCH1 + LENPDF2_WITH_BCH2)
 
 static uint16_t const sync_bit = 0b111111111111111; //from 1-15
 static uint16_t const frame_sync = 0b000101111; //from 16-24
@@ -40,26 +38,30 @@ static uint8_t bch2_poly[13] = {1,0,1,0,1,0,0,1,1,1,0,0,1};
 //PDF2
 static uint8_t const position_data_source = 0b1; //107; GPS internal
 
+/**
+ * @brief Encode data using bch algorithm
+ *
+ * @param data   data array (size: n)
+ * @param g_poly generator polynom array (size: n - k + 1)
+ * @param n      data array length (length of output)
+ * @param k      payload length (length of input)
+ */
+static void bch_encode(uint8_t* data, uint8_t* g_poly, uint16_t n, uint16_t k);
 
-void PLB_Init(PLB_Instance* plb, PLB_Transmit transmit){
-    plb->transmit = transmit;
-    plb->pos.valid = 0;
-}
-
-void PLB_Process(PLB_Instance* plb){
-
-    if (plb == 0 || plb->pos.valid == 0) {
-        return;
-    } 
+uint16_t PLB_CreateFrame(uint8_t *frame, uint8_t len, POS_Position* pos) {
+    if (frame == 0 || len == 0 || len < LENALL 
+            || pos == 0 || pos->valid == POS_Valid_Flag_Invalid) {
+        return 0;
+    }
     
     //protocol
     BitArray_t startBits;
-    BITARRAY_Init(&startBits, plb->data, 24);
+    BITARRAY_Init(&startBits, frame, LENSYNC);
     BITARRAY_AddBits(&startBits, sync_bit, 15);
     BITARRAY_AddBits(&startBits, frame_sync, 9);
     
     //add bits into array for pdf1 and calculate the bch_code for pdf1
-    uint8_t *pdf1 = plb->data+24;
+    uint8_t *pdf1 = frame+LENSYNC;
     BitArray_t data1;
     BITARRAY_Init(&data1, pdf1, LENPDF1);
     BITARRAY_AddBits(&data1, format_flag, 1);
@@ -76,43 +78,22 @@ void PLB_Process(PLB_Instance* plb){
     bch_encode(pdf1, bch1_poly, LENPDF1_WITH_BCH1, LENPDF1);
     
     //add bits into array for pdf2 and calculate the bch_code for pdf2
-    uint8_t *pdf2 = plb->data+24+LENPDF1_WITH_BCH1;
+    uint8_t *pdf2 = frame+24+LENPDF1_WITH_BCH1;
     BitArray_t data2;
     BITARRAY_Init(&data2, pdf2, LENPDF2);
     BITARRAY_AddBits(&data2, position_data_source, 1);
-    BITARRAY_AddBits(&data2, plb->pos.latitude.direction, 1);
-    BITARRAY_AddBits(&data2, plb->pos.latitude.degree, 7);
-    BITARRAY_AddBits(&data2, plb->pos.latitude.minute, 4);
-    BITARRAY_AddBits(&data2, plb->pos.longitude.direction, 1);
-    BITARRAY_AddBits(&data2, plb->pos.longitude.degree, 8);
-    BITARRAY_AddBits(&data2, plb->pos.longitude.minute, 4);
+    BITARRAY_AddBits(&data2, pos->latitude.direction, 1);
+    BITARRAY_AddBits(&data2, pos->latitude.degree, 7);
+    BITARRAY_AddBits(&data2, pos->latitude.minute, 4);
+    BITARRAY_AddBits(&data2, pos->longitude.direction, 1);
+    BITARRAY_AddBits(&data2, pos->longitude.degree, 8);
+    BITARRAY_AddBits(&data2, pos->longitude.minute, 4);
     
     bch_encode(pdf2, bch2_poly, LENPDF2_WITH_BCH2, LENPDF2);
-    
-    for (int i = 0; i < LEN_PROTOCOL; i++) {
-        uint16_t txData = plb->data[i] == 0 ? IQ_0 : IQ_1;
-        plb->transmit(txData);
-    }
+
+    return LENALL;
 }
 
-POS_Position* PLB_GetPosition(PLB_Instance* plb) {
-    return plb == 0 ? 0 : &plb->pos;
-}
-void PLB_SetPosition(PLB_Instance* plb, POS_Position* pos) {
-    if (plb != 0 && pos != 0) {
-        memcpy(&plb->pos, pos, sizeof(POS_Position));
-    }
-}
-
-
-/**
- * @brief Encode data using bch algorithm
- *
- * @param data   data array (size: n)
- * @param g_poly generator polynom array (size: n - k + 1)
- * @param n      data array length (length of output)
- * @param k      payload length (length of input)
- */
 static void bch_encode(uint8_t* data, uint8_t* g_poly, uint16_t n, uint16_t k){
     uint8_t feedback;
     

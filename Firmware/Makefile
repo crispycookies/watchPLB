@@ -37,7 +37,7 @@ INCLUDES= \
 	-IDrivers/User/adc \
 	-IDrivers/User/key \
 	-IDrivers/User/led \
-	-IDrivers/User/rfTx \
+	-IDrivers/User/radio \
 	-IDrivers/User/uart \
 	-IDrivers/User/spi \
 	-IDrivers/User/dma \

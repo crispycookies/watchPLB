@@ -2,28 +2,18 @@
 #include "spi_driver.h"
 #include "location.h"
 #include "plb.h"
+#include "radio.h"
+#include <string.h>
 
-#define SPI_TIMEOUT   100
+#define FRAME_SIZE 144
 
-#define TX_BUF_SIZE   2
-#define TX_BUF_ADDR   0
-#define TX_BUF_DATA   1
+static EMC_State emergencyState;
+static uint8_t dataFrame[FRAME_SIZE];
+static uint16_t frameLength;
 
-#define SPI_READ      0
-#define SPI_WRITE     (1 << 7)
-
-#define ADDR_FIFOCTRL 4
-#define ADDR_FIFODATA 5
-
-//plb module
-
-static uint8_t emergencyState;
 static SPI_Init_Struct spi;
-static PLB_Instance plb; 
-
-static void plbTransmit(uint16_t data);
-
-static void SetReg(uint8_t addr, uint8_t data);
+static POS_Time lastPosUpdate;
+static RADIO_Instance radio;
 
 void EMC_Init(void) {
     
@@ -68,45 +58,35 @@ void EMC_Init(void) {
     
     SPI_Init(&spi);
 
-    //init plb with spi
-    PLB_Init(&plb, plbTransmit);
+    //init radio with spi
+    RADIO_Init(&radio, &spi);
 
-    emergencyState = 0;
+    emergencyState = EMC_State_Idle;
+    frameLength = 0;
 }
 
 void EMC_Process(void) {
 
-    if (emergencyState != 0) {
-        POS_Position* locPos = LOC_GetLastPosition();
-        POS_Position* plbPos = PLB_GetPosition(&plb);
+    if (emergencyState == EMC_State_Emergency) {
         
-        if (locPos != 0 && plbPos != 0 && locPos->valid != 0 && 
-                (plbPos->valid == 0 || POS_CmpTime(&locPos->time, &plbPos->time) > 0)) {
-            PLB_SetPosition(&plb, locPos);
+        if (RADIO_GetState(&radio) == RADIO_STATE_IDLE) {
+            POS_Position* locPos = LOC_GetLastPosition();
+
+            if (locPos != 0 && locPos->valid == POS_Valid_Flag_Valid
+                    && POS_CmpTime(&locPos->time, &lastPosUpdate) > 0) {
+                memcpy(&lastPosUpdate, &locPos->time, sizeof(POS_Time));
+                frameLength = PLB_CreateFrame(dataFrame, FRAME_SIZE, locPos);
+            }
+            
+            if (frameLength != 0) {
+                RADIO_SetFrame(&radio, dataFrame, frameLength);
+            }
         }
 
-        PLB_Process(&plb);
-    } 
+        RADIO_Process(&radio);
+    }
 }
 
-void EMC_SetEmergency(uint8_t emc) {
+void EMC_SetEmergency(EMC_State emc) {
     emergencyState = emc;
-}
-
-static void plbTransmit(uint16_t data) {
-    SetReg(ADDR_FIFOCTRL, (data >> 8) & 0x03);
-    
-    //maybe wait 1ms??
-    
-    SetReg(ADDR_FIFODATA, data & 0xFF);
-}
-
-static void SetReg(uint8_t addr, uint8_t data) {
-    //chip select -> 0
-    SPI_CS_Enable(&spi);
-    uint8_t txBuf[TX_BUF_SIZE];
-    txBuf[TX_BUF_ADDR] = SPI_WRITE | (addr & 0x7F);
-    txBuf[TX_BUF_DATA] = data;
-    SPI_SendData(&spi, txBuf, TX_BUF_SIZE, SPI_TIMEOUT);
-    //chip select -> 1
 }
