@@ -10,7 +10,6 @@
 #include "usb.h"
 #include "usb_device.h"
 #include "usbd_cdc_if.h"
-#include "usbd_core.h"
 
 HAL_StatusTypeDef USB_Init()
 {

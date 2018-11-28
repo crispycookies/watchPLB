@@ -4,22 +4,28 @@
   * @version        :
   * @brief          : This file implements the board support package for the USB device library
   ******************************************************************************
-  **/
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx.h"
 #include "stm32l0xx_hal.h"
-#include "stm32l0xx_hal_pcd.h"
 #include "usbd_def.h"
 #include "usbd_core.h"
 #include "usbd_cdc.h"
 
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
 
-PCD_HandleTypeDef hpcd_USB_FS;
+
+                PCD_HandleTypeDef hpcd_USB_FS;
 void _Error_Handler(char * file, int line);
 
 
 static void SystemClockConfig_Resume(void);
+
+
+
 void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef *hpcd, uint8_t state);
 extern void SystemClock_Config(void);
 
@@ -32,12 +38,14 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
 {
   if(pcdHandle->Instance==USB)
   {
+
     /* Peripheral clock enable */
     __HAL_RCC_USB_CLK_ENABLE();
 
     /* Peripheral interrupt init */
     HAL_NVIC_SetPriority(USB_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(USB_IRQn);
+
   }
 }
 
@@ -45,11 +53,13 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
 {
   if(pcdHandle->Instance==USB)
   {
-    /* Peripheral clock disable */
+
+    /* Disable Peripheral clock */
     __HAL_RCC_USB_CLK_DISABLE();
 
     /* Peripheral interrupt Deinit*/
     HAL_NVIC_DisableIRQ(USB_IRQn);
+
   }
 }
 
@@ -224,8 +234,9 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
   hpcd_USB_FS.Init.battery_charging_enable = DISABLE;
   if (HAL_PCD_Init(&hpcd_USB_FS) != HAL_OK)
   {
-    //_Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILE__, __LINE__);
   }
+
   HAL_PCDEx_PMAConfig((PCD_HandleTypeDef*)pdev->pData , 0x00 , PCD_SNG_BUF, 0x18);
   HAL_PCDEx_PMAConfig((PCD_HandleTypeDef*)pdev->pData , 0x80 , PCD_SNG_BUF, 0x58);
   HAL_PCDEx_PMAConfig((PCD_HandleTypeDef*)pdev->pData , 0x81 , PCD_SNG_BUF, 0xC0);
@@ -664,7 +675,7 @@ void USBD_static_free(void *p)
 
 /* USER CODE BEGIN 5 */
 /**
-  * @brief  Configures system clock after wake-up from USB Resume CallBack:
+  * @brief  Configures system clock after wake-up from USB resume callBack:
   *         enable HSI, PLL and select PLL as system clock source.
   * @retval None
   */
@@ -690,7 +701,7 @@ void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef *hpcd, uint8_t state)
   }
   else
   {
-    /* Configure High connection state */
+    /* Configure High connection state. */
 
   }
   /* USER CODE END 6 */

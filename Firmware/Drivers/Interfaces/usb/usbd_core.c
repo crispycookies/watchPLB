@@ -28,63 +28,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_core.h"
 
-/** @addtogroup STM32_USBD_DEVICE_LIBRARY
-* @{
-*/
-
-
-/** @defgroup USBD_CORE 
-* @brief usbd core module
-* @{
-*/ 
-
-/** @defgroup USBD_CORE_Private_TypesDefinitions
-* @{
-*/ 
-/**
-* @}
-*/ 
-
-
-/** @defgroup USBD_CORE_Private_Defines
-* @{
-*/ 
-
-/**
-* @}
-*/ 
-
-
-/** @defgroup USBD_CORE_Private_Macros
-* @{
-*/ 
-/**
-* @}
-*/ 
-
-
-
-
-/** @defgroup USBD_CORE_Private_FunctionPrototypes
-* @{
-*/ 
-
-/**
-* @}
-*/ 
-
-/** @defgroup USBD_CORE_Private_Variables
-* @{
-*/ 
-
-/**
-* @}
-*/ 
-
-/** @defgroup USBD_CORE_Private_Functions
-* @{
-*/ 
-
 /**
 * @brief  USBD_Init
 *         Initializes the device stack and load the class driver

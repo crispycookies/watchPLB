@@ -28,6 +28,70 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_ioreq.h"
 
+/** @addtogroup STM32_USB_DEVICE_LIBRARY
+  * @{
+  */
+
+
+/** @defgroup USBD_IOREQ 
+  * @brief control I/O requests module
+  * @{
+  */ 
+
+/** @defgroup USBD_IOREQ_Private_TypesDefinitions
+  * @{
+  */ 
+/**
+  * @}
+  */ 
+
+
+/** @defgroup USBD_IOREQ_Private_Defines
+  * @{
+  */ 
+
+/**
+  * @}
+  */ 
+
+
+/** @defgroup USBD_IOREQ_Private_Macros
+  * @{
+  */ 
+/**
+  * @}
+  */ 
+
+
+/** @defgroup USBD_IOREQ_Private_Variables
+  * @{
+  */ 
+
+/**
+  * @}
+  */ 
+
+
+/** @defgroup USBD_IOREQ_Private_FunctionPrototypes
+  * @{
+  */ 
+/**
+  * @}
+  */ 
+
+
+/** @defgroup USBD_IOREQ_Private_Functions
+  * @{
+  */ 
+
+/**
+* @brief  USBD_CtlSendData
+*         send data on the ctl pipe
+* @param  pdev: device instance
+* @param  buff: pointer to data buffer
+* @param  len: length of data to be sent
+* @retval status
+*/
 USBD_StatusTypeDef  USBD_CtlSendData (USBD_HandleTypeDef  *pdev, 
                                uint8_t *pbuf,
                                uint16_t len)

@@ -21,7 +21,7 @@ HAL_StatusTypeDef LOG_Init()
 }
 
 
-HAL_StatusTypeDef LOG_Log (const uint8_t * format, ...)
+HAL_StatusTypeDef LOG_Log(const uint8_t * format, ...)
 {
   va_list args;
   va_start (args, format);
