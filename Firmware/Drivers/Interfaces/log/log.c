@@ -12,25 +12,32 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-static uint8_t buffer[256];
+#define BUFFER_LEN 256
 
-HAL_StatusTypeDef LOG_Init()
+static uint8_t buffer[BUFFER_LEN];
+
+static uint8_t init = 0;
+
+void LOG_Init()
 {
 	USB_Init();
-	return HAL_OK;
+	init = 1;
+	return;
 }
 
 
-HAL_StatusTypeDef LOG_Log(const uint8_t * format, ...)
+void LOG_Log(const uint8_t * format, ...)
 {
-  va_list args;
-  va_start (args, format);
-  uint16_t len = vsprintf ((char*)buffer,(char*)format, args);
-  if(USB_SendData (buffer, len) != HAL_OK)
-  {
-	  return HAL_ERROR;
-  }
-  va_end (args);
+	if (init == 0) {
+		return;
+	}
 
-  return HAL_OK;
+	va_list args;
+	va_start (args, format);
+	
+	uint16_t len = vsnprintf ((char*)buffer, BUFFER_LEN, (char*)format, args);
+	USB_SendData (buffer, len);
+
+	va_end (args); 
+	return;
 }
