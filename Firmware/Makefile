@@ -38,10 +38,10 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/User/rfTx \
 	-IDrivers/User/uart \
 	-IDrivers/User/dma \
+	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
-	-IDrivers/Interfaces/usb \
 	-IDrivers/Interfaces/log \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
