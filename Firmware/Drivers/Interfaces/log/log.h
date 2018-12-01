@@ -12,4 +12,4 @@
 void LOG_Init();
 
 // Writes formated Data via USB
-void LOG_Log(const uint8_t * format, ...);
+void LOG_Log(const char * format, ...);

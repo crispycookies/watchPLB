@@ -26,7 +26,7 @@ void LOG_Init()
 }
 
 
-void LOG_Log(const uint8_t * format, ...)
+void LOG_Log(const char * format, ...)
 {
 	if (init == 0) {
 		return;
@@ -35,7 +35,7 @@ void LOG_Log(const uint8_t * format, ...)
 	va_list args;
 	va_start (args, format);
 	
-	uint16_t len = vsnprintf ((char*)buffer, BUFFER_LEN, (char*)format, args);
+	uint16_t len = vsnprintf ((char*)buffer, BUFFER_LEN, format, args);
 	USB_SendData (buffer, len);
 
 	va_end (args); 
