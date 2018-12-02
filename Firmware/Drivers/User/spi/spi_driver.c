@@ -134,16 +134,16 @@ static void SPI_Init_CS(const SPI_GPIO_Pair gp) {
  * @param  gp: The Pin and the Location of the Pin to use
  * @retval none
  */
-void SPI_CS_Enable(const SPI_GPIO_Pair gp) {
-	HAL_GPIO_WritePin(gp.bank, gp.pin, GPIO_PIN_RESET);
+void SPI_CS_Enable(SPI_Init_Struct * spi_init) {
+	HAL_GPIO_WritePin(spi_init->CS.bank, spi_init->CS.pin, GPIO_PIN_RESET);
 }
 /**
  * @brief Disable CS
  * @param  gp: The Pin and the Location of the Pin to use
  * @retval none
  */
-void SPI_CS_Disable(const SPI_GPIO_Pair gp) {
-	HAL_GPIO_WritePin(gp.bank, gp.pin, GPIO_PIN_SET);
+void SPI_CS_Disable(SPI_Init_Struct * spi_init) {
+	HAL_GPIO_WritePin(spi_init->CS.bank, spi_init->CS.pin, GPIO_PIN_SET);
 }
 /**
  * @brief Initialize SPI and GPIOs; Enables CS
@@ -155,9 +155,9 @@ SPI_RetType SPI_Init(SPI_Init_Struct * spi_init) {
 		return SPI_RET_INVALID_PARAM;
 	}
 
-	if (spi_init->SPI->Instance == SPI1) {
+	if (spi_init->SPI.Instance == SPI1) {
 		__HAL_RCC_SPI1_CLK_ENABLE();
-	} else if (spi_init->SPI->Instance == SPI2) {
+	} else if (spi_init->SPI.Instance == SPI2) {
 		__HAL_RCC_SPI2_CLK_ENABLE();
 	} else {
 		return SPI_RET_INVALID_PARAM;
@@ -168,16 +168,15 @@ SPI_RetType SPI_Init(SPI_Init_Struct * spi_init) {
 	SPI_AF_INIT(spi_init->MISO);
 	SPI_AF_INIT(spi_init->SCLK);
 	SPI_Init_CS(spi_init->CS);
-	SPI_CS_Enable(spi_init->CS);
+	SPI_CS_Enable(spi_init);
 
-	__HAL_SPI_DISABLE(spi_init->SPI);
+	__HAL_SPI_DISABLE(&spi_init->SPI);
 
-	if (HAL_SPI_Init(spi_init->SPI) != HAL_OK) {
+	if (HAL_SPI_Init(&spi_init->SPI) != HAL_OK) {
 		return SPI_RET_FAILED_INIT;
 	}
-	HAL_SPI_MspInit(spi_init->SPI);
 
-	__HAL_SPI_ENABLE(spi_init->SPI);
+	__HAL_SPI_ENABLE(&spi_init->SPI);
 
 	return SPI_RET_OK;
 }
@@ -195,7 +194,7 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
 		return SPI_RET_INVALID_PARAM;
 	}
 
-	if (HAL_SPI_Transmit(spi_init->SPI,  tx_buffer, tx_buffer_size,
+	if (HAL_SPI_Transmit(&spi_init->SPI,  tx_buffer, tx_buffer_size,
 			timeout) != HAL_OK) {
 		return SPI_RET_OP_FAILED;
 	}
@@ -217,7 +216,7 @@ SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, uint8_t * rx_buffer,
 		return SPI_RET_INVALID_PARAM;
 	}
 
-	if (HAL_SPI_Receive(spi_init->SPI, (uint8_t*) rx_buffer, rx_buffer_size,
+	if (HAL_SPI_Receive(&spi_init->SPI, (uint8_t*) rx_buffer, rx_buffer_size,
 			timeout) != HAL_OK) {
 		return SPI_RET_OP_FAILED;
 	}
@@ -234,16 +233,15 @@ SPI_RetType SPI_DeInit(SPI_Init_Struct * spi_init) {
 	if (spi_init == 0) {
 		return SPI_RET_INVALID_PARAM;
 	}
-	SPI_CS_Disable(spi_init->CS);
+	SPI_CS_Disable(spi_init);
 	HAL_GPIO_DeInit(spi_init->CS.bank, spi_init->CS.pin);
 	HAL_GPIO_DeInit(spi_init->SCLK.bank, spi_init->SCLK.pin);
 	HAL_GPIO_DeInit(spi_init->MOSI.bank, spi_init->MOSI.pin);
 	HAL_GPIO_DeInit(spi_init->MISO.bank, spi_init->MISO.pin);
 
-	if (HAL_SPI_DeInit(spi_init->SPI) != HAL_OK) {
+	if (HAL_SPI_DeInit(&spi_init->SPI) != HAL_OK) {
 		return SPI_RET_FAILED_INIT;
 	}
-	HAL_SPI_MspDeInit(spi_init->SPI);
 
 	return SPI_RET_OK;
 }
