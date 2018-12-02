@@ -75,7 +75,13 @@ void EMC_Process(void) {
             if (locPos != 0 && locPos->valid == POS_Valid_Flag_Valid
                     && POS_CmpTime(&locPos->time, &lastPosUpdate) > 0) {
                 memcpy(&lastPosUpdate, &locPos->time, sizeof(POS_Time));
+
+                LOG("[EMC] Found new Position:\n");
+                LOG_POS(locPos);
+
                 frameLength = PLB_CreateFrame(dataFrame, FRAME_SIZE, locPos);
+
+                LOG_BITARRAY(dataFrame, frameLength);
             }
             
             if (frameLength != 0) {
