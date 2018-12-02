@@ -29,6 +29,15 @@ typedef enum {
 } POS_Longitude_Flag;
 
 /**
+ * @brief Position valid flag
+ * 
+ */
+typedef enum {
+	POS_Valid_Flag_Invalid = 0,
+	POS_Valid_Flag_Valid
+} POS_Valid_Flag;
+
+/**
  * @brief Position timestamp
  * 
  */
@@ -67,7 +76,9 @@ typedef struct {
     POS_Time time;
 	POS_Latitude latitude;
 	POS_Longitude longitude;
-	uint8_t valid;
+	POS_Valid_Flag valid;
 } POS_Position;
+
+int16_t POS_CmpTime(POS_Time *left, POS_Time *right);
 
 #endif //!POSITION_H

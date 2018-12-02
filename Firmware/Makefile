@@ -29,14 +29,17 @@ LINKER_FLAGS=-lm -mthumb -mcpu=cortex-m0plus  -Wl,--gc-sections -T$(LINK_SCRIPT)
 LINK_SCRIPT="stm32_flash.ld"
 ASSEMBLER_FLAGS=-c -g -O0 -mcpu=cortex-m0plus  -mthumb -specs=nano.specs -D"STM32L073xx"  -x assembler-with-cpp
 COMPILER_FLAGS=-c -g -mcpu=cortex-m0plus  -O0 -Wall -ffunction-sections -fdata-sections -mthumb -specs=nano.specs -D"STM32L073xx" -include stm32l0xx_hal_conf.h -include system_stm32l0xx.h
-INCLUDES=-IDrivers/CMSIS/Include \
+INCLUDES= \
+	-ITools/BitArray \
+	-IDrivers/CMSIS/Include \
 	-IDrivers/CMSIS/Device/ST/STM32L0xx/Include \
 	-I$(HAL_DIRECTORY)/Inc \
 	-IDrivers/User/adc \
 	-IDrivers/User/key \
 	-IDrivers/User/led \
-	-IDrivers/User/rfTx \
+	-IDrivers/User/radio \
 	-IDrivers/User/uart \
+	-IDrivers/User/spi \
 	-IDrivers/User/dma \
 	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
@@ -45,6 +48,7 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/Interfaces/log \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
+	-IDrivers/Interfaces/plb \
 	-IApp/communication \
 	-IApp/emergencyCall \
 	-IApp/location \
@@ -61,6 +65,7 @@ BIN_DIR = $(OBJECT_DIR)
 SRC := $(wildcard App/*/*.c) \
 	$(wildcard Drivers/User/*/*.c) \
 	$(wildcard Drivers/Interfaces/*/*.c) \
+	$(wildcard Tools/*/*.c) \
 	$(HAL_DIRECTORY)/Src/stm32l0xx_hal.c
 
 INC := $(wildcard *.h) \
