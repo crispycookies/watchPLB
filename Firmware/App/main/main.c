@@ -1,4 +1,3 @@
-
 /**
   ******************************************************************************
   * @file           : main.c
@@ -81,9 +80,9 @@ int main(void) {
 	SystemClock_Config();
 	LOG_Init();
 	
+	LOG("System initialized\n");
+
 	while (1) {
-		LOG_Log("Hello World... this i log: '%i'",1);
-		HAL_Delay(1000);
 	}
 }
 
