@@ -14,5 +14,11 @@
 				POS->longitude.degree, POS->longitude.minute, \
 			POS->valid == POS_Valid_Flag_Valid ? 'V' : 'I')
 
+#define LOG_BITARRAY(ARR, LEN) do { \
+        for (uint16_t i = 0; i < LEN; i++) { \
+            LOG("%01u", ARR[i]); \
+        } \
+        LOG("\n"); \
+    } while (0)
 
 #endif //!LOGGER_H
