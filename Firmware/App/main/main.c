@@ -50,9 +50,150 @@
 #include "stm32l0xx_hal.h"
 #include "usb.h"
 #include "log.h"
+#include "location.h"
+#include "emergencyCall.h"
 
 /* Private variables ---------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
+#define POS_CNT 7
+#define DELAY 1000
+
+POS_Position positions[POS_CNT] = {
+	{
+		//empty config
+		.time = {
+			.hour = 0,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Valid //has to be valid
+	}, {
+		//test config
+		.time = {
+			.hour = 1,
+			.minute = 2,
+			.second = 3,
+			.split = 4
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 23,
+			.minute = 45.234
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 10,
+			.minute = 38.923
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (Hagenberg)
+		.time = {
+			.hour = 1,
+			.minute = 2,
+			.second = 4,
+			.split = 2
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 48,
+			.minute = 22.082
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_E,
+			.degree = 14,
+			.minute = 30.782
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (New York, US)
+		.time = {
+			.hour = 2,
+			.minute = 3,
+			.second = 4,
+			.split = 5
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 40,
+			.minute = 43.650
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 73,
+			.minute = 59.328
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config(Melbourne, Australia)
+		.time = {
+			.hour = 12,
+			.minute = 13,
+			.second = 14,
+			.split = 15
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 37,
+			.minute = 48.858
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_E,
+			.degree = 144,
+			.minute = 57.804
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (should be neglected because of old timestamp)
+		.time = {
+			.hour = 10,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (should be neglected because invalid)
+		.time = {
+			.hour = 14,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Invalid
+	}, 
+};
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void _Error_Handler(char *file, int line);
@@ -79,10 +220,21 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	LOG_Init();
+	LOC_Init();
+	EMC_Init();
 	
 	LOG("System initialized\n");
 
+	uint32_t next = HAL_GetTick() + DELAY;
+	uint8_t i = 0;
+
 	while (1) {
+		if (HAL_GetTick()  > next) {
+			next = HAL_GetTick() + DELAY;
+			LOC_InjectPosition(&positions[i++]);
+		}
+
+		EMC_Process();
 	}
 }
 
