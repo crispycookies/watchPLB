@@ -96,6 +96,9 @@ RADIO_State RADIO_GetState(RADIO_Instance *inst) {
 
 static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
     uint16_t tx = (data == 0) ? IQ_0 : IQ_1;
+
+    LOG("[RADIO] TX: %3x\n", tx);
+
     uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
 
     if (ret == TX_OK) {
