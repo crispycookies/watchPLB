@@ -29,7 +29,7 @@
 #define TX_OK  0x1
 #define TX_NOK 0x0
 
-static uint8_t Transmit10(RADIO_Instance *inst, uint16_t data);
+static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data);
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data);
 
 void RADIO_Init(RADIO_Instance *inst, SPI_Init_Struct *spi) {
@@ -94,11 +94,12 @@ RADIO_State RADIO_GetState(RADIO_Instance *inst) {
     return 0;
 }
 
-static uint8_t Transmit10(RADIO_Instance *inst, uint16_t data) {
-    uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, (data >> 8) & 0x03);
+static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
+    uint16_t tx = (data == 0) ? IQ_0 : IQ_1;
+    uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
 
     if (ret == TX_OK) {
-        SetReg(inst, ADDR_FIFODATA, data & 0xFF);
+        SetReg(inst, ADDR_FIFODATA, tx & 0xFF);
     }
     
     return ret;
