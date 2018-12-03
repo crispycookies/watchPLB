@@ -78,7 +78,7 @@ uint16_t PLB_CreateFrame(uint8_t *frame, uint8_t len, POS_Position* pos) {
     bch_encode(pdf1, bch1_poly, LENPDF1_WITH_BCH1, LENPDF1);
     
     //add bits into array for pdf2 and calculate the bch_code for pdf2
-    uint8_t *pdf2 = frame+24+LENPDF1_WITH_BCH1;
+    uint8_t *pdf2 = frame+LENSYNC+LENPDF1_WITH_BCH1;
     BitArray_t data2;
     BITARRAY_Init(&data2, pdf2, LENPDF2);
     BITARRAY_AddBits(&data2, position_data_source, 1);
