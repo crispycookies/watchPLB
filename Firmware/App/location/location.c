@@ -57,3 +57,9 @@ static void positionCallback(POS_Position *pos) {
         memcpy(&position, pos, sizeof(POS_Position));
     }
 }
+
+void LOC_InjectPosition(POS_Position* pos) {
+    if (pos != 0) {
+        memcpy(&position, pos, sizeof(POS_Position));
+    }
+}
