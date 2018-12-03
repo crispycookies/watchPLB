@@ -234,6 +234,7 @@ int main(void) {
 			LOC_InjectPosition(&positions[i++]);
 		}
 
+		LOC_Process();
 		EMC_Process();
 	}
 }
