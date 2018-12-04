@@ -81,6 +81,7 @@ void EMC_Process(void) {
 
                 frameLength = PLB_CreateFrame(dataFrame, FRAME_SIZE, locPos);
 
+                LOG("[EMC] Frame: \n");
                 LOG_BITARRAY(dataFrame, frameLength);
             }
             

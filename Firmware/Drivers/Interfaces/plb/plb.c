@@ -61,6 +61,9 @@ uint16_t PLB_CreateFrame(uint8_t *frame, uint8_t len, POS_Position* pos) {
     BITARRAY_Init(&startBits, frame, LENSYNC);
     BITARRAY_AddBits(&startBits, sync_bit, 15);
     BITARRAY_AddBits(&startBits, frame_sync, 9);
+
+    LOG("[PLB] Protocol sync bits: ");
+    LOG_BITARRAY(frame, LENSYNC);
     
     //add bits into array for pdf1 and calculate the bch_code for pdf1
     uint8_t *pdf1 = frame+LENSYNC;
@@ -76,8 +79,14 @@ uint16_t PLB_CreateFrame(uint8_t *frame, uint8_t len, POS_Position* pos) {
     BITARRAY_AddBits(&data1, national_use, 10);
     BITARRAY_AddBits(&data1, certif_number, 10);
     BITARRAY_AddBits(&data1, radiolocating, 2);
+
+    LOG("[PLB] PDF1: ");
+    LOG_BITARRAY(pdf1, LENPDF1);
     
     bch_encode(pdf1, bch1_poly, LENPDF1_WITH_BCH1, LENPDF1);
+
+    LOG("[PLB] PDF1 + BCH: ");
+    LOG_BITARRAY(pdf1, LENPDF1_WITH_BCH1);
     
     //add bits into array for pdf2 and calculate the bch_code for pdf2
     uint8_t *pdf2 = frame+LENSYNC+LENPDF1_WITH_BCH1;
@@ -91,7 +100,13 @@ uint16_t PLB_CreateFrame(uint8_t *frame, uint8_t len, POS_Position* pos) {
     BITARRAY_AddBits(&data2, pos->longitude.degree, 8);
     BITARRAY_AddBits(&data2, pos->longitude.minute/MIN_DIV, 4);
 
+    LOG("[PLB] PDF2: ");
+    LOG_BITARRAY(pdf2, LENPDF2);
+    
     bch_encode(pdf2, bch2_poly, LENPDF2_WITH_BCH2, LENPDF2);
+
+    LOG("[PLB] PDF2 + BCH: ");
+    LOG_BITARRAY(pdf2, LENPDF2_WITH_BCH2);
 
     return LENALL;
 }
