@@ -17,6 +17,8 @@
 #define LENPDF2_WITH_BCH2 38
 #define LENALL            (LENSYNC + LENPDF1_WITH_BCH1 + LENPDF2_WITH_BCH2)
 
+#define MIN_DIV           4
+
 static uint16_t const sync_bit = 0b111111111111111; //from 1-15
 static uint16_t const frame_sync = 0b000101111; //from 16-24
 //PDF1
@@ -84,11 +86,11 @@ uint16_t PLB_CreateFrame(uint8_t *frame, uint8_t len, POS_Position* pos) {
     BITARRAY_AddBits(&data2, position_data_source, 1);
     BITARRAY_AddBits(&data2, pos->latitude.direction, 1);
     BITARRAY_AddBits(&data2, pos->latitude.degree, 7);
-    BITARRAY_AddBits(&data2, pos->latitude.minute, 4);
+    BITARRAY_AddBits(&data2, pos->latitude.minute/MIN_DIV, 4);
     BITARRAY_AddBits(&data2, pos->longitude.direction, 1);
     BITARRAY_AddBits(&data2, pos->longitude.degree, 8);
-    BITARRAY_AddBits(&data2, pos->longitude.minute, 4);
-    
+    BITARRAY_AddBits(&data2, pos->longitude.minute/MIN_DIV, 4);
+
     bch_encode(pdf2, bch2_poly, LENPDF2_WITH_BCH2, LENPDF2);
 
     return LENALL;
