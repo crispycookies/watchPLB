@@ -59,10 +59,10 @@ static uint8_t bch2_poly[13] = {1,0,1,0,1,0,0,1,1,1,0,0,1};
 //static uint16_t const bch2_poly = 0b1010100111001; //13 with matlab function bchgenpoly(63,51)
 //PDF2
 static uint8_t const position_data_source = 0b1; //107; GPS internal
-uint8_t latitude_flag = 0b0; // N = '1'; S = '0'; pos.108
+uint8_t latitude_flag = 0b0; // N = '0'; S = '1'; pos.108
 uint8_t latitude_degrees = 0b0; //from 109-115
 uint8_t latitude_minutes = 0b0; //from 116-119
-uint8_t longtitude_flag = 0b0; // E = '1'; W = '0'; pos.120
+uint8_t longtitude_flag = 0b0; // E = '0'; W = '1'; pos.120
 uint8_t longtitude_degrees = 0b0; //from 121-128
 uint8_t longtitude_minutes = 0b0; //from 129-132;
 
