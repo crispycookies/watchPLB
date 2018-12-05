@@ -55,13 +55,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 #define POS_CNT 7
-#define DELAY 1000
+#define DELAY 2000
 
 POS_Position positions[POS_CNT] = {
 	{
 		//empty config
 		.time = {
-			.hour = 0,
+			.hour = 1,
 			.minute = 0,
 			.second = 0,
 			.split = 0
@@ -222,15 +222,20 @@ int main(void) {
 	LOG_Init();
 	LOC_Init();
 	EMC_Init();
+
+	EMC_SetEmergency(EMC_State_Emergency);
 	
+	HAL_Delay(1000);
+
 	LOG("System initialized\n");
 
 	uint32_t next = HAL_GetTick() + DELAY;
 	uint8_t i = 0;
 
 	while (1) {
-		if (HAL_GetTick()  > next) {
+		if (HAL_GetTick()  > next && i < POS_CNT) {
 			next = HAL_GetTick() + DELAY;
+			LOG("[MAIN] Next Position: %u Tick: %lu\n", i, HAL_GetTick());
 			LOC_InjectPosition(&positions[i++]);
 		}
 
