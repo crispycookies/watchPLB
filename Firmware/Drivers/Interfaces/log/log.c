@@ -36,6 +36,7 @@ void LOG_Log(const char * format, ...)
 	
 	uint16_t len = vsnprintf ((char*)buffer, BUFFER_LEN, format, args);
 	USB_SendData (buffer, len);
+	HAL_Delay(2);
 
 	va_end (args); 
 }
