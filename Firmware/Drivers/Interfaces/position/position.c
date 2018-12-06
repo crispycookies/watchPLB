@@ -13,16 +13,16 @@ int16_t POS_CmpTime(POS_Time *left, POS_Time *right) {
 				if (left->split == right->split) {
 					return 0;
 				} else {
-					return left->split - right->split;
+					return ((int16_t)left->split) - ((int16_t)right->split);
 				}
 			} else {
-				return left->second - right->second;
+				return ((int16_t)left->second) - ((int16_t)right->second);
 			}
 		} else {
-			return left->minute - right->minute;
+			return ((int16_t)left->minute) - ((int16_t)right->minute);
 		}
 	} else {
-		return left->hour - right->hour;
+		return ((int16_t)left->hour) - ((int16_t)right->hour);
 	}
 }
 
