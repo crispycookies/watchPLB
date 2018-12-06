@@ -79,13 +79,13 @@ void RADIO_Process(RADIO_Instance *inst) {
 }
 
 void RADIO_SetFrame(RADIO_Instance *inst, uint8_t *data, uint16_t len) {
-    if (inst != 0 && inst->state == RADIO_STATE_IDLE) {
-        if (data == 0 || len == 0 || len > RADIO_FRAME_LENGTH) {
-            inst->state = RADIO_STATE_IDLE;
-        } else {
-            memcpy(inst->frame, data, len);
-            inst->state = RADIO_STATE_SYNC;
-        }
+    if (inst != 0 && inst->state == RADIO_STATE_IDLE 
+            && data != 0 && len != 0 && len < RADIO_FRAME_LENGTH) {
+        LOG("[RADIO] New Frame\n");
+        memcpy(inst->frame, data, len);
+        inst->len = len;
+        inst->idx = 0;
+        inst->state = RADIO_STATE_SYNC;
     }
 }
 
