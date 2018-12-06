@@ -15,8 +15,8 @@
  * 
  */
 typedef enum {
-	POS_Latitude_Flag_S = 0,
-	POS_Latitude_Flag_N = 1
+	POS_Latitude_Flag_N = 0,
+	POS_Latitude_Flag_S = 1
 } POS_Latitude_Flag;
 
 /**
@@ -24,8 +24,8 @@ typedef enum {
  * 
  */
 typedef enum {
-	POS_Longitude_Flag_W = 0,
-	POS_Longitude_Flag_E = 1
+	POS_Longitude_Flag_E = 0,
+	POS_Longitude_Flag_W = 1
 } POS_Longitude_Flag;
 
 /**
