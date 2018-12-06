@@ -24,7 +24,7 @@
 #define STATE_S6_PLL_LOCK   (1 << 1)
 
 #define IQ_1                (0x369U)
-#define IQ_0                (0x259U)
+#define IQ_0                (0x97U)
 
 #define TX_OK  0x1
 #define TX_NOK 0x0
