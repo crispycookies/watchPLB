@@ -46,7 +46,7 @@ typedef struct {
 typedef struct{
 	POS_Latitude_Flag direction;
 	uint16_t degree;
-	double minute;
+	float minute;
 } POS_Latitude;
 
 /**
@@ -56,7 +56,7 @@ typedef struct{
 typedef struct{
 	POS_Longitude_Flag direction;
 	uint16_t degree;
-	double minute;
+	float minute;
 } POS_Longitude;
 
 /**
