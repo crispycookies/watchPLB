@@ -41,10 +41,11 @@ INCLUDES= \
 	-IDrivers/User/uart \
 	-IDrivers/User/spi \
 	-IDrivers/User/dma \
+	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
-	-IDrivers/Interfaces/usb \
+	-IDrivers/Interfaces/log \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
 	-IDrivers/Interfaces/plb \
@@ -52,9 +53,10 @@ INCLUDES= \
 	-IApp/emergencyCall \
 	-IApp/location \
 	-IApp/system \
-	-IApp/userInterface
+	-IApp/userInterface \
+	-ITools/Logger
 	
-HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr spi iwdg wwdg
+HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr pcd pcd_ex spi iwdg wwdg
 
 # Define output directory
 OBJECT_DIR = Debug

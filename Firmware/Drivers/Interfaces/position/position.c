@@ -1,4 +1,7 @@
 #include "position.h"
+#include "stdio.h"
+
+#define POS_STRLEN 61
 
 int16_t POS_CmpTime(POS_Time *left, POS_Time *right) {
 	if (left == 0 || right == 0) {
