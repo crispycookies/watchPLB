@@ -50,5 +50,4 @@ void LOG_BitArray(uint8_t *array, uint16_t len) {
 	}
 	buffer[len] = '\n';
 	USB_SendData(buffer, len+1);
-	HAL_Delay(2);
 }

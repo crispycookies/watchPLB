@@ -102,11 +102,10 @@ static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
 
     LOG("[RADIO] TX: %3x\n", tx);
 
-    uint8_t ret = TX_OK;
-    //uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
+    uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
 
     if (ret == TX_OK) {
-        //SetReg(inst, ADDR_FIFODATA, tx & 0xFF);
+        SetReg(inst, ADDR_FIFODATA, tx & 0xFF);
     }
     
     return ret;
