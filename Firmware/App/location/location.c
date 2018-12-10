@@ -13,7 +13,7 @@ static POS_Position position;
 static void positionCallback(POS_Position *pos);
 
 void LOC_Init() {
-    position.valid = 0;
+    position.valid = POS_Valid_Flag_Invalid;
 
     UART_Config uart_conf;
     

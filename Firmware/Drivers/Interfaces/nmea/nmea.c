@@ -246,9 +246,9 @@ static void parseGPGGL(NMEA_Instance* nmea) {
 
         //read valid flag
         if (*buf == ',' && *(buf+1) == 'A') {
-            pos.valid = 1;
+            pos.valid = POS_Valid_Flag_Valid;
         } else {
-            pos.valid = 0;
+            pos.valid = POS_Valid_Flag_Invalid;
         }
         
         //execute callback
