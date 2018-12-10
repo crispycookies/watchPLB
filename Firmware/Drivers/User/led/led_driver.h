@@ -95,7 +95,7 @@ bool led_timer_start(void);
 bool led_timer_stop(void);
 
 /**
-  * @brief Stops the Timer and its Interrupt
+  * @brief Sets the Reister Values for the LED
   * @param led: the LED for which the REGISTER value has to be set
   * @param value: the Register Value. Interrupt shifts this Value by 1 and checks if Bit is set. If Set, it enables LED, otherwise it disables.
   * @retval true if succeeded and false if not

@@ -11,6 +11,8 @@
 #ifndef USER_SPI_SPI_DRIVER_H_
 #define USER_SPI_SPI_DRIVER_H_
 
+#include "stm32l0xx_hal_spi.h"
+
 /*Global Typedefs*/
 typedef uint16_t GPIO_PinType;
 
