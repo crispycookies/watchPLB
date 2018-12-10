@@ -50,7 +50,7 @@ typedef struct{
 } POS_Latitude;
 
 /**
- * @brief Position latitude structure
+ * @brief Position longitude structure
  * 
  */
 typedef struct{
@@ -69,5 +69,9 @@ typedef struct {
 	POS_Longitude longitude;
 	uint8_t valid;
 } POS_Position;
+
+int16_t POS_CmpTime(POS_Time *left, POS_Time *right);
+
+uint16_t POS_ToString(POS_Position *pos, uint8_t* str, uint16_t len);
 
 #endif //!POSITION_H
