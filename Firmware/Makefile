@@ -28,7 +28,7 @@ HAL_PREFIX=stm32l0xx_hal_
 LINKER_FLAGS=-lm -mthumb -mcpu=cortex-m0plus  -Wl,--gc-sections -T$(LINK_SCRIPT) -static  -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs -specs=nosys.specs  -Wl,-cref "-Wl,-Map=$(BIN_DIR)/WatchPLB.map" -Wl,--defsym=malloc_getpagesize_P=0x1000
 LINK_SCRIPT="stm32_flash.ld"
 ASSEMBLER_FLAGS=-c -g -O0 -mcpu=cortex-m0plus  -mthumb -specs=nano.specs -D"STM32L073xx"  -x assembler-with-cpp
-COMPILER_FLAGS=-c -g -mcpu=cortex-m0plus  -O0 -Wall -ffunction-sections -fdata-sections -mthumb -specs=nano.specs -D"STM32L073xx" -include stm32l0xx_hal_conf.h -include system_stm32l0xx.h
+COMPILER_FLAGS=-c -g -mcpu=cortex-m0plus  -O0 -Wall -ffunction-sections -fdata-sections -mthumb -specs=nano.specs -D"STM32L073xx" -include stm32l0xx_hal_conf.h -include system_stm32l0xx.h -include logger.h
 INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/CMSIS/Device/ST/STM32L0xx/Include \
 	-I$(HAL_DIRECTORY)/Inc \
@@ -38,19 +38,21 @@ INCLUDES=-IDrivers/CMSIS/Include \
 	-IDrivers/User/rfTx \
 	-IDrivers/User/uart \
 	-IDrivers/User/dma \
+	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
-	-IDrivers/Interfaces/usb \
+	-IDrivers/Interfaces/log \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
 	-IApp/communication \
 	-IApp/emergencyCall \
 	-IApp/location \
 	-IApp/system \
-	-IApp/userInterface
+	-IApp/userInterface \
+	-ITools/Logger
 	
-HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr spi iwdg wwdg
+HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr pcd pcd_ex spi iwdg wwdg
 
 # Define output directory
 OBJECT_DIR = Debug
