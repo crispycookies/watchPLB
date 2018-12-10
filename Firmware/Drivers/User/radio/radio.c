@@ -47,7 +47,8 @@ void RADIO_Process(RADIO_Instance *inst) {
         {
             case RADIO_STATE_CONFIGURE:
                 //configure radio module
-                inst->state = RADIO_STATE_SYNC; //temp state skip
+                LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_IDLE\n");
+                inst->state = RADIO_STATE_IDLE; //temp state skip
                 break;
 
             case RADIO_STATE_SYNC:
@@ -56,11 +57,13 @@ void RADIO_Process(RADIO_Instance *inst) {
                 //temp state skip
                 inst->idx = 0;
                 inst->state = RADIO_STATE_FRAME; 
+                LOG("[RADIO] Change State: RADIO_STATE_SYNC -> RADIO_STATE_FRAME\n");
                 break;
 
             case RADIO_STATE_FRAME:
-                if (inst->idx < inst->len) {
+                if (inst->idx >= inst->len) {
                     inst->state = RADIO_STATE_IDLE;
+                    LOG("[RADIO] Change State: RADIO_STATE_FRAME -> RADIO_STATE_IDLE\n");
                 } else {
                     //send modulated frame
                     while (inst->idx < inst->len && Transmit10(inst, inst->frame[inst->idx])) {
