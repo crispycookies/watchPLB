@@ -24,9 +24,13 @@
 #define STATE_S6_PLL_LOCK   (1 << 1)
 
 #define IQ_1                (0x369U)
-#define IQ_0                (0x259U)
+#define IQ_0                (0x97U)
 
-static void SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data);
+#define TX_OK  0x1
+#define TX_NOK 0x0
+
+static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data);
+static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data);
 
 void RADIO_Init(RADIO_Instance *inst, SPI_Init_Struct *spi) {
     if (inst != 0 && spi != 0) {
@@ -43,14 +47,29 @@ void RADIO_Process(RADIO_Instance *inst) {
         {
             case RADIO_STATE_CONFIGURE:
                 //configure radio module
+                LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_IDLE\n");
+                inst->state = RADIO_STATE_IDLE; //temp state skip
                 break;
 
             case RADIO_STATE_SYNC:
                 //set preamble sync message
+
+                //temp state skip
+                inst->idx = 0;
+                inst->state = RADIO_STATE_FRAME; 
+                LOG("[RADIO] Change State: RADIO_STATE_SYNC -> RADIO_STATE_FRAME\n");
                 break;
 
             case RADIO_STATE_FRAME:
-                //send modulated frame
+                if (inst->idx >= inst->len) {
+                    inst->state = RADIO_STATE_IDLE;
+                    LOG("[RADIO] Change State: RADIO_STATE_FRAME -> RADIO_STATE_IDLE\n");
+                } else {
+                    //send modulated frame
+                    while (inst->idx < inst->len && Transmit10(inst, inst->frame[inst->idx])) {
+                        inst->idx++;
+                    }
+                }                
                 break;
         
             default:
@@ -60,13 +79,13 @@ void RADIO_Process(RADIO_Instance *inst) {
 }
 
 void RADIO_SetFrame(RADIO_Instance *inst, uint8_t *data, uint16_t len) {
-    if (inst != 0 && inst->state == RADIO_STATE_IDLE) {
-        if (data == 0 || len == 0 || len > RADIO_FRAME_LENGTH) {
-            inst->state = RADIO_STATE_IDLE;
-        } else {
-            memcpy(inst->frame, data, len);
-            inst->state = RADIO_STATE_SYNC;
-        }
+    if (inst != 0 && inst->state == RADIO_STATE_IDLE 
+            && data != 0 && len != 0 && len < RADIO_FRAME_LENGTH) {
+        LOG("[RADIO] New Frame\n");
+        memcpy(inst->frame, data, len);
+        inst->len = len;
+        inst->idx = 0;
+        inst->state = RADIO_STATE_SYNC;
     }
 }
 
@@ -78,21 +97,38 @@ RADIO_State RADIO_GetState(RADIO_Instance *inst) {
     return 0;
 }
 
-//TODO: Integrate in process
-static void plbTransmit(RADIO_Instance *inst, uint16_t data) {
-    SetReg(inst, ADDR_FIFOCTRL, (data >> 8) & 0x03);
+static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
+    uint16_t tx = (data == 0) ? IQ_0 : IQ_1;
+
+    LOG("[RADIO] TX: %3x\n", tx);
+
+    uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
+
+    if (ret == TX_OK) {
+        SetReg(inst, ADDR_FIFODATA, tx & 0xFF);
+    }
     
-    //maybe wait 1ms??
-    
-    SetReg(inst, ADDR_FIFODATA, data & 0xFF);
+    return ret;
 }
 
-static void SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
+static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
+    uint8_t rec;
+    uint8_t ret = TX_NOK;
+
     //chip select -> 0
     SPI_CS_Enable(inst->spi);
-    uint8_t txBuf[TX_BUF_SIZE];
-    txBuf[TX_BUF_ADDR] = SPI_WRITE | (addr & 0x7F);
-    txBuf[TX_BUF_DATA] = data;
-    SPI_SendData(inst->spi, txBuf, TX_BUF_SIZE, SPI_TIMEOUT);
+    addr = SPI_WRITE | (addr & 0x7F);
+    SPI_SendData(inst->spi, &addr, 1, SPI_TIMEOUT);
+
+    SPI_ReadData(inst->spi, &rec, 1, SPI_TIMEOUT);
+
+    if ((rec & STATE_S3_FIFO_FULL) == 0) {
+        SPI_SendData(inst->spi, &data, 1, SPI_TIMEOUT);
+        ret = TX_OK;
+    }
+    
     //chip select -> 1
+    SPI_CS_Disable(inst->spi);
+
+    return ret;
 }
