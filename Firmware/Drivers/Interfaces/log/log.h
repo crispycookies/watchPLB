@@ -13,3 +13,5 @@ void LOG_Init();
 
 // Writes formated Data via USB
 void LOG_Log(const char * format, ...);
+
+void LOG_BitArray(uint8_t *array, uint16_t len);

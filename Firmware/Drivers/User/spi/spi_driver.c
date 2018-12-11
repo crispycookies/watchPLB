@@ -93,10 +93,6 @@ static void SPI_AF_INIT(const SPI_GPIO_Pair gp) {
 	}
 
 	HAL_GPIO_Init(gp.bank, &spi_init_def);
-	/*
-	while(!(gp.bank->MODER & (GPIO_MODE_AF_PP<<(gp.pin<<1))) ){
-		/*Empty Loop*/
-	//}
 
 }
 /**

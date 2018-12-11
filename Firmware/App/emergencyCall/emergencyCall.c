@@ -61,6 +61,7 @@ void EMC_Init(void) {
     //init radio with spi
     RADIO_Init(&radio, &spi);
 
+    memset(&lastPosUpdate, 0, sizeof(POS_Time));
     emergencyState = EMC_State_Idle;
     frameLength = 0;
 }
@@ -81,6 +82,7 @@ void EMC_Process(void) {
 
                 frameLength = PLB_CreateFrame(dataFrame, FRAME_SIZE, locPos);
 
+                LOG("[EMC] Frame: \n");
                 LOG_BITARRAY(dataFrame, frameLength);
             }
             

@@ -9,4 +9,8 @@ void LOC_Process();
 
 uint8_t LOC_PositionAvailable();
 
+POS_Position* LOC_GetLastPosition();
+
+void LOC_InjectPosition(POS_Position* pos);
+
 #endif //!LOCATION_H
