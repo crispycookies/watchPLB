@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.6.0">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -33,9 +33,9 @@
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
@@ -5660,9 +5660,6 @@ Covered vias can be set in Masks (Limit).
 <autorouter>
 <pass name="Default">
 <param name="RoutingGrid" value="50mil"/>
-<param name="AutoGrid" value="1"/>
-<param name="Efforts" value="0"/>
-<param name="TopRouterVariant" value="1"/>
 <param name="tpViaShape" value="round"/>
 <param name="PrefDir.1" value="|"/>
 <param name="PrefDir.2" value="0"/>
@@ -5757,11 +5754,11 @@ Covered vias can be set in Masks (Limit).
 <element name="IC1" library="ubloxLib" package="SAM-M8Q" value="SAM-M8Q" x="26.67" y="26.5176" smashed="yes"/>
 <element name="R1" library="resistor" package="M0805" value="47k" x="38.862" y="24.765" smashed="yes" rot="R180">
 <attribute name="NAME" x="40.005" y="27.2034" size="1.27" layer="25" font="vector" rot="R180"/>
-<attribute name="VALUE" x="39.878" y="27.6606" size="1.27" layer="27" rot="R180"/>
+<attribute name="VALUE" x="40.894" y="23.0886" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="R2" library="resistor" package="M0805" value="47k" x="27.7622" y="16.6116" smashed="yes">
 <attribute name="NAME" x="26.8224" y="14.224" size="1.27" layer="25" font="vector"/>
-<attribute name="VALUE" x="26.4414" y="12.192" size="1.27" layer="27"/>
+<attribute name="VALUE" x="23.0124" y="14.224" size="1.27" layer="27"/>
 </element>
 <element name="C1" library="resistor" package="C0805" value="1uF" x="29.5656" y="35.3568" smashed="yes">
 <attribute name="NAME" x="28.6258" y="36.4236" size="1.27" layer="25" font="vector"/>
@@ -5769,19 +5766,19 @@ Covered vias can be set in Masks (Limit).
 </element>
 <element name="C2" library="resistor" package="C0805" value="1uF" x="17.6784" y="25.4508" smashed="yes" rot="R270">
 <attribute name="NAME" x="16.4592" y="24.3332" size="1.27" layer="25" font="vector" rot="R90"/>
-<attribute name="VALUE" x="15.0876" y="26.3398" size="1.27" layer="27" rot="R270"/>
+<attribute name="VALUE" x="14.8844" y="24.0792" size="1.27" layer="27" rot="R90"/>
 </element>
 <element name="C3" library="resistor" package="C0805" value="1uF" x="17.6784" y="29.4132" smashed="yes" rot="R90">
 <attribute name="NAME" x="16.4338" y="28.3464" size="1.27" layer="25" font="vector" rot="R90"/>
-<attribute name="VALUE" x="16.002" y="28.2194" size="1.27" layer="27" rot="R90"/>
+<attribute name="VALUE" x="14.986" y="27.9654" size="1.27" layer="27" rot="R90"/>
 </element>
 <element name="B2" library="PCB4_Demoboard" package="L0603" value="BLM18KG601SN1D" x="8.6106" y="20.9042" smashed="yes" rot="R90">
 <attribute name="NAME" x="7.62" y="19.9136" size="1.27" layer="25" font="vector" rot="R90"/>
-<attribute name="VALUE" x="3.5052" y="16.0636" size="1.27" layer="27" rot="R90"/>
+<attribute name="VALUE" x="6.2992" y="15.6826" size="1.27" layer="27" rot="R90"/>
 </element>
 <element name="C4" library="resistor" package="C0805" value="4.7uF" x="11.3284" y="21.0058" smashed="yes" rot="R270">
 <attribute name="NAME" x="12.5222" y="22.1234" size="1.27" layer="25" font="vector" rot="R270"/>
-<attribute name="VALUE" x="14.5288" y="23.4188" size="1.27" layer="27" rot="R270"/>
+<attribute name="VALUE" x="12.3952" y="18.0848" size="1.27" layer="27"/>
 </element>
 <element name="&lt;GPS" library="pinhead" package="1X08" value="" x="2.286" y="25" smashed="yes" rot="R90">
 <attribute name="NAME" x="4.2418" y="36.2776" size="1.27" layer="25" font="vector" ratio="10"/>

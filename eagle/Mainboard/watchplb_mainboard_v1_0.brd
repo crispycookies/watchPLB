@@ -12769,7 +12769,7 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="17.5928" y="45.071" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="20.9644" y="45.9436" size="1.016" layer="27" rot="R180"/>
 </element>
-<element name="R49" library="resistor" package="M0805" value="10k" x="23.1648" y="46.7868" smashed="yes" rot="R90">
+<element name="R49" library="resistor" package="M0805" value="3k9" x="23.1648" y="46.7868" smashed="yes" rot="R90">
 <attribute name="NAME" x="22.1488" y="45.7708" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="25.4508" y="45.7708" size="1.27" layer="27" rot="R90"/>
 </element>
@@ -12777,7 +12777,7 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="24.6126" y="41.3766" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="29.6926" y="41.9862" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="R51" library="resistor" package="M0805" value="120k" x="1.524" y="43.7388" smashed="yes" rot="R90">
+<element name="R51" library="resistor" package="M0805" value="155k" x="1.524" y="43.7388" smashed="yes" rot="R90">
 <attribute name="NAME" x="2.3368" y="46.0756" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="3.81" y="42.7228" size="1.27" layer="27" rot="R90"/>
 </element>
@@ -12834,11 +12834,11 @@ Covered vias can be set in Masks (Limit).
 <attribute name="NAME" x="57.7884" y="80.2432" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="67.1474" y="78.5148" size="1.016" layer="27" rot="R90"/>
 </element>
-<element name="R53" library="resistor" package="M0805" value="47k" x="65.6844" y="89.916" smashed="yes">
+<element name="R53" library="resistor" package="M0805" value="5k1" x="65.6844" y="89.916" smashed="yes">
 <attribute name="NAME" x="65.5828" y="90.932" size="1.016" layer="25" font="vector"/>
 <attribute name="VALUE" x="64.6684" y="87.63" size="1.27" layer="27"/>
 </element>
-<element name="R54" library="resistor" package="M0805" value="5k1" x="64.9224" y="97.536" smashed="yes" rot="R90">
+<element name="R54" library="resistor" package="M0805" value="39k" x="64.9224" y="97.536" smashed="yes" rot="R90">
 <attribute name="NAME" x="63.2968" y="96.2152" size="1.016" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="67.2084" y="96.52" size="1.27" layer="27" rot="R90"/>
 </element>

@@ -25423,9 +25423,9 @@ by exp-lbrs.ulp</description>
 <part name="+3V26" library="supply1" deviceset="+3V3" device=""/>
 <part name="R48" library="resistor" deviceset="R-EU_" device="M0805" value="330k"/>
 <part name="C49" library="resistor" deviceset="C-EU" device="C0805K" value="100nF"/>
-<part name="R49" library="resistor" deviceset="R-EU_" device="M0805" value="10k"/>
+<part name="R49" library="resistor" deviceset="R-EU_" device="M0805" value="3k9"/>
 <part name="R50" library="resistor" deviceset="R-EU_" device="R2512" value="0.25R"/>
-<part name="R51" library="resistor" deviceset="R-EU_" device="M0805" value="120k"/>
+<part name="R51" library="resistor" deviceset="R-EU_" device="M0805" value="155k"/>
 <part name="R52" library="resistor" deviceset="R-EU_" device="M0805" value="12k4"/>
 <part name="C51" library="rcl" deviceset="CPOL-EU" device="E" value="22uF 80-EDK226M050A9GAA "/>
 <part name="C52" library="rcl" deviceset="CPOL-EU" device="E" value="22uF 80-EDK226M050A9GAA "/>
@@ -25440,8 +25440,8 @@ by exp-lbrs.ulp</description>
 <part name="B7" library="PCB4_Demoboard" deviceset="B-EU_" device="B0603" value="BLM18KG601SN1D"/>
 <part name="C53" library="rcl" deviceset="CPOL-EU" device="E" value="10uF  80-EDK106M025A9DAA  "/>
 <part name="C54" library="rcl" deviceset="CPOL-EU" device="E" value="100uF  647-GYA1E101MCQ1GS "/>
-<part name="R53" library="resistor" deviceset="R-EU_" device="M0805" value="47k"/>
-<part name="R54" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
+<part name="R53" library="resistor" deviceset="R-EU_" device="M0805" value="5k1"/>
+<part name="R54" library="resistor" deviceset="R-EU_" device="M0805" value="39k"/>
 <part name="P+2" library="supply1" deviceset="+12V" device=""/>
 <part name="C55" library="rcl" deviceset="CPOL-EU" device="E" value="NP"/>
 <part name="IC5" library="lm1117" deviceset="LM1117DTX-ADJ" device="" value="LM1117DTX-ADJ-10V"/>
