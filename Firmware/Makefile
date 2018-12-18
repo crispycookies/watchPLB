@@ -28,7 +28,7 @@ HAL_PREFIX=stm32l0xx_hal_
 LINKER_FLAGS=-lm -mthumb -mcpu=cortex-m0plus  -Wl,--gc-sections -T$(LINK_SCRIPT) -static  -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs -specs=nosys.specs  -Wl,-cref "-Wl,-Map=$(BIN_DIR)/WatchPLB.map" -Wl,--defsym=malloc_getpagesize_P=0x1000
 LINK_SCRIPT="stm32_flash.ld"
 ASSEMBLER_FLAGS=-c -g -O0 -mcpu=cortex-m0plus  -mthumb -specs=nano.specs -D"STM32L073xx"  -x assembler-with-cpp
-COMPILER_FLAGS=-c -g -mcpu=cortex-m0plus  -O0 -Wall -ffunction-sections -fdata-sections -mthumb -specs=nano.specs -D"STM32L073xx" -include stm32l0xx_hal_conf.h -include system_stm32l0xx.h -include logger.h
+COMPILER_FLAGS=-c -g -mcpu=cortex-m0plus  -O0 -Wall -ffunction-sections -fdata-sections -mthumb -specs=nano.specs -D"STM32L073xx" -include stm32l0xx_hal_conf.h -include system_stm32l0xx.h -include stm32l0xx_hal.h -include logger.h
 INCLUDES= \
 	-ITools/BitArray \
 	-ITools/Logger \
@@ -44,6 +44,7 @@ INCLUDES= \
 	-IDrivers/User/dma \
 	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
+	-IDrivers/User/sysclock \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/log \
