@@ -44,6 +44,7 @@ INCLUDES= \
 	-IDrivers/User/dma \
 	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
+	-IDrivers/User/sysclock \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/log \
