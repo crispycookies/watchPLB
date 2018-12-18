@@ -47,7 +47,6 @@
   */
  
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
 #include "usb.h"
 #include "log.h"
 #include "sysclock_driver.h"
