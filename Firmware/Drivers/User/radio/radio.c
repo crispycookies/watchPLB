@@ -9,12 +9,66 @@
 #define TX_BUF_ADDR   0
 #define TX_BUF_DATA   1
 
+//RW Flag
 #define SPI_READ      0
 #define SPI_WRITE     (1 << 7)
 
-#define ADDR_FIFOCTRL 4
-#define ADDR_FIFODATA 5
+//Adresses
+#define ADDR_REVISION     0x00
+#define ADDR_SCRATCH      0x01
+#define ADDR_PWRMODE      0x02
+#define ADDR_XTALOSC      0x03
+#define ADDR_FIFOCTRL     0x04
+#define ADDR_FIFODATA     0x05
+#define ADDR_IRQMASK      0x06
 
+#define ADDR_PINCFG1      0x0C
+#define ADDR_PINCFG2      0x0D
+#define ADDR_PINCFG3      0x0E
+  
+#define ADDR_MODULATION   0x10
+#define ADDR_ENCODING     0x11
+#define ADDR_FRAMING      0x12
+  
+#define ADDR_FREQB3       0x1C
+#define ADDR_FREQB2       0x1D
+#define ADDR_FREQB1       0x1E
+#define ADDR_FREQB0       0x1F
+#define ADDR_FREQ3        0x20
+#define ADDR_FREQ2        0x21
+#define ADDR_FREQ1        0x22
+#define ADDR_FREQ0        0x23
+#define ADDR_FSKDEV2      0x25
+#define ADDR_FSKDEV1      0x26
+#define ADDR_FSKDEV0      0x27
+#define ADDR_PLLLOOP      0x2C
+#define ADDR_PLLRANGING   0x2D
+  
+#define ADDR_TXPWR        0x30
+#define ADDR_TXRATEHI     0x31
+#define ADDR_TXRATEMID    0x32
+#define ADDR_TXRATELO     0x33
+
+//Configuration Values
+#define CONF_XTALOSC      0x18
+#define CONF_MODULATION   0x06
+#define CONF_ENCODING     0x00
+#define CONF_FRAMING      0x00
+#define CONF_FREQ3        0x00
+#define CONF_FREQ2        0x00
+#define CONF_FREQ1        0xcb
+#define CONF_FREQ0        0xcb
+#define CONF_TXPWR        0x0f
+#define CONF_TXRATEHI     0x01
+#define CONF_TXRATEMID    0x99
+#define CONF_TXRATELO     0x9a
+#define CONF_PLLRANGING   0x18
+#define CONF_PLLLOOP      0x29
+#define CONF_FSKDEV2      0x00  //should be 0?!
+#define CONF_FSKDEV1      0x00
+#define CONF_FSKDEV0      0x00
+
+//States
 #define STATE_S0_FIFOSTAT0  (1 << 7)
 #define STATE_S1_FIFOSTAT1  (1 << 6)
 #define STATE_S2_FIFO_EMPTY (1 << 5)
@@ -23,11 +77,27 @@
 #define STATE_S5_FIFO_OVER  (1 << 2)
 #define STATE_S6_PLL_LOCK   (1 << 1)
 
+//Power modes
+#define PWRMODE_STANDBY 0
+
+//Modulation values
 #define IQ_1                (0x369U)
 #define IQ_0                (0x97U)
 
+//Return values
 #define TX_OK  0x1
 #define TX_NOK 0x0
+
+#define PREAMBLE_MSG 0x55
+
+#define CONFIGURATION_DELAY 5
+#define PREAMBLE_DURATION 160
+
+#define BITSYNCPATTERN_LEN 16
+#define FRAMESYNCPATTERN_LEN 9
+
+static const uint8_t bitsyncPattern[BITSYNCPATTERN_LEN]     = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+static const uint8_t framesyncPattern[FRAMESYNCPATTERN_LEN] = {0,0,0,1,0,1,1,1,1};
 
 static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data);
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data);
@@ -47,23 +117,77 @@ void RADIO_Process(RADIO_Instance *inst) {
         {
             case RADIO_STATE_CONFIGURE:
                 //configure radio module
-                LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_IDLE\n");
-                inst->state = RADIO_STATE_IDLE; //temp state skip
-                break;
+                SetReg(inst, ADDR_PWRMODE, PWRMODE_STANDBY);
+                inst->idx = HAL_GetTick() + CONFIGURATION_DELAY;
+                SetReg(inst, ADDR_XTALOSC, CONF_XTALOSC);
+                SetReg(inst, ADDR_PLLLOOP, CONF_PLLLOOP);
+                SetReg(inst, ADDR_PLLRANGING, CONF_PLLRANGING);
+                SetReg(inst, ADDR_FREQ3, CONF_FREQ3);
+                SetReg(inst, ADDR_FREQ2, CONF_FREQ2);
+                SetReg(inst, ADDR_FREQ1, CONF_FREQ1);
+                SetReg(inst, ADDR_FREQ0, CONF_FREQ0);
+                SetReg(inst, ADDR_TXPWR, CONF_TXPWR);
+                SetReg(inst, ADDR_FSKDEV2, CONF_FSKDEV2);
+                SetReg(inst, ADDR_FSKDEV1, CONF_FSKDEV1);
+                SetReg(inst, ADDR_FSKDEV0, CONF_FSKDEV0);        
+                SetReg(inst, ADDR_TXRATEHI, CONF_TXRATEHI);
+                SetReg(inst, ADDR_TXRATEMID, CONF_TXRATEMID);
+                SetReg(inst, ADDR_TXRATELO, CONF_TXRATELO);
+                SetReg(inst, ADDR_MODULATION, CONF_MODULATION);
+                SetReg(inst, ADDR_ENCODING, CONF_ENCODING);
+                SetReg(inst, ADDR_FRAMING, CONF_FRAMING);
 
-            case RADIO_STATE_SYNC:
+                LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_WAIT_CONF\n");
+                inst->state = RADIO_STATE_IDLE;
+                break;
+            case RADIO_STATE_WAIT_CONF:
+                if (HAL_GetTick() > inst->idx) {
+                    LOG("[RADIO] Change State: RADIO_STATE_WAIT_CONF -> RADIO_STATE_IDLE\n");
+                    inst->state = RADIO_STATE_IDLE;
+                }
+                break;
+            case RADIO_STATE_START_TX:
+                LOG("[RADIO] Change State: RADIO_STATE_START_TX -> RADIO_STATE_PREAMBLE\n");
+                inst->idx = HAL_GetTick() + CONFIGURATION_DELAY;
+                inst->state = RADIO_STATE_PREAMBLE; 
+                break;
+            case RADIO_STATE_PREAMBLE:
                 //set preamble sync message
-
-                //temp state skip
-                inst->idx = 0;
-                inst->state = RADIO_STATE_FRAME; 
-                LOG("[RADIO] Change State: RADIO_STATE_SYNC -> RADIO_STATE_FRAME\n");
+                if (HAL_GetTick() < inst->idx) {
+                    SetReg(inst, ADDR_FIFODATA, PREAMBLE_MSG);
+                } else {
+                    inst->idx = 0;
+                    inst->state = RADIO_STATE_BITSYNC; 
+                    LOG("[RADIO] Change State: RADIO_STATE_PREAMBLE -> RADIO_STATE_BITSYNC\n");
+                }
                 break;
-
+            case RADIO_STATE_BITSYNC:
+                if (inst->idx < BITSYNCPATTERN_LEN) {
+                    while (inst->idx < BITSYNCPATTERN_LEN && Transmit10(inst, bitsyncPattern[inst->idx])) {
+                        inst->idx++;
+                    }
+                } else {
+                    LOG("[RADIO] Change State: RADIO_STATE_BITSYNC -> RADIO_STATE_FRAMESYNC\n");
+                    inst->idx = 0;
+                    inst->state = RADIO_STATE_FRAMESYNC; 
+                }
+                break;
+            case RADIO_STATE_FRAMESYNC:
+                if (inst->idx < FRAMESYNCPATTERN_LEN) {
+                    while (inst->idx < FRAMESYNCPATTERN_LEN && Transmit10(inst, framesyncPattern[inst->idx])) {
+                        inst->idx++;
+                    }
+                } else {
+                    LOG("[RADIO] Change State: RADIO_STATE_BITSYNC -> RADIO_STATE_FRAMESYNC\n");
+                    inst->idx = 0;
+                    inst->state = RADIO_STATE_FRAMESYNC; 
+                }
+                break;
             case RADIO_STATE_FRAME:
                 if (inst->idx >= inst->len) {
-                    inst->state = RADIO_STATE_IDLE;
-                    LOG("[RADIO] Change State: RADIO_STATE_FRAME -> RADIO_STATE_IDLE\n");
+                    inst->state = RADIO_STATE_POSTAMBLE;
+                    inst->idx = 0;
+                    LOG("[RADIO] Change State: RADIO_STATE_FRAME -> RADIO_STATE_POSTAMBLE\n");
                 } else {
                     //send modulated frame
                     while (inst->idx < inst->len && Transmit10(inst, inst->frame[inst->idx])) {
@@ -71,7 +195,16 @@ void RADIO_Process(RADIO_Instance *inst) {
                     }
                 }                
                 break;
-        
+            case RADIO_STATE_POSTAMBLE:
+                Transmit10(inst, 0);
+                if (inst->idx == 0) {
+                    inst->idx++;
+                } else {
+                    inst->state = RADIO_STATE_IDLE;
+                    inst->idx = 0;
+                    LOG("[RADIO] Change State: RADIO_STATE_POSTAMBLE -> RADIO_STATE_IDLE\n");
+                }
+                break;
             default:
                 break;
         }
@@ -85,7 +218,7 @@ void RADIO_SetFrame(RADIO_Instance *inst, uint8_t *data, uint16_t len) {
         memcpy(inst->frame, data, len);
         inst->len = len;
         inst->idx = 0;
-        inst->state = RADIO_STATE_SYNC;
+        inst->state = RADIO_STATE_START_TX;
     }
 }
 
@@ -104,7 +237,7 @@ static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
 
     uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
 
-    if (ret == TX_OK) {
+    if ((ret  & STATE_S3_FIFO_FULL) == 0) {
         SetReg(inst, ADDR_FIFODATA, tx & 0xFF);
     }
     
@@ -113,7 +246,7 @@ static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
 
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
     uint8_t rec;
-    uint8_t ret = TX_NOK;
+    uint8_t ret = 0;
 
     //chip select -> 0
     SPI_CS_Enable(inst->spi);
@@ -122,10 +255,7 @@ static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
 
     SPI_ReadData(inst->spi, &rec, 1, SPI_TIMEOUT);
 
-    if ((rec & STATE_S3_FIFO_FULL) == 0) {
-        SPI_SendData(inst->spi, &data, 1, SPI_TIMEOUT);
-        ret = TX_OK;
-    }
+    SPI_SendData(inst->spi, &data, 1, SPI_TIMEOUT);
     
     //chip select -> 1
     SPI_CS_Disable(inst->spi);

@@ -8,16 +8,21 @@
 typedef enum {
     RADIO_STATE_IDLE = 0,
     RADIO_STATE_CONFIGURE,
-    RADIO_STATE_SYNC,
-    RADIO_STATE_FRAME
+    RADIO_STATE_WAIT_CONF,
+    RADIO_STATE_START_TX,
+    RADIO_STATE_PREAMBLE,
+    RADIO_STATE_BITSYNC,
+    RADIO_STATE_FRAMESYNC,
+    RADIO_STATE_FRAME,
+    RADIO_STATE_POSTAMBLE
 } RADIO_State;
 
 typedef struct {
     SPI_Init_Struct* spi;
     uint8_t frame[RADIO_FRAME_LENGTH];
-    uint16_t len;
-    uint16_t idx;
     RADIO_State state;
+    uint16_t len;
+    uint32_t idx;
     
 } RADIO_Instance;
 
