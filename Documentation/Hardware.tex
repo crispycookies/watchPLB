@@ -1,0 +1,208 @@
+% !TeX spellcheck = de_DE
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[naustrian]{babel}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{verbatim}
+\usepackage{scrpage2}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{titling}
+\usepackage{a4wide}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{titling}
+\usepackage{float}
+
+
+\pagestyle{scrheadings}
+\clearscrheadfoot
+
+
+
+%% scource-code listings
+\usepackage{listingsutf8, scrhack}
+\usepackage{courier}
+\lstset{%
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    commentstyle=\color{OliveGreen},
+    keywordstyle=\color{MidnightBlue},
+    stringstyle=\color{Maroon},
+    escapeinside={\%*}{*)},
+    inputencoding=utf8/latin1,
+    frame=single,
+    numbers=left,
+    stepnumber=1
+}
+
+\begin{document}
+
+\ofoot{\pagemark}
+
+\tableofcontents
+\newpage
+
+\section{Mainboard}
+\subsection{MCU}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_mcu.png}
+\caption{Hauptplatine, Baugruppe MCU grün umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{Schaltplanteil Mikrocontroller STM32L073RZ}
+\label{fig:abb1}
+\end{figure}
+
+\subsection{Debug}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_debug.png}
+\caption{Hauptplatine, Baugruppe Debug grün umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=2, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{USB-To-UART und USB des STM}
+\label{fig:abb1}
+\end{figure}
+
+\subsection{Funk}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_funk.png}
+\caption{Hauptplatine, Baugruppe Funk grün umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=3, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{Funk}
+\label{fig:abb1}
+\end{figure}
+
+\subsection{Buttons}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_buttons.png}
+\caption{Hauptplatine, Baugruppe Buttons grün umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=4, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{Taster, WakeUp, Vibrationsmotor}
+\label{fig:abb1}
+\end{figure}
+
+\subsection{Bluetooth}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_bluetooth.png}
+\caption{Hauptplatine, Baugruppe Bluetooth grün umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=5, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{Bluetooth-Modul}
+\label{fig:abb1}
+\end{figure}
+
+\subsection{Charge}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_charge.png}
+\caption{Hauptplatine, Baugruppe Charge umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=6, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{Akkuladeschaltung}
+\label{fig:abb1}
+\end{figure}
+
+\subsection{Battery Protection}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_batprot.png}
+\caption{Hauptplatine, Baugruppe Battery Protection umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=7, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{Lithium-Ionen-Akku Schutzschaltung}
+\label{fig:abb1}
+\end{figure}
+
+\subsection{Voltage Regulator}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_vreg.png}
+\caption{Hauptplatine, Baugruppe VREG umrahmt}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=8, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\caption{Spannungsregler}
+\label{fig:abb1}
+\end{figure}
+
+\section{GPS-Board}
+
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, scale=0.4]{../Documentation/pics/gpsboard.png}
+\caption{Platine des GPS-Moduls}
+\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=90, width=\linewidth]{../eagle/GPS_board/watchplb_gps_v1_0_AB.pdf}
+\caption{GPS-Modul}
+\label{fig:abb1}
+\end{figure}
+
+
+
+
+\end{document}

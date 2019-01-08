@@ -12051,7 +12051,7 @@ Covered vias can be set in Masks (Limit).
 <element name="U2" library="stm32l073rz_hoffentlich" package="LQFP64-10X10MM" value="STM32L073RZ" x="68.1228" y="31.242" smashed="yes" rot="R270">
 <attribute name="VENDOR" value="STMicroelectronics" x="68.1228" y="31.242" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="stm32l0x3rl" x="68.1228" y="31.242" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="NAME" x="67.4878" y="34.5186" size="1.016" layer="25" font="vector" rot="SR270"/>
+<attribute name="NAME" x="65.3034" y="32.2834" size="1.016" layer="25" font="vector" rot="SR0"/>
 </element>
 <element name="C4" library="resistor" package="C0805" value="100nF" x="74.3712" y="38.4048" smashed="yes" rot="R270">
 <attribute name="NAME" x="75.311" y="38.5064" size="1.016" layer="25" font="vector"/>
@@ -15498,10 +15498,16 @@ Covered vias can be set in Masks (Limit).
 <wire x1="65.8728" y1="36.992" x2="65.8728" y2="36.2352" width="0.254" layer="1"/>
 <wire x1="65.8728" y1="36.2352" x2="66.1416" y2="35.9664" width="0.254" layer="1"/>
 <wire x1="66.1416" y1="35.9664" x2="67.056" y2="35.9664" width="0.254" layer="1"/>
-<wire x1="67.056" y1="35.9664" x2="67.818" y2="35.2044" width="0.254" layer="1"/>
-<wire x1="67.818" y1="35.2044" x2="67.818" y2="33.992" width="0.254" layer="1"/>
 <wire x1="66.7512" y1="30.7848" x2="67.6656" y2="31.6992" width="0.254" layer="1"/>
-<wire x1="67.6656" y1="31.6992" x2="67.6656" y2="33.992" width="0.254" layer="1"/>
+<wire x1="67.6656" y1="31.6992" x2="67.6656" y2="33.6804" width="0.254" layer="1"/>
+<wire x1="67.6656" y1="33.6804" x2="67.6656" y2="33.992" width="0.254" layer="1"/>
+<wire x1="67.056" y1="35.9664" x2="67.6656" y2="35.3568" width="0.254" layer="1"/>
+<wire x1="67.6656" y1="35.3568" x2="67.6656" y2="34.29" width="0.254" layer="1"/>
+<wire x1="67.6656" y1="34.29" x2="67.6656" y2="33.992" width="0.254" layer="1"/>
+<wire x1="67.3608" y1="33.9852" x2="67.6656" y2="34.29" width="0.254" layer="1"/>
+<wire x1="67.6656" y1="34.29" x2="67.9704" y2="33.9852" width="0.254" layer="1"/>
+<wire x1="67.9704" y1="33.9852" x2="67.6656" y2="33.6804" width="0.254" layer="1"/>
+<wire x1="67.6656" y1="33.6804" x2="67.3608" y2="33.9852" width="0.254" layer="1"/>
 </signal>
 <signal name="N$78">
 <contactref element="CONFIG_INTERFACE_TEST_POINT" pad="2"/>
@@ -15732,11 +15738,6 @@ Covered vias can be set in Masks (Limit).
 <wire x1="3.3528" y1="97.1144" x2="3.622" y2="97.3836" width="0.254" layer="1"/>
 <wire x1="1.8288" y1="88.8492" x2="1.9456" y2="88.8492" width="0.254" layer="1"/>
 <wire x1="1.9456" y1="88.8492" x2="2.098" y2="89.0016" width="0.254" layer="1"/>
-<wire x1="64.8728" y1="36.992" x2="64.8728" y2="36.016" width="0.254" layer="1"/>
-<wire x1="64.8728" y1="36.016" x2="65.8368" y2="35.052" width="0.254" layer="1"/>
-<wire x1="65.8368" y1="35.052" x2="66.4464" y2="35.052" width="0.254" layer="1"/>
-<via x="66.4464" y="35.052" extent="1-16" drill="0.3048" shape="octagon"/>
-<wire x1="66.4464" y1="35.052" x2="67.6656" y2="34.1376" width="0.254" layer="16"/>
 <wire x1="2.098" y1="81.8388" x2="2.098" y2="74.102" width="0.254" layer="1"/>
 <wire x1="2.098" y1="74.102" x2="2.7432" y2="73.4568" width="0.254" layer="1"/>
 <via x="2.7432" y="73.4568" extent="1-16" drill="0.3048" shape="octagon"/>
@@ -15874,18 +15875,18 @@ Covered vias can be set in Masks (Limit).
 <approved hash="4,1,74119e319ea9e80e"/>
 <approved hash="4,1,56fc02161a03f2eb"/>
 <approved hash="6,1,c112c3474238b080"/>
-<approved hash="6,1,74829cef9c9574f8"/>
-<approved hash="6,1,4f63a64ca6364f19"/>
 <approved hash="6,1,5129c247423dd153"/>
+<approved hash="6,1,4f63a64ca6364f19"/>
+<approved hash="6,1,74829cef9c9574f8"/>
 <approved hash="6,1,e82049a2dc898072"/>
 <approved hash="6,1,7f78421a7d48eb43"/>
 <approved hash="6,1,218a4b4f623e7029"/>
 <approved hash="6,1,54261e581ea354dd"/>
 <approved hash="6,1,b8a5e24f6211e706"/>
-<approved hash="6,1,57a9bf86bf8957a6"/>
 <approved hash="6,1,6c488525852a6c47"/>
-<approved hash="6,1,307ad3cabcbf9dc1"/>
+<approved hash="6,1,57a9bf86bf8957a6"/>
 <approved hash="6,1,4f049ebdafe2698b"/>
+<approved hash="6,1,307ad3cabcbf9dc1"/>
 <approved hash="19,1,8e9d2019259c13aa"/>
 <approved hash="19,1,64073e4477d1ef37"/>
 <approved hash="19,1,a3b105dd07ba1dce"/>
@@ -15907,14 +15908,14 @@ Covered vias can be set in Masks (Limit).
 <approved hash="6,1,5721e6166b7a3886"/>
 <approved hash="6,1,1846948794791e50"/>
 <approved hash="6,1,6774687a68786776"/>
-<approved hash="6,1,313c7da3f6876019"/>
-<approved hash="6,1,94988111c1c1fc53"/>
 <approved hash="6,1,1a9abf2faf45b855"/>
 <approved hash="6,1,a5ad7d1f0259d8ef"/>
 <approved hash="6,1,a6a860e6112ad9f8"/>
 <approved hash="6,1,afbf67ed1823defd"/>
 <approved hash="6,1,dcb666e01b20a3f2"/>
 <approved hash="6,1,d19181e3fe25acd3"/>
+<approved hash="6,1,94988111c1c1fc53"/>
+<approved hash="6,1,313c7da3f6876019"/>
 <approved hash="19,1,4c7e020c02cc4cbe"/>
 <approved hash="6,16,1846948794791e50"/>
 <approved hash="6,16,5721e6166b7a3886"/>
