@@ -13,7 +13,7 @@ static POS_Position position;
 static void positionCallback(POS_Position *pos);
 
 void LOC_Init() {
-    position.valid = 0;
+    position.valid = POS_Valid_Flag_Invalid;
 
     UART_Config uart_conf;
     
@@ -55,5 +55,12 @@ POS_Position* LOC_GetLastPosition() {
 static void positionCallback(POS_Position *pos) {
     if (pos != 0 && pos->valid != 0) {
         memcpy(&position, pos, sizeof(POS_Position));
+    }
+}
+
+void LOC_InjectPosition(POS_Position* pos) {
+    if (pos != 0) {
+        memcpy(&position, pos, sizeof(POS_Position));
+        LOG("[LOC] Position injected\n");
     }
 }

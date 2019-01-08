@@ -9,7 +9,9 @@
   */
 
 // Initializes all needed components (USB)
-HAL_StatusTypeDef LOG_Init();
+void LOG_Init();
 
 // Writes formated Data via USB
-HAL_StatusTypeDef LOG_Log(const uint8_t * format, ...);
+void LOG_Log(const char * format, ...);
+
+void LOG_BitArray(uint8_t *array, uint16_t len);
