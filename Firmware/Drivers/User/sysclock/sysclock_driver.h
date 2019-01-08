@@ -35,4 +35,11 @@ void SystemClock_Config(void);
 */
 void SystemClock_SleepMode_Config(void);
 
+/**
+  * @brief Sysclock Configuration Function - Stand By
+  * @param None
+  * @retval None
+*/
+void SystemClock_UnSleepMode_Config(void);
+
 #endif /* USER_SYSCLOCK_SYSCLOCK_DRIVER_H_ */
