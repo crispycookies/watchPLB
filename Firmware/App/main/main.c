@@ -50,6 +50,8 @@
 #include "stm32l0xx_hal.h"
 #include "usb.h"
 #include "log.h"
+#include "led_driver.h"
+#include "ui.h"
 
 /* Private variables ---------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -65,97 +67,55 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
-
-  SystemClock_Config();
+  //SystemClock_Config();
   //USB_Init();
-  LOG_Init();
-
+  //LOG_Init();
+  //led_init();
+  UI_Init();
 
   //uint8_t mystring[]="Hello world !!!\r";
 
+  /*
+   led_on(led_pa4);
+   led_on(led_pa5);
+   led_on(led_pa6);
+   led_on(led_pa7);
+   led_on(led_pc4);
+   led_on(led_pc5);
+   led_on(led_pb0);
+   led_on(led_pb1);
+   led_on(led_pb2);
+   led_on(led_pb10);
+   led_on(led_pb11);
+   */
+
+
+   ////////////////////////BLEEEEE////////////////////
+   //ble_interface_init();
+
+   //uint8_t * rx = "Test Test Hallo Test";
+   //uint8_t len = (uint8_t) strlen(rx);
+
+   //uint8_t * name = "Michi du FGT";
+   //uint8_t name_len = (uint8_t) strlen(name);
+
+   //ble_interface_set_name(name, name_len);
+   //ble_interface_advertize(true);
+   ///////////////////END BLEEEE//////////////////////
+
+  int i = 0;
   while (1)
   {
-	 LOG_Log("Hello World... this i log: '%i'",1);
-	 HAL_Delay(1000);
+	 //LOG_Log("String & int test: '%s' ... '%i'\r\r",mystring,i);
+	 //HAL_Delay(1000);
+	 i++;
+	 UI_Update();
   }
 }
 
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
 
-  RCC_OscInitTypeDef RCC_OscInitStruct;
-  RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_PeriphCLKInitTypeDef PeriphClkInit;
 
-    /**Configure the main internal regulator output voltage 
-    */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLLMUL_12;
-  RCC_OscInitStruct.PLL.PLLDIV = RCC_PLLDIV_4;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
-  PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLL;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-    /**Configure the Systick interrupt time 
-    */
-  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
-
-    /**Configure the Systick 
-    */
-  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-
-  /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
-}
-
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @param  file: The file name as string.
-  * @param  line: The line in file as a number.
-  * @retval None
-  */
-void _Error_Handler(char *file, int line)
-{
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  while(1)
-  {
-  }
-  /* USER CODE END Error_Handler_Debug */
-}
 
 #ifdef  USE_FULL_ASSERT
 /**
