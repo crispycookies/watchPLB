@@ -9,7 +9,6 @@
 #include "uart.h"
 #include "dma.h"
 #include <string.h>
-#include "stm32l0xx_hal_conf.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -154,20 +153,20 @@ void UART_Init(UART_Instance* inst, UART_Config* conf) {
 		irq = USART4_5_IRQn;
 		instances[UART_4] = inst;
 		if ((conf->txDmaChannel == DMA1_Channel3) || ((conf->txDmaChannel == DMA1_Channel7))) {
-			txRequest = DMA_REQUEST_4;
+			txRequest = DMA_REQUEST_12;
 		}
-		if ((conf->rxDmaChannel == DMA1_Channel4) || ((conf->rxDmaChannel == DMA1_Channel6))) {
-			rxRequest = DMA_REQUEST_4;
+		if ((conf->rxDmaChannel == DMA1_Channel2) || ((conf->rxDmaChannel == DMA1_Channel6))) {
+			rxRequest = DMA_REQUEST_12;
 		}
 	} else if (conf->uart == USART5) {
 		__HAL_RCC_USART5_CLK_ENABLE();
 		irq = USART4_5_IRQn;
 		instances[UART_5] = inst;
 		if ((conf->txDmaChannel == DMA1_Channel3) || ((conf->txDmaChannel == DMA1_Channel7))) {
-			txRequest = DMA_REQUEST_4;
+			txRequest = DMA_REQUEST_13;
 		}
-		if ((conf->rxDmaChannel == DMA1_Channel4) || ((conf->rxDmaChannel == DMA1_Channel6))) {
-			rxRequest = DMA_REQUEST_4;
+		if ((conf->rxDmaChannel == DMA1_Channel2) || ((conf->rxDmaChannel == DMA1_Channel6))) {
+			rxRequest = DMA_REQUEST_13;
 		}
 	}
 
@@ -396,6 +395,7 @@ static void startReceive(UART_Instance* inst) {
 			: inst->rxCircTail - inst->rxCircHead;
 
 	if (inst->rxCount > 0) {
+		__HAL_UART_CLEAR_FLAG(&(inst->uart), UART_CLEAR_OREF);
 		//start reception
 		HAL_UART_Receive_DMA(&(inst->uart), inst->rxCircBuf + inst->rxCircHead, inst->rxCount);
 		//clear IDLE interrupt
