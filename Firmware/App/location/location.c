@@ -28,7 +28,7 @@ void LOC_Init() {
     uart_conf.txPin = 10;
     uart_conf.txAF = GPIO_AF6_USART4;
     
-    //UART_Init(&uart, &uart_conf);
+    UART_Init(&uart, &uart_conf);
 
     NMEA_Init(&nmea);
     NMEA_SetPositionCallback(&nmea, positionCallback);
@@ -37,11 +37,14 @@ void LOC_Init() {
 }
 
 void LOC_Process() {
-    //while (UART_GetAvailableBytes(&uart) > 0) {
-    //    uint8_t byte = UART_GetByte(&uart);
-    //    NMEA_Process(&nmea, byte);
-    //    UBX_Process(&ubx, byte);
-    //}
+    while (UART_GetAvailableBytes(&uart) > 0) {
+        uint8_t tmpData[100];
+        int16_t cnt = UART_GetData(&uart, 100, tmpData);
+        LOG("%s.*", cnt, tmpData);
+        //uint8_t byte = UART_GetByte(&uart);
+        //NMEA_Process(&nmea, byte);
+        //UBX_Process(&ubx, byte);
+    }
 }
 
 uint8_t LOC_PositionAvailable() {

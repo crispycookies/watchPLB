@@ -221,9 +221,9 @@ int main(void) {
 	SystemClock_Config();
 	LOG_Init();
 	LOC_Init();
-	EMC_Init();
+	//EMC_Init();
 
-	EMC_SetEmergency(EMC_State_Emergency);
+	//EMC_SetEmergency(EMC_State_Emergency);
 	
 	HAL_Delay(1000);
 
@@ -233,13 +233,13 @@ int main(void) {
 	uint8_t i = 0;
 
 	while (1) {
-		if (HAL_GetTick()  > next && i < POS_CNT) {
-			next = HAL_GetTick() + DELAY;
-			LOG("[MAIN] Next Position: %u Tick: %lu\n", i, HAL_GetTick());
-			LOC_InjectPosition(&positions[i++]);
-		}
+		//if (HAL_GetTick()  > next && i < POS_CNT) {
+		//	next = HAL_GetTick() + DELAY;
+		//	LOG("[MAIN] Next Position: %u Tick: %lu\n", i, HAL_GetTick());
+		//	//LOC_InjectPosition(&positions[i++]);
+		//}
 
 		LOC_Process();
-		EMC_Process();
+		//EMC_Process();
 	}
 }
