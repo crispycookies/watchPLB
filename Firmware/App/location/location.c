@@ -21,11 +21,11 @@ void LOC_Init() {
     uart_conf.baud = UART_BaudRate_9600;
     uart_conf.rxDmaChannel = DMA1_Channel6;
     uart_conf.rxBoard = GPIOC;
-    uart_conf.rxPin = 11;
+    uart_conf.rxPin = GPIO_PIN_11;
     uart_conf.rxAF = GPIO_AF6_USART4;
     uart_conf.txDmaChannel = DMA1_Channel7;
     uart_conf.txBoard = GPIOC;
-    uart_conf.txPin = 10;
+    uart_conf.txPin = GPIO_PIN_10;
     uart_conf.txAF = GPIO_AF6_USART4;
     
     UART_Init(&uart, &uart_conf);
