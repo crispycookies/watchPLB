@@ -117,6 +117,7 @@ void NMEA_Process(NMEA_Instance* nmea, uint8_t byte) {
                     if (byte == '*') {
                         //set next state
                         nmea->state = NMEA_State_CS0;
+                        nmea->data[nmea->idx++] = 0;
                     }
                     //check if index is out of range
                     if (byte >= NMEA_DATA_LENGTH) {

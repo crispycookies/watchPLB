@@ -68,7 +68,7 @@ typedef struct {
     NMEA_Callback_Position cb_pos;
     NMEA_Callback_Unknown  cb_unk;
     uint8_t cs;
-    uint8_t data[NMEA_DATA_LENGTH];
+    uint8_t data[NMEA_DATA_LENGTH+1];
     uint8_t idx;
 } NMEA_Instance;
 
