@@ -77,7 +77,7 @@ void NMEA_Init(NMEA_Instance* nmea);
  * @brief Set callback for new position
  * 
  * @param nmea nmea instance structure
- * @param cb callback funnction
+ * @param cb callback function
  */
 void NMEA_SetPositionCallback(NMEA_Instance* nmea, NMEA_Callback_Position cb);
 

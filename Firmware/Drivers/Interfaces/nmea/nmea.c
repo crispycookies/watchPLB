@@ -34,11 +34,11 @@ static uint8_t charToHex(uint8_t ch);
 static void parse(NMEA_Instance* nmea);
 
 /**
- * @brief parse gpggl message
+ * @brief parse GPGLL message
  * 
  * @param nmea nmea instance structure
  */
-static void parseGPGGL(NMEA_Instance* nmea);
+static void parseGPGLL(NMEA_Instance* nmea);
 
 void NMEA_Init(NMEA_Instance* nmea) {
     if (nmea != 0) {
@@ -163,7 +163,7 @@ static void parse(NMEA_Instance* nmea) {
         switch (nmea->type)
         {
             case NMEA_Type_GPGLL:
-                parseGPGGL(nmea);
+                parseGPGLL(nmea);
                 break;
             default:
                 if (nmea->cb_unk != 0) {
@@ -174,7 +174,7 @@ static void parse(NMEA_Instance* nmea) {
     }
 }
 
-static void parseGPGGL(NMEA_Instance* nmea) {
+static void parseGPGLL(NMEA_Instance* nmea) {
     if (nmea != 0 && nmea->type == NMEA_Type_GPGLL && nmea->idx >= NMEA_GPGLL_LENGTH) {
         POS_Position pos;
         uint8_t *buf = nmea->data;
