@@ -60,6 +60,10 @@ void LOC_Process() {
         //uint8_t byte = UART_GetByte(&uart);
         //NMEA_Process(&nmea, byte);
         //UBX_Process(&ubx, byte);
+        for (uint16_t i = 0; i < cnt; i++) {
+            UBX_Process(&ubx, tmpData[i]);
+            NMEA_Process(&nmea, tmpData[i]);
+        }
     }
 }
 
