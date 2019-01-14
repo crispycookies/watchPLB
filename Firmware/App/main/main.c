@@ -220,12 +220,13 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	LOG_Init();
-	LOC_Init();
 	//EMC_Init();
 
 	//EMC_SetEmergency(EMC_State_Emergency);
 	
 	HAL_Delay(1000);
+	
+	LOC_Init();
 
 	LOG("System initialized\n");
 
