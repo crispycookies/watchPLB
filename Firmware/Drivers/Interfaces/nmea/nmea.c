@@ -15,6 +15,13 @@
 #define NMEA_TYPE_STR_LENGTH 5  //length of nmea type string
 
 #define NMEA_TYPE_STR_GPGLL "GPGLL"
+#define NMEA_TYPE_STR_GNGLL "GNGLL"
+#define NMEA_TYPE_STR_GLGSB "GLGSB"
+#define NMEA_TYPE_STR_GPGSV "GPGSV"
+#define NMEA_TYPE_STR_GNGSA "GNGSA"
+#define NMEA_TYPE_STR_GNGGA "GNGGA"
+#define NMEA_TYPE_STR_GNVTG "GNVTG"
+#define NMEA_TYPE_STR_GNRMC "GNRMC"
 
 #define NMEA_GPGLL_LENGTH 60    // TODO: check real length
 
@@ -34,17 +41,18 @@ static uint8_t charToHex(uint8_t ch);
 static void parse(NMEA_Instance* nmea);
 
 /**
- * @brief parse gpggl message
+ * @brief parse GPGLL message
  * 
  * @param nmea nmea instance structure
  */
-static void parseGPGGL(NMEA_Instance* nmea);
+static void parseGPGLL(NMEA_Instance* nmea);
 
 void NMEA_Init(NMEA_Instance* nmea) {
     if (nmea != 0) {
         //init state and callback
         nmea->state = NMEA_State_IDLE;
         nmea->cb_pos = 0;
+        nmea->cb_unk = 0;
     }
 }
 
@@ -68,6 +76,20 @@ void NMEA_Process(NMEA_Instance* nmea, uint8_t byte) {
                             //detect message format
                             if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GPGLL, NMEA_TYPE_STR_LENGTH) == 0) {
                                 nmea->type = NMEA_Type_GPGLL;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNGLL, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNGLL;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GLGSB, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GLGSB;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GPGSV, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GPGSV;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNGSA, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNGSA;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNGGA, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNGGA;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNVTG, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNVTG;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNRMC, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNRMC;
                             } else {
                                 nmea->type = NMEA_Type_NONE;
                             }
@@ -95,9 +117,10 @@ void NMEA_Process(NMEA_Instance* nmea, uint8_t byte) {
                     if (byte == '*') {
                         //set next state
                         nmea->state = NMEA_State_CS0;
+                        nmea->data[nmea->idx++] = 0;
                     }
                     //check if index is out of range
-                    if (byte >= NMEA_DATA_LENGTH) {
+                    if (nmea->idx >= NMEA_DATA_LENGTH) {
                         //cancel message
                         nmea->state = NMEA_State_IDLE;
                     } else {
@@ -141,6 +164,13 @@ void NMEA_SetPositionCallback(NMEA_Instance* nmea, NMEA_Callback_Position cb) {
     }
 }
 
+void NMEA_SetUnknownCallback(NMEA_Instance* nmea, NMEA_Callback_Unknown cb) {
+    if (nmea != 0) {
+        //set callback
+        nmea->cb_unk = cb;
+    }
+}
+
 static uint8_t charToHex(uint8_t ch) {
     if (ch >= '0' && ch <= '9') {
         return ch - '0';
@@ -155,15 +185,18 @@ static void parse(NMEA_Instance* nmea) {
         switch (nmea->type)
         {
             case NMEA_Type_GPGLL:
-                parseGPGGL(nmea);
+                parseGPGLL(nmea);
                 break;
             default:
+                if (nmea->cb_unk != 0) {
+                    nmea->cb_unk(nmea->type, nmea->data, nmea->idx);
+                }
                 break;
         }
     }
 }
 
-static void parseGPGGL(NMEA_Instance* nmea) {
+static void parseGPGLL(NMEA_Instance* nmea) {
     if (nmea != 0 && nmea->type == NMEA_Type_GPGLL && nmea->idx >= NMEA_GPGLL_LENGTH) {
         POS_Position pos;
         uint8_t *buf = nmea->data;
