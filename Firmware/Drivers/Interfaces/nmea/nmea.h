@@ -45,6 +45,14 @@ typedef enum {
 typedef void (*NMEA_Callback_Position)(POS_Position *pos);
 
 /**
+ * @brief Nmea unknown callback
+ * 
+ * @param pos gps position
+ * 
+ */
+typedef void (*NMEA_Callback_Unknown)(NMEA_Type type, uint8_t* data, uint16_t len);
+
+/**
  * @brief Nmea instance structure
  * 
  */
@@ -52,6 +60,7 @@ typedef struct {
     NMEA_State state;
     NMEA_Type type;
     NMEA_Callback_Position cb_pos;
+    NMEA_Callback_Unknown  cb_unk;
     uint8_t cs;
     uint8_t data[NMEA_DATA_LENGTH];
     uint8_t idx;
@@ -71,6 +80,14 @@ void NMEA_Init(NMEA_Instance* nmea);
  * @param cb callback funnction
  */
 void NMEA_SetPositionCallback(NMEA_Instance* nmea, NMEA_Callback_Position cb);
+
+/**
+ * @brief Set callback for unknown types
+ * 
+ * @param nmea nmea instance structure
+ * @param cb callback function
+ */
+void NMEA_SetUnknownCallback(NMEA_Instance* nmea, NMEA_Callback_Unknown cb);
 
 /**
  * @brief Process received byte

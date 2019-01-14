@@ -45,6 +45,7 @@ void NMEA_Init(NMEA_Instance* nmea) {
         //init state and callback
         nmea->state = NMEA_State_IDLE;
         nmea->cb_pos = 0;
+        nmea->cb_unk = 0;
     }
 }
 
@@ -141,6 +142,13 @@ void NMEA_SetPositionCallback(NMEA_Instance* nmea, NMEA_Callback_Position cb) {
     }
 }
 
+void NMEA_SetUnknownCallback(NMEA_Instance* nmea, NMEA_Callback_Unknown cb) {
+    if (nmea != 0) {
+        //set callback
+        nmea->cb_unk = cb;
+    }
+}
+
 static uint8_t charToHex(uint8_t ch) {
     if (ch >= '0' && ch <= '9') {
         return ch - '0';
@@ -158,6 +166,9 @@ static void parse(NMEA_Instance* nmea) {
                 parseGPGGL(nmea);
                 break;
             default:
+                if (nmea->cb_unk != 0) {
+                    nmea->cb_unk(nmea->type, nmea->data, nmea->idx);
+                }
                 break;
         }
     }
