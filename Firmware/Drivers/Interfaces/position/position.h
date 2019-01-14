@@ -8,8 +8,6 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include <stdint.h>
-
 /**
  * @brief Position latitude flag
  * 
