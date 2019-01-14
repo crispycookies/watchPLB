@@ -4,16 +4,30 @@
 #include "uart.h"
 #include <string.h>
 
+#define BUF_LEN 32
+
+typedef enum {
+    No,
+    InProgress,
+    Yes
+} Configured;
+
 static NMEA_Instance nmea;
 static UBX_Instance ubx;
 static UART_Instance uart;
 
 static POS_Position position;
+static Configured cfgState;
+
+static uint8_t buf[BUF_LEN];
 
 static void positionCallback(POS_Position *pos);
+static void unknownCallback(NMEA_Type type, uint8_t* data, uint16_t len);
+static void ackCallback(UBX_Class msgClass, uint8_t id, UBX_Id_Ack ack);
 
 void LOC_Init() {
-    position.valid = 0;
+    position.valid = POS_Valid_Flag_Invalid;
+    cfgState = No;
 
     UART_Config uart_conf;
     
@@ -32,8 +46,10 @@ void LOC_Init() {
 
     NMEA_Init(&nmea);
     NMEA_SetPositionCallback(&nmea, positionCallback);
+    NMEA_SetUnknownCallback(&nmea, unknownCallback);
 
     UBX_Init(&ubx);
+    UBX_SetAckCallback(&ubx, ackCallback, UBX_Class_CFG, 0x17);
 }
 
 void LOC_Process() {
@@ -52,15 +68,43 @@ POS_Position* LOC_GetLastPosition() {
     return &position;
 }
 
+void LOC_InjectPosition(POS_Position* pos) {
+    if (pos != 0) {
+        memcpy(&position, pos, sizeof(POS_Position));
+        LOG("\n[LOC] Position injected\n");
+    }
+}
+
 static void positionCallback(POS_Position *pos) {
     if (pos != 0 && pos->valid != 0) {
         memcpy(&position, pos, sizeof(POS_Position));
     }
 }
 
-void LOC_InjectPosition(POS_Position* pos) {
-    if (pos != 0) {
-        memcpy(&position, pos, sizeof(POS_Position));
-        LOG("[LOC] Position injected\n");
+static void unknownCallback(NMEA_Type type, uint8_t* data, uint16_t len) {
+    if (cfgState == No) {
+        LOG("\n[LOC] Configure NMEA\n");
+        cfgState = InProgress;
+
+        uint16_t cnt = UBX_CreateNMEAConfigFrame(&ubx, buf, BUF_LEN);
+        UART_SendData(&uart, cnt, buf);
+    }
+}
+
+static void ackCallback(UBX_Class msgClass, uint8_t id, UBX_Id_Ack ack) {
+    switch (msgClass) {
+        case UBX_Class_CFG:
+            if (id == 0x17) {
+                if (ack == UBX_Id_Ack_Ack) {
+                    cfgState = Yes;
+                    LOG("\n[LOC] NMEA config ACK\n");
+                } else {
+                    LOG("\n[LOC] NMEA config NAK\n");
+                }
+                
+            }
+            break;
+        default:
+            break;
     }
 }
