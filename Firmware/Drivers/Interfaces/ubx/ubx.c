@@ -13,9 +13,14 @@
 #define SYNC_CHAR_1 0xB5
 #define SYNC_CHAR_2 0x62
 
-#define MSG_ACK_LEN     0x2
-#define MSG_ACK_POS_CLS 0x0
-#define MSG_ACK_POS_ID  0x1
+#define HEADER_LEN      0x06
+#define CK_LEN          0x02
+#define MSG_ACK_LEN     0x02
+#define MSG_ACK_POS_CLS 0x00
+#define MSG_ACK_POS_ID  0x01
+
+#define MSG_CFG_NMEA_LEN 0x14
+#define MSG_CFG_NMEA_ID  0x17
 
 /**
  * @brief Process/parse message
@@ -30,6 +35,8 @@ static void processMsg(UBX_Instance* ubx);
  * @param ubx ubx instance structure
  */
 static void processAck(UBX_Instance* ubx);
+
+static void createChecksum(uint8_t *data, uint16_t len);
 
 void UBX_Init(UBX_Instance* ubx) {
     if (ubx != 0) {
@@ -189,6 +196,55 @@ void UBX_Process(UBX_Instance* ubx, uint8_t byte) {
     }
 }
 
+uint16_t UBX_CreateNMEAConfigFrame(UBX_Instance* ubx, uint8_t *frame, uint16_t len) {
+    if (frame == 0 || len < (MSG_CFG_NMEA_LEN + HEADER_LEN + CK_LEN)) {
+        return 0;
+    }
+
+    uint16_t idx = 0;
+
+    //sync
+    frame[idx++] = SYNC_CHAR_1;
+    frame[idx++] = SYNC_CHAR_2;
+
+    //class
+    frame[idx++] = UBX_Class_CFG;
+
+    //id
+    frame[idx++] = MSG_CFG_NMEA_ID;
+
+    //length
+    frame[idx++] = MSG_CFG_NMEA_LEN;
+    frame[idx++] = 0x00;
+
+    //payload
+    frame[idx++] = 0x1f; // filter       - 0b00011111
+    frame[idx++] = 0x41; // nmeaVersion  - NMEA version 4.1
+    frame[idx++] = 0x00; // numSV        - unlimited number of SVs reported
+    frame[idx++] = 0x0A; // flags        - 0b00001010
+    frame[idx++] = 0x72; // gnssToFilter - 0b01110010
+    frame[idx++] = 0x00; // gnssToFilter
+    frame[idx++] = 0x00; // gnssToFilter
+    frame[idx++] = 0x00; // gnssToFilter
+    frame[idx++] = 0x00; // svNumbering  - Strict - Satellites are not output
+    frame[idx++] = 0x01; // mainTalkerId - GPS
+    frame[idx++] = 0x00; // gsvTalkerId  - default
+    frame[idx++] = 0x01; // version      - 1
+    frame[idx++] = 0x00; // bdsTalkerId  - 0
+    frame[idx++] = 0x00; // bdsTalkerId  - 0
+    frame[idx++] = 0x00; // reserved1
+    frame[idx++] = 0x00; // reserved1
+    frame[idx++] = 0x00; // reserved1
+    frame[idx++] = 0x00; // reserved1
+    frame[idx++] = 0x00; // reserved1
+    frame[idx++] = 0x00; // reserved1
+
+    idx += CK_LEN;
+    createChecksum(frame, idx);
+
+    return idx;
+}
+
 static void processMsg(UBX_Instance* ubx) {
     if (ubx != 0) {
         //process message by class
@@ -223,3 +279,15 @@ static void processAck(UBX_Instance* ubx) {
     }
 }
 
+static void createChecksum(uint8_t *data, uint16_t len) {
+    uint8_t ck_a = 0;
+    uint8_t ck_b = 0;
+
+    for (uint16_t i = 2; i < len-2; i++) {
+        ck_a = ck_a + data[i];
+        ck_b = ck_b + ck_a;
+    }
+
+    data[len-2] = ck_a;
+    data[len-1] = ck_b;
+}
