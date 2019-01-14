@@ -103,7 +103,7 @@ void UBX_Process(UBX_Instance* ubx, uint8_t byte) {
             ubx->state = UBX_State_Sync2;
         } else {
             //check if new byte needs to be added to checksum 
-            if (ubx->state != UBX_State_CK_A || ubx->state != UBX_State_CK_B) {
+            if (ubx->state != UBX_State_CK_A && ubx->state != UBX_State_CK_B) {
                 //add byte to checksum
                 ubx->ck_a += byte;
                 ubx->ck_b += ubx->ck_a;
