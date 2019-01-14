@@ -15,6 +15,13 @@
 #define NMEA_TYPE_STR_LENGTH 5  //length of nmea type string
 
 #define NMEA_TYPE_STR_GPGLL "GPGLL"
+#define NMEA_TYPE_STR_GNGLL "GNGLL"
+#define NMEA_TYPE_STR_GLGSB "GLGSB"
+#define NMEA_TYPE_STR_GPGSV "GPGSV"
+#define NMEA_TYPE_STR_GNGSA "GNGSA"
+#define NMEA_TYPE_STR_GNGGA "GNGGA"
+#define NMEA_TYPE_STR_GNVTG "GNVTG"
+#define NMEA_TYPE_STR_GNRMC "GNRMC"
 
 #define NMEA_GPGLL_LENGTH 60    // TODO: check real length
 
@@ -69,6 +76,20 @@ void NMEA_Process(NMEA_Instance* nmea, uint8_t byte) {
                             //detect message format
                             if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GPGLL, NMEA_TYPE_STR_LENGTH) == 0) {
                                 nmea->type = NMEA_Type_GPGLL;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNGLL, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNGLL;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GLGSB, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GLGSB;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GPGSV, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GPGSV;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNGSA, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNGSA;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNGGA, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNGGA;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNVTG, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNVTG;
+                            } else if (strncmp((char*)nmea->data, NMEA_TYPE_STR_GNRMC, NMEA_TYPE_STR_LENGTH) == 0) {
+                                nmea->type = NMEA_Type_GNRMC;
                             } else {
                                 nmea->type = NMEA_Type_NONE;
                             }

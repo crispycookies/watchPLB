@@ -26,7 +26,6 @@ typedef enum {
     NMEA_State_LF
 } NMEA_State;
 
-
 /**
  * @brief Nmea message type
  * 
@@ -34,6 +33,13 @@ typedef enum {
 typedef enum {
     NMEA_Type_NONE = 0,
     NMEA_Type_GPGLL,
+    NMEA_Type_GNGLL,
+    NMEA_Type_GLGSB,
+    NMEA_Type_GPGSV,
+    NMEA_Type_GNGSA,
+    NMEA_Type_GNGGA,
+    NMEA_Type_GNVTG,
+    NMEA_Type_GNRMC
 } NMEA_Type;
 
 /**
