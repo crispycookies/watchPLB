@@ -120,7 +120,7 @@ void NMEA_Process(NMEA_Instance* nmea, uint8_t byte) {
                         nmea->data[nmea->idx++] = 0;
                     }
                     //check if index is out of range
-                    if (byte >= NMEA_DATA_LENGTH) {
+                    if (nmea->idx >= NMEA_DATA_LENGTH) {
                         //cancel message
                         nmea->state = NMEA_State_IDLE;
                     } else {
