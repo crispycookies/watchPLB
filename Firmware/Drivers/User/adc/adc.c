@@ -20,20 +20,22 @@ HAL_StatusTypeDef Adc_Init(uint8_t const channel)
 	__HAL_RCC_ADC1_CLK_ENABLE();
 
 	/* Initialize Adc configuration structure */
-	adcinit.ClockPrescaler = 		ADC_CLOCK_ASYNC_DIV1;
-	adcinit.Resolution = 			ADC_RESOLUTION_12B;
-	adcinit.DataAlign =				ADC_DATAALIGN_RIGHT;
-	adcinit.ScanConvMode = 			ADC_SCAN_DIRECTION_FORWARD;
-	adcinit.EOCSelection =			ADC_EOC_SINGLE_CONV;
-	adcinit.LowPowerAutoWait =		ENABLE_AUTOPOWERWAIT;
-	adcinit.LowPowerAutoPowerOff =	ENABLE_AUTOPOWEROFF;
-	adcinit.ContinuousConvMode =  	DISABLE;
-	adcinit.ExternalTrigConv	 =  ADC_EXTERNALTRIGCONV_T6_TRGO;
-	adcinit.ExternalTrigConvEdge =	ADC_EXTERNALTRIGCONVEDGE_NONE;
-	adcinit.DMAContinuousRequests = DISABLE;
-	adcinit.Overrun =				ADC_OVR_DATA_PRESERVED;
-	adcinit.SamplingTime =          ADC_SAMPLETIME_1CYCLE_5;
-	adcinit.OversamplingMode =		DISABLE;
+	 adcinit.OversamplingMode = DISABLE;
+	 adcinit.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
+	 adcinit.Resolution = ADC_RESOLUTION_12B;
+	 adcinit.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+	 adcinit.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
+	 adcinit.DataAlign = ADC_DATAALIGN_RIGHT;
+	 adcinit.ContinuousConvMode = DISABLE;
+	 adcinit.DiscontinuousConvMode = DISABLE;
+	 adcinit.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+	 adcinit.ExternalTrigConv = ADC_SOFTWARE_START;
+	 adcinit.DMAContinuousRequests = DISABLE;
+	 adcinit.EOCSelection = ADC_EOC_SINGLE_CONV;
+	 adcinit.Overrun = ADC_OVR_DATA_PRESERVED;
+	 adcinit.LowPowerAutoWait = DISABLE;
+	 adcinit.LowPowerFrequencyMode = DISABLE;
+	 adcinit.LowPowerAutoPowerOff = DISABLE;
 
 
 	hadc.Init = adcinit;
@@ -56,7 +58,7 @@ int32_t Adc_GetValue(uint32_t const timeout)
    /*Start the conversion process*/
    if (HAL_ADC_Start(&hadc) != HAL_OK)
    {
-	  return HAL_ERROR;
+	  //return HAL_ERROR;
    }
 
 	if (HAL_ADC_PollForConversion(&hadc, timeout) != HAL_OK)
@@ -73,15 +75,9 @@ int32_t Adc_GetValue(uint32_t const timeout)
 // change/ set the hardware channel used for conversion
 HAL_StatusTypeDef Adc_SetChannel(uint8_t const channel)
 {
-	uint8_t const numOfHardwareChannels = 19;
-
-	/* Check if valid channel given */
-	if(channel > numOfHardwareChannels)
-	{
-		return HAL_ERROR;
-	}
 
 	chconfig.Channel = channel;
+	chconfig.Rank =  ADC_RANK_CHANNEL_NUMBER;
 
 	if (HAL_ADC_ConfigChannel(&hadc, &chconfig) != HAL_OK)
 	{
