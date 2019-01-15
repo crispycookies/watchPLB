@@ -87,6 +87,8 @@ void EMC_Process(void) {
             }
             
             if (frameLength != 0) {
+                LOG("[EMC] Start Frame\n");
+
                 RADIO_SetFrame(&radio, dataFrame, frameLength);
             }
         }

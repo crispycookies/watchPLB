@@ -220,13 +220,14 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	LOG_Init();
-	//EMC_Init();
-
-	//EMC_SetEmergency(EMC_State_Emergency);
 	
 	HAL_Delay(1000);
 	
 	LOC_Init();
+	LOC_InjectPosition(&(positions[2]));
+
+	EMC_Init();
+	EMC_SetEmergency(EMC_State_Emergency);
 
 	LOG("System initialized\n");
 
@@ -240,7 +241,7 @@ int main(void) {
 		//	//LOC_InjectPosition(&positions[i++]);
 		//}
 
-		LOC_Process();
-		//EMC_Process();
+		//LOC_Process();
+		EMC_Process();
 	}
 }
