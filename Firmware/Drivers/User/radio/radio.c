@@ -54,10 +54,10 @@
 #define CONF_MODULATION   0x06
 #define CONF_ENCODING     0x00
 #define CONF_FRAMING      0x00
-#define CONF_FREQ3        0x00
-#define CONF_FREQ2        0x00
-#define CONF_FREQ1        0xcb
-#define CONF_FREQ0        0xcb
+#define CONF_FREQ3        0x19
+#define CONF_FREQ2        0x60
+#define CONF_FREQ1        0xC8
+#define CONF_FREQ0        0xB5
 #define CONF_TXPWR        0x0f
 #define CONF_TXRATEHI     0x01
 #define CONF_TXRATEMID    0x99
