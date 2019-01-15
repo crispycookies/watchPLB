@@ -13,6 +13,7 @@
 #include "sysclock_driver.h"
 #include "vibrator_driver.h"
 #include "key.h"
+#include "emergencyCall.h"
 #include <stdbool.h>
 
 typedef enum
@@ -38,6 +39,7 @@ UIstates UIstate = UI_Idle;
 static bool isSleepmode = false;
 static const TIME ledtimercd = 10;
 static REGISTER ledreg = 0x0F;
+
 
 void UI_UpdateBattery()
 {
@@ -137,7 +139,6 @@ HAL_StatusTypeDef UI_Init()
 	KEY_Init();
 	led_init();
 
-	//led_on(led_pb0);
 
 	led_timer_init(ledtimercd);
 	//vibrator_init(GPIOA,15);
@@ -171,7 +172,7 @@ HAL_StatusTypeDef UI_Update()
 			else if (KEY_Get(BTN_2) == GPIO_PIN_SET)
 			{
 				// activate Bluetooth here ////////////////////////////////////////////////////////////////
-
+				led_on(led_pb0); /////////////////////////////TEST PURPOSE
 				UIstate = UI_Waiting;
 
 			}
@@ -192,13 +193,12 @@ HAL_StatusTypeDef UI_Update()
 		case UI_SendLocation:
 		{
 			//vibrator_on();
+			// call SOS function
 
-
-			led_on(led_pb2);
-
-
+			EMC_SetEmergency(EMC_State_Emergency);
 
 			//vibrator_off();
+			led_on(led_pb2); /////////////////////////////TEST PURPOSE
 
 			UIstate = UI_Waiting;
 			break;
@@ -214,14 +214,13 @@ HAL_StatusTypeDef UI_Update()
 				led_on(led_pc5);
 			}
 
-			if(KEY_Get(BTN_2) == GPIO_PIN_SET ||KEY_Get(BTN_3) == GPIO_PIN_SET || KEY_Get(BTN_4) == GPIO_PIN_SET)
+			if(KEY_Get(BTN_2) == GPIO_PIN_SET || KEY_Get(BTN_3) == GPIO_PIN_SET || KEY_Get(BTN_4) == GPIO_PIN_SET)
 			{
-				SystemClock_Config();
+				SystemClock_UnSleepMode_Config();
 				UIstate = UI_Waiting;
 				isSleepmode = false;
+				led_off(led_pc5);
 			}
-
-			UIstate = UI_Sleepmode;
 			break;
 		}
 		default:
