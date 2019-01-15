@@ -20,6 +20,13 @@
 */
 void ble_interface_init();
 
+//void ble_enable(){};
+//void ble_disable(){};
+
+//void ble_enable_pairing_auto(){};
+//void ble_enable_pairing(){};
+
+//void ble_accept_pairing_request(){};
 /**
   * @brief Send Data in Transparent Mode
   * @param tx_buffer: pointer to tx buffer
@@ -55,7 +62,7 @@ void ble_interface_deinit();
   * @param None
   * @retval None
 */
-void ble_interface_connect();
+void ble_interface_connect(bool rd_addr, uint64_t address);
 
 /**
   * @brief Disconnect
