@@ -18,22 +18,22 @@ static RADIO_Instance radio;
 void EMC_Init(void) {
     
     SPI_GPIO_Pair miso;
-    miso.bank = GPIOA;
-    miso.pin = GPIO_PIN_6;
+    miso.bank = GPIOC;
+    miso.pin = GPIO_PIN_2;
 
     SPI_GPIO_Pair mosi;
-    mosi.bank = GPIOA;
-    mosi.pin = GPIO_PIN_7;
+    mosi.bank = GPIOC;
+    mosi.pin = GPIO_PIN_3;
     
     SPI_GPIO_Pair slclk;
-    slclk.bank = GPIOA;
-    slclk.pin = GPIO_PIN_5;
+    slclk.bank = GPIOB;
+    slclk.pin = GPIO_PIN_10;
     
     SPI_GPIO_Pair cs;
     cs.bank = GPIOC;
     cs.pin = GPIO_PIN_1;
     
-    spi.SPI.Instance = SPI1;
+    spi.SPI.Instance = SPI2;
     spi.SPI.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
     spi.SPI.Init.Mode = SPI_MODE_MASTER;
     spi.SPI.Init.NSS = SPI_NSS_SOFT;

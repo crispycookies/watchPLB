@@ -251,9 +251,9 @@ static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
     //chip select -> 0
     SPI_CS_Enable(inst->spi);
     addr = SPI_WRITE | (addr & 0x7F);
-    SPI_SendData(inst->spi, &addr, 1, SPI_TIMEOUT);
+    SPI_WriteRead(inst->spi, addr, &rec, SPI_TIMEOUT);
 
-    SPI_ReadData(inst->spi, &rec, 1, SPI_TIMEOUT);
+    LOG("[RADIO] SetReg (0x%x): 0x%x\n", addr, rec);
 
     SPI_SendData(inst->spi, &data, 1, SPI_TIMEOUT);
     
