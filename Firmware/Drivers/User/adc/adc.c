@@ -8,45 +8,64 @@
 #include "adc.h"
 
 	ADC_HandleTypeDef hadc;
-	ADC_ChannelConfTypeDef chconfig;
 
 
-HAL_StatusTypeDef Adc_Init(uint8_t const channel)
+HAL_StatusTypeDef Adc_Init()
 {
-	ADC_InitTypeDef adcinit;
 
+	GPIO_InitTypeDef GPIO_InitStruct;
 
 	//clock init
 	__HAL_RCC_ADC1_CLK_ENABLE();
 
-	/* Initialize Adc configuration structure */
-	 adcinit.OversamplingMode = DISABLE;
-	 adcinit.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
-	 adcinit.Resolution = ADC_RESOLUTION_12B;
-	 adcinit.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-	 adcinit.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
-	 adcinit.DataAlign = ADC_DATAALIGN_RIGHT;
-	 adcinit.ContinuousConvMode = DISABLE;
-	 adcinit.DiscontinuousConvMode = DISABLE;
-	 adcinit.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-	 adcinit.ExternalTrigConv = ADC_SOFTWARE_START;
-	 adcinit.DMAContinuousRequests = DISABLE;
-	 adcinit.EOCSelection = ADC_EOC_SINGLE_CONV;
-	 adcinit.Overrun = ADC_OVR_DATA_PRESERVED;
-	 adcinit.LowPowerAutoWait = DISABLE;
-	 adcinit.LowPowerFrequencyMode = DISABLE;
-	 adcinit.LowPowerAutoPowerOff = DISABLE;
+    /**ADC GPIO Configuration
+    PA1     ------> ADC_IN1
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 
-	hadc.Init = adcinit;
 
+	ADC_ChannelConfTypeDef sConfig;
 
-	if(HAL_ADC_Init(&hadc) != HAL_OK)
-	{
-		return HAL_ERROR;
-	}
+	    /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+	    */
+	  hadc.Instance = ADC1;
 
-	return Adc_SetChannel(channel);
+	  hadc.Init.OversamplingMode = DISABLE;
+	  hadc.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
+	  hadc.Init.Resolution = ADC_RESOLUTION_12B;
+	  hadc.Init.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+	  hadc.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
+	  hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+	  hadc.Init.ContinuousConvMode = DISABLE;
+	  hadc.Init.DiscontinuousConvMode = DISABLE;
+	  hadc.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+	  hadc.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+	  hadc.Init.DMAContinuousRequests = DISABLE;
+	  hadc.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+	  hadc.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+	  hadc.Init.LowPowerAutoWait = DISABLE;
+	  hadc.Init.LowPowerFrequencyMode = DISABLE;
+	  hadc.Init.LowPowerAutoPowerOff = DISABLE;
+	  if (HAL_ADC_Init(&hadc) != HAL_OK)
+	  {
+		  return HAL_ERROR;
+	  }
+
+	    /**Configure for the selected ADC regular channel to be converted.
+	    */
+	  sConfig.Channel = ADC_CHANNEL_1;
+	  sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
+	  if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
+	  {
+		  return HAL_ERROR;
+	  }
+
+	//return Adc_SetChannel(channel);
+	return HAL_OK;
 }
 
 
@@ -75,14 +94,12 @@ int32_t Adc_GetValue(uint32_t const timeout)
 // change/ set the hardware channel used for conversion
 HAL_StatusTypeDef Adc_SetChannel(uint8_t const channel)
 {
-
-	chconfig.Channel = channel;
+	/*chconfig.Channel = channel;
 	chconfig.Rank =  ADC_RANK_CHANNEL_NUMBER;
 
 	if (HAL_ADC_ConfigChannel(&hadc, &chconfig) != HAL_OK)
 	{
 		return HAL_ERROR;
 	}
-
-	return HAL_OK;
+	return HAL_OK;*/
 }

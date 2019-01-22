@@ -23,7 +23,7 @@
  * @return HAL_OK if the given channel is valid else
  * 		   HAL_ERROR
  */
-HAL_StatusTypeDef Adc_Init(uint8_t const channel);
+HAL_StatusTypeDef Adc_Init();
 
 
 /**
