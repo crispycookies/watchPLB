@@ -23,7 +23,7 @@ GPIO_PinType pin;
   * @param 	PIN: The Pin to use
   * @retval Returns True if Params are Valid, false if not
 */
-bool vibrator_init(GPIO_TypeDef BANK, GPIO_PinType PIN){
+bool vibrator_init(GPIO_TypeDef *BANK, GPIO_PinType PIN){
 	bank = bank;
 	pin = pin;
 

@@ -13,7 +13,7 @@
 
 #include <stdbool.h>
 
-typedef uint8_t GPIO_PinType;
+typedef uint32_t GPIO_PinType;
 
 /**
   * @brief Initialize GPIOs for Vibrator
@@ -21,7 +21,7 @@ typedef uint8_t GPIO_PinType;
   * @param 	PIN: The Pin to use
   * @retval Returns True if Params are Valid, false if not
 */
-bool vibrator_init(GPIO_TypeDef BANK, GPIO_PinType PIN);
+bool vibrator_init(GPIO_TypeDef *BANK, GPIO_PinType PIN);
 
 /**
   * @brief Turns on Vibrator
