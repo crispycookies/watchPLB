@@ -47,6 +47,8 @@ INCLUDES= \
 	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
 	-IDrivers/User/sysclock \
+	-IDrivers/Interfaces/battery \
+	-IDrivers/Interfaces/ble/CRC \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/log \

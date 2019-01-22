@@ -52,11 +52,14 @@
 #include "log.h"
 #include "led_driver.h"
 #include "ui.h"
+#include "adc.h"
+#include "sysclock_driver.h"
+#include "battery.h"
 
 /* Private variables ---------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
+//void SystemClock_Config(void);
 
 /* Private function prototypes -----------------------------------------------*/
 
@@ -65,9 +68,14 @@ void SystemClock_Config(void);
   *
   * @retval None
   */
+
+  int val = 0;
+
+
 int main(void)
 {
-  //SystemClock_Config();
+	HAL_Init();
+  SystemClock_Config();
   //USB_Init();
   //LOG_Init();
   //led_init();
@@ -91,25 +99,32 @@ int main(void)
 
 
    ////////////////////////BLEEEEE////////////////////
-   //ble_interface_init();
+  /*
+   ble_interface_init();
 
-   //uint8_t * rx = "Test Test Hallo Test";
-   //uint8_t len = (uint8_t) strlen(rx);
+   uint8_t * rx = "Test Test Hallo Test";
+   uint8_t len = (uint8_t) strlen(rx);
 
-   //uint8_t * name = "Michi du FGT";
-   //uint8_t name_len = (uint8_t) strlen(name);
+   uint8_t * name = "bleplb";
+   uint8_t name_len = (uint8_t) strlen(name);
 
-   //ble_interface_set_name(name, name_len);
-   //ble_interface_advertize(true);
+   ble_interface_set_name(name, name_len);
+
+   ble_interface_advertize(true);
+   */
    ///////////////////END BLEEEE//////////////////////
-
+  int val2;
   int i = 0;
   while (1)
   {
 	 //LOG_Log("String & int test: '%s' ... '%i'\r\r",mystring,i);
 	 //HAL_Delay(1000);
-	 i++;
+	 //val =  battery_status();
+	 //val2 = Adc_GetValue(1000);
 	 UI_Update();
+	 //i++;
+	 //ble_interface_send(rx,len);
+	 //UI_Update();
   }
 }
 

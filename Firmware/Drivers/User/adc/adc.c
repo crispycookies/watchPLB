@@ -12,6 +12,9 @@
 
 HAL_StatusTypeDef Adc_Init()
 {
+	/* GPIO Ports Clock Enable */
+	  __HAL_RCC_GPIOA_CLK_ENABLE();
+
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 
