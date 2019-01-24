@@ -24,8 +24,8 @@ GPIO_PinType pin;
   * @retval Returns True if Params are Valid, false if not
 */
 bool vibrator_init(GPIO_TypeDef *BANK, GPIO_PinType PIN){
-	bank = bank;
-	pin = pin;
+	bank = BANK;
+	pin = PIN;
 
 	if(bank == GPIOA){
 		__HAL_RCC_GPIOA_CLK_ENABLE();
