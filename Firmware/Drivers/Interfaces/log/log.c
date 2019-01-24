@@ -12,15 +12,44 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#if LOG_DEST == LOG_UART
+#include "uart.h"
+#endif
+
 #define BUFFER_LEN 256
 
 static uint8_t buffer[BUFFER_LEN];
 
 static uint8_t init = 0;
 
+#if LOG_DEST == LOG_UART
+UART_Instance uart;
+#endif
+
 void LOG_Init()
 {
+#if LOG_DEST == LOG_NONE
+	//no logging, no init
+	return;
+#elif LOG_DEST == LOG_USB
 	USB_Init();
+#elif LOG_DEST == LOG_UART
+	//init uart for logging
+    UART_Config uart_conf;
+    
+    uart_conf.uart = USART2;
+    uart_conf.baud = UART_BaudRate_9600;
+    uart_conf.rxDmaChannel = DMA1_Channel5;
+    uart_conf.rxBoard = GPIOA;
+    uart_conf.rxPin = GPIO_PIN_2;
+    uart_conf.rxAF = GPIO_AF4_USART2;
+    uart_conf.txDmaChannel = DMA1_Channel4;
+    uart_conf.txBoard = GPIOA;
+    uart_conf.txPin = GPIO_PIN_3;
+    uart_conf.txAF = GPIO_AF4_USART2;
+    
+    UART_Init(&uart, &uart_conf);
+#endif
 	init = 1;
 }
 
@@ -35,7 +64,15 @@ void LOG_Log(const char * format, ...)
 	va_start (args, format);
 	
 	uint16_t len = vsnprintf ((char*)buffer, BUFFER_LEN, format, args);
+
+#if LOG_DEST == LOG_NONE
+	//no logging, should skipped becaus no init
+#elif LOG_DEST == LOG_USB
 	USB_SendData (buffer, len);
+#elif LOG_DEST == LOG_UART
+	//send data  via uart
+	UART_SendData(&uart, len, buffer);
+#endif
 
 	va_end (args); 
 }
@@ -48,5 +85,14 @@ void LOG_BitArray(uint8_t *array, uint16_t len) {
 		buffer[i] = array[i] > 0 ? '1' : '0';
 	}
 	buffer[len] = '\n';
+	
+#if LOG_DEST == LOG_NONE
+	//no logging, should skipped becaus no init
+#elif LOG_DEST == LOG_USB
 	USB_SendData(buffer, len+1);
+#elif LOG_DEST == LOG_UART
+	//send data  via uart
+	UART_SendData(&uart, len, buffer);
+#endif
+
 }
