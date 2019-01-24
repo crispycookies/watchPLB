@@ -9,6 +9,8 @@
 #define TX_BUF_ADDR   0
 #define TX_BUF_DATA   1
 
+#define MAX_ADDR      0x50
+
 //RW Flag
 #define SPI_READ      0
 #define SPI_WRITE     (1 << 7)
@@ -102,6 +104,7 @@ static const uint8_t framesyncPattern[FRAMESYNCPATTERN_LEN] = {0,0,0,1,0,1,1,1,1
 static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data);
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data);
 static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data);
+static void DumpRegister(RADIO_Instance *inst);
 
 void RADIO_Init(RADIO_Instance *inst, SPI_Init_Struct *spi) {
     if (inst != 0 && spi != 0) {
@@ -137,6 +140,8 @@ void RADIO_Process(RADIO_Instance *inst) {
                 SetReg(inst, ADDR_MODULATION, CONF_MODULATION);
                 SetReg(inst, ADDR_ENCODING, CONF_ENCODING);
                 SetReg(inst, ADDR_FRAMING, CONF_FRAMING);
+
+                DumpRegister(inst);
 
                 LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_WAIT_CONF\n");
                 inst->state = RADIO_STATE_IDLE;
@@ -279,4 +284,14 @@ static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data) {
     SPI_CS_Disable(inst->spi);
 
     return status;
+}
+
+static void DumpRegister(RADIO_Instance *inst) {
+    LOG("\n[RADIO] --- Radio memory dump ---\n");
+    for (uint8_t i = 0; i <= MAX_ADDR; i++) {
+        uint8_t reg;
+        GetReg(inst, i, &reg);
+        LOG("[RADIO] 0x%2.2x: 0x%2.2x\n", i, reg);
+    }
+    LOG(  "[RADIO] -------------------------\n\n");
 }
