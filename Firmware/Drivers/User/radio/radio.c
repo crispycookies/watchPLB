@@ -241,7 +241,7 @@ static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
         SetReg(inst, ADDR_FIFODATA, tx & 0xFF);
     }
     
-    return ret;
+    return (ret & STATE_S3_FIFO_FULL) == 0;
 }
 
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
