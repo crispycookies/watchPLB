@@ -276,9 +276,9 @@ static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data) {
     addr = SPI_READ | (addr & 0x7F);
     SPI_WriteRead(inst->spi, addr, &status, SPI_TIMEOUT);
 
-    //LOG("[RADIO] SetReg 0x%x = 0x%x => 0x%x\n", adgitdr, data, rec);
+    //LOG("[RADIO] SetReg 0x%x = 0x%x => 0x%x\n", addr, data, status);
 
-    SPI_WriteRead(inst->spi, 0xff, &data, SPI_TIMEOUT);
+    SPI_WriteRead(inst->spi, 0xff, data, SPI_TIMEOUT);
     
     //chip select -> 1
     SPI_CS_Disable(inst->spi);
