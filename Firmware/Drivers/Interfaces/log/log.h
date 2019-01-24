@@ -8,6 +8,15 @@
   **************************
   */
 
+#ifndef LOG_H
+#define LOG_H
+
+#define LOG_NONE 0
+#define LOG_USB  1
+#define LOG_UART 2
+
+#define LOG_DEST LOG_UART
+
 // Initializes all needed components (USB)
 void LOG_Init();
 
@@ -15,3 +24,5 @@ void LOG_Init();
 void LOG_Log(const char * format, ...);
 
 void LOG_BitArray(uint8_t *array, uint16_t len);
+
+#endif //LOG_H
