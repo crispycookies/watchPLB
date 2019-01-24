@@ -178,9 +178,9 @@ void RADIO_Process(RADIO_Instance *inst) {
                         inst->idx++;
                     }
                 } else {
-                    LOG("[RADIO] Change State: RADIO_STATE_BITSYNC -> RADIO_STATE_FRAMESYNC\n");
+                    LOG("[RADIO] Change State: RADIO_STATE_FRAMESYNC -> RADIO_STATE_FRAME\n");
                     inst->idx = 0;
-                    inst->state = RADIO_STATE_FRAMESYNC; 
+                    inst->state = RADIO_STATE_FRAME; 
                 }
                 break;
             case RADIO_STATE_FRAME:
