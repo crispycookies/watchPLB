@@ -101,6 +101,7 @@ static const uint8_t framesyncPattern[FRAMESYNCPATTERN_LEN] = {0,0,0,1,0,1,1,1,1
 
 static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data);
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data);
+static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data);
 
 void RADIO_Init(RADIO_Instance *inst, SPI_Init_Struct *spi) {
     if (inst != 0 && spi != 0) {
@@ -255,6 +256,24 @@ static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
     LOG("[RADIO] SetReg (0x%x): 0x%x\n", addr, rec);
 
     SPI_SendData(inst->spi, &data, 1, SPI_TIMEOUT);
+    
+    //chip select -> 1
+    SPI_CS_Disable(inst->spi);
+
+    return status;
+}
+
+static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data) {
+    uint8_t status;
+
+    //chip select -> 0
+    SPI_CS_Enable(inst->spi);
+    addr = SPI_READ | (addr & 0x7F);
+    SPI_WriteRead(inst->spi, addr, &status, SPI_TIMEOUT);
+
+    //LOG("[RADIO] SetReg 0x%x = 0x%x => 0x%x\n", adgitdr, data, rec);
+
+    SPI_WriteRead(inst->spi, 0xff, &data, SPI_TIMEOUT);
     
     //chip select -> 1
     SPI_CS_Disable(inst->spi);
