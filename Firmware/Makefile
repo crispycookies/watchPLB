@@ -47,12 +47,14 @@ INCLUDES= \
 	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
 	-IDrivers/User/sysclock \
+	-IDrivers/Interfaces/ble/CRC \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/log \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
 	-IDrivers/Interfaces/plb \
+	-IDrivers/Interfaces/battery \
 	-IApp/communication \
 	-IApp/emergencyCall \
 	-IApp/location \
