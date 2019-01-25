@@ -14,8 +14,9 @@
 #define LOG_NONE 0
 #define LOG_USB  1
 #define LOG_UART 2
+#define LOG_GPS  3
 
-#define LOG_DEST LOG_UART
+#define LOG_DEST LOG_GPS
 
 // Initializes all needed components (USB)
 void LOG_Init();
