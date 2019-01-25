@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#if LOG_DEST == LOG_UART
+#if LOG_DEST == LOG_UART || LOG_DEST == LOG_GPS
 #include "uart.h"
 #endif
 
@@ -22,7 +22,7 @@ static uint8_t buffer[BUFFER_LEN];
 
 static uint8_t init = 0;
 
-#if LOG_DEST == LOG_UART
+#if LOG_DEST == LOG_UART || LOG_DEST == LOG_GPS
 UART_Instance uart;
 #endif
 
@@ -49,6 +49,22 @@ void LOG_Init()
     uart_conf.txAF = GPIO_AF4_USART2;
     
     UART_Init(&uart, &uart_conf);
+#elif LOG_DEST == LOG_GPS
+	//init uart for logging
+    UART_Config uart_conf;
+    
+    uart_conf.uart = USART4;
+    uart_conf.baud = UART_BaudRate_9600;
+    uart_conf.rxDmaChannel = DMA1_Channel6;
+    uart_conf.rxBoard = GPIOC;
+    uart_conf.rxPin = GPIO_PIN_11;
+    uart_conf.rxAF = GPIO_AF6_USART4;
+    uart_conf.txDmaChannel = DMA1_Channel7;
+    uart_conf.txBoard = GPIOC;
+    uart_conf.txPin = GPIO_PIN_10;
+    uart_conf.txAF = GPIO_AF6_USART4;
+    
+    UART_Init(&uart, &uart_conf);
 #endif
 	init = 1;
 }
@@ -70,7 +86,7 @@ void LOG_Log(const char * format, ...)
 #elif LOG_DEST == LOG_USB
 	USB_SendData (buffer, len);
 	HAL_Delay(2);
-#elif LOG_DEST == LOG_UART
+#elif LOG_DEST == LOG_UART || LOG_DEST == LOG_GPS
 	//send data  via uart
 	UART_SendData(&uart, len, buffer);
 #endif
@@ -92,7 +108,7 @@ void LOG_BitArray(uint8_t *array, uint16_t len) {
 #elif LOG_DEST == LOG_USB
 	USB_SendData(buffer, len+1);
 	HAL_Delay(2);
-#elif LOG_DEST == LOG_UART
+#elif LOG_DEST == LOG_UART || LOG_DEST == LOG_GPS
 	//send data  via uart
 	UART_SendData(&uart, len, buffer);
 #endif
