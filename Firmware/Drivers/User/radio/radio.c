@@ -70,6 +70,9 @@
 #define CONF_FSKDEV1      0x00
 #define CONF_FSKDEV0      0x00
 
+#define MASK_PLLRANGING_START 0x10
+#define MASK_PLLRANGING_ERROR 0x20
+
 //States
 #define STATE_S0_FIFOSTAT0  (1 << 7)
 #define STATE_S1_FIFOSTAT1  (1 << 6)
@@ -80,11 +83,13 @@
 #define STATE_S6_PLL_LOCK   (1 << 1)
 
 //Power modes
-#define PWRMODE_STANDBY 0
+#define PWRMODE_STANDBY 0x05
+#define PWRMODE_SYNTHTX 0x0C
+#define PWRMODE_FULLTX  0x0D
 
 //Modulation values
 #define IQ_1                (0x369U)
-#define IQ_0                (0x97U)
+#define IQ_0                (0x097U)
 
 //Return values
 #define TX_OK  0x1
@@ -93,7 +98,9 @@
 #define PREAMBLE_MSG 0x55
 
 #define CONFIGURATION_DELAY 5
+#define STARTUP_DELAY       1
 #define PREAMBLE_DURATION 160
+#define AR_INTERVAL       (5*60*1000)
 
 #define BITSYNCPATTERN_LEN 16
 #define FRAMESYNCPATTERN_LEN 9
@@ -125,7 +132,6 @@ void RADIO_Process(RADIO_Instance *inst) {
                 inst->idx = HAL_GetTick() + CONFIGURATION_DELAY;
                 SetReg(inst, ADDR_XTALOSC, CONF_XTALOSC);
                 SetReg(inst, ADDR_PLLLOOP, CONF_PLLLOOP);
-                SetReg(inst, ADDR_PLLRANGING, CONF_PLLRANGING);
                 SetReg(inst, ADDR_FREQ3, CONF_FREQ3);
                 SetReg(inst, ADDR_FREQ2, CONF_FREQ2);
                 SetReg(inst, ADDR_FREQ1, CONF_FREQ1);
@@ -140,31 +146,65 @@ void RADIO_Process(RADIO_Instance *inst) {
                 SetReg(inst, ADDR_MODULATION, CONF_MODULATION);
                 SetReg(inst, ADDR_ENCODING, CONF_ENCODING);
                 SetReg(inst, ADDR_FRAMING, CONF_FRAMING);
+                inst->nextAR = 0;
 
                 DumpRegister(inst);
 
-                LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_WAIT_CONF\n");
-                inst->state = RADIO_STATE_IDLE;
+                LOG("[RADIO] Configuration complete\n");
+                //LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_WAIT_CONF\n");
+                inst->state = RADIO_STATE_WAIT_CONF;
                 break;
             case RADIO_STATE_WAIT_CONF:
                 if (HAL_GetTick() > inst->idx) {
-                    LOG("[RADIO] Change State: RADIO_STATE_WAIT_CONF -> RADIO_STATE_IDLE\n");
+                    //LOG("[RADIO] Change State: RADIO_STATE_WAIT_CONF -> RADIO_STATE_IDLE\n");
                     inst->state = RADIO_STATE_IDLE;
                 }
                 break;
             case RADIO_STATE_START_TX:
-                LOG("[RADIO] Change State: RADIO_STATE_START_TX -> RADIO_STATE_PREAMBLE\n");
-                inst->idx = HAL_GetTick() + CONFIGURATION_DELAY;
-                inst->state = RADIO_STATE_PREAMBLE; 
+                //LOG("[RADIO] Change State: RADIO_STATE_START_TX -> RADIO_STATE_WAIT_TX\n");
+                SetReg(inst, ADDR_PWRMODE, PWRMODE_SYNTHTX);
+                inst->idx = HAL_GetTick() + STARTUP_DELAY;
+                inst->state = RADIO_STATE_WAIT_TX;
                 break;
+            case RADIO_STATE_WAIT_TX:
+                if (HAL_GetTick() > inst->idx) {
+                    if (HAL_GetTick() > inst->nextAR) {
+                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_TX -> RADIO_STATE_PREAMBLE\n");
+                        SetReg(inst, ADDR_PWRMODE, PWRMODE_FULLTX);
+                        inst->idx   = HAL_GetTick() + PREAMBLE_DURATION;
+                        inst->state = RADIO_STATE_PREAMBLE;
+                    } else {
+                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_TX -> RADIO_STATE_WAIT_AR\n");
+                        SetReg(inst, ADDR_PLLRANGING, CONF_PLLRANGING);
+                        inst->state = RADIO_STATE_WAIT_AR;
+                    }
+                }
+                break;
+            case RADIO_STATE_WAIT_AR:
+                {
+                    uint8_t reg;
+                    GetReg(inst, ADDR_PLLRANGING, &reg);
+                    if (reg & MASK_PLLRANGING_ERROR) {
+                        LOG("[RADIO] PLL Ranging failed! Restart Configuration\n");
+                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_AR -> RADIO_STATE_CONFIGURE\n");
+                        inst->state = RADIO_STATE_CONFIGURE;
+                    } else if ((reg & MASK_PLLRANGING_START) == 0) {
+                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_AR -> RADIO_STATE_PREAMBLE\n");
+                        SetReg(inst, ADDR_PWRMODE, PWRMODE_FULLTX);
+                        inst->state  = RADIO_STATE_PREAMBLE;
+                        inst->nextAR = HAL_GetTick() + AR_INTERVAL;
+                        inst->idx    = HAL_GetTick() + PREAMBLE_DURATION;
+                    }
+                    break;
+                }
             case RADIO_STATE_PREAMBLE:
                 //set preamble sync message
                 if (HAL_GetTick() < inst->idx) {
-                    SetReg(inst, ADDR_FIFODATA, PREAMBLE_MSG);
+                    //SetReg(inst, ADDR_FIFODATA, PREAMBLE_MSG); 
                 } else {
                     inst->idx = 0;
                     inst->state = RADIO_STATE_BITSYNC; 
-                    LOG("[RADIO] Change State: RADIO_STATE_PREAMBLE -> RADIO_STATE_BITSYNC\n");
+                    //LOG("[RADIO] Change State: RADIO_STATE_PREAMBLE -> RADIO_STATE_BITSYNC\n");
                 }
                 break;
             case RADIO_STATE_BITSYNC:
@@ -173,7 +213,7 @@ void RADIO_Process(RADIO_Instance *inst) {
                         inst->idx++;
                     }
                 } else {
-                    LOG("[RADIO] Change State: RADIO_STATE_BITSYNC -> RADIO_STATE_FRAMESYNC\n");
+                    //LOG("[RADIO] Change State: RADIO_STATE_BITSYNC -> RADIO_STATE_FRAMESYNC\n");
                     inst->idx = 0;
                     inst->state = RADIO_STATE_FRAMESYNC; 
                 }
@@ -184,7 +224,7 @@ void RADIO_Process(RADIO_Instance *inst) {
                         inst->idx++;
                     }
                 } else {
-                    LOG("[RADIO] Change State: RADIO_STATE_FRAMESYNC -> RADIO_STATE_FRAME\n");
+                    //LOG("[RADIO] Change State: RADIO_STATE_FRAMESYNC -> RADIO_STATE_FRAME\n");
                     inst->idx = 0;
                     inst->state = RADIO_STATE_FRAME; 
                 }
@@ -193,7 +233,7 @@ void RADIO_Process(RADIO_Instance *inst) {
                 if (inst->idx >= inst->len) {
                     inst->state = RADIO_STATE_POSTAMBLE;
                     inst->idx = 0;
-                    LOG("[RADIO] Change State: RADIO_STATE_FRAME -> RADIO_STATE_POSTAMBLE\n");
+                    //LOG("[RADIO] Change State: RADIO_STATE_FRAME -> RADIO_STATE_POSTAMBLE\n");
                 } else {
                     //send modulated frame
                     while (inst->idx < inst->len && Transmit10(inst, inst->frame[inst->idx])) {
@@ -206,9 +246,10 @@ void RADIO_Process(RADIO_Instance *inst) {
                 if (inst->idx == 0) {
                     inst->idx++;
                 } else {
+                    SetReg(inst, ADDR_PWRMODE, PWRMODE_STANDBY);
                     inst->state = RADIO_STATE_IDLE;
                     inst->idx = 0;
-                    LOG("[RADIO] Change State: RADIO_STATE_POSTAMBLE -> RADIO_STATE_IDLE\n");
+                    //LOG("[RADIO] Change State: RADIO_STATE_POSTAMBLE -> RADIO_STATE_IDLE\n");
                 }
                 break;
             default:
@@ -239,7 +280,7 @@ RADIO_State RADIO_GetState(RADIO_Instance *inst) {
 static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
     uint16_t tx = (data == 0) ? IQ_0 : IQ_1;
 
-    LOG("[RADIO] TX: %3x\n", tx);
+    //LOG("[RADIO] TX: %3x\n", tx);
 
     uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
 
@@ -258,9 +299,10 @@ static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
     addr = SPI_WRITE | (addr & 0x7F);
     SPI_WriteRead(inst->spi, addr, &status, SPI_TIMEOUT);
 
-    LOG("[RADIO] SetReg (0x%x): 0x%x\n", addr, rec);
+    //LOG("[RADIO] SetReg 0x%x = 0x%x => 0x%x\n", addr, data, status);
 
-    SPI_SendData(inst->spi, &data, 1, SPI_TIMEOUT);
+    uint8_t tmp;
+    SPI_WriteRead(inst->spi, data, &tmp, SPI_TIMEOUT);
     
     //chip select -> 1
     SPI_CS_Disable(inst->spi);
@@ -289,7 +331,7 @@ static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data) {
 static void DumpRegister(RADIO_Instance *inst) {
     LOG("\n[RADIO] --- Radio memory dump ---\n");
     for (uint8_t i = 0; i <= MAX_ADDR; i++) {
-        uint8_t reg;
+        uint8_t reg = 0xff;
         GetReg(inst, i, &reg);
         LOG("[RADIO] 0x%2.2x: 0x%2.2x\n", i, reg);
     }

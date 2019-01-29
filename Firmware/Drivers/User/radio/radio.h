@@ -10,6 +10,8 @@ typedef enum {
     RADIO_STATE_CONFIGURE,
     RADIO_STATE_WAIT_CONF,
     RADIO_STATE_START_TX,
+    RADIO_STATE_WAIT_TX,
+    RADIO_STATE_WAIT_AR,
     RADIO_STATE_PREAMBLE,
     RADIO_STATE_BITSYNC,
     RADIO_STATE_FRAMESYNC,
@@ -23,6 +25,7 @@ typedef struct {
     RADIO_State state;
     uint16_t len;
     uint32_t idx;
+    uint32_t nextAR;
     
 } RADIO_Instance;
 
