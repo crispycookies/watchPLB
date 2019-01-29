@@ -42,7 +42,7 @@ void EMC_Init(void) {
     spi.SPI.Init.TIMode = SPI_TIMODE_DISABLE;
     spi.SPI.Init.Direction = SPI_DIRECTION_2LINES;
     spi.SPI.Init.DataSize = SPI_DATASIZE_8BIT;
-    spi.SPI.Init.FirstBit = SPI_FIRSTBIT_LSB;
+    spi.SPI.Init.FirstBit = SPI_FIRSTBIT_MSB;
     
     spi.SPI.Init.CLKPolarity = SPI_POLARITY_LOW;
     spi.SPI.Init.CLKPhase = SPI_PHASE_1EDGE;
