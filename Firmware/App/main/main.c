@@ -223,11 +223,13 @@ int main(void) {
 	
 	HAL_Delay(1000);
 	
-	LOC_Init();
+	//LOC_Init();
 	LOC_InjectPosition(&(positions[2]));
 
 	EMC_Init();
 	EMC_SetEmergency(EMC_State_Emergency);
+
+
 
 	LOG("System initialized\n");
 
