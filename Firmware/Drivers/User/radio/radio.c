@@ -74,13 +74,13 @@
 #define MASK_PLLRANGING_ERROR 0x20
 
 //States
-#define STATE_S0_FIFOSTAT0  (1 << 7)
-#define STATE_S1_FIFOSTAT1  (1 << 6)
-#define STATE_S2_FIFO_EMPTY (1 << 5)
-#define STATE_S3_FIFO_FULL  (1 << 4)
-#define STATE_S4_FIFO_UNDER (1 << 3)
-#define STATE_S5_FIFO_OVER  (1 << 2)
-#define STATE_S6_PLL_LOCK   (1 << 1)
+#define STATE_S0_FIFOSTAT0  (1 << 0)
+#define STATE_S1_FIFOSTAT1  (1 << 1)
+#define STATE_S2_FIFO_EMPTY (1 << 2)
+#define STATE_S3_FIFO_FULL  (1 << 3)
+#define STATE_S4_FIFO_UNDER (1 << 4)
+#define STATE_S5_FIFO_OVER  (1 << 5)
+#define STATE_S6_PLL_LOCK   (1 << 6)
 
 //Power modes
 #define PWRMODE_STANDBY 0x05
