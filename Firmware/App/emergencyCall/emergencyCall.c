@@ -7,6 +7,8 @@
 
 #define FRAME_SIZE 144
 
+#define MSG_INTERVAL 0
+
 static EMC_State emergencyState;
 static uint8_t dataFrame[FRAME_SIZE];
 static uint16_t frameLength;
@@ -14,6 +16,7 @@ static uint16_t frameLength;
 static SPI_Init_Struct spi;
 static POS_Time lastPosUpdate;
 static RADIO_Instance radio;
+static uint32_t lastMsgSent;
 
 void EMC_Init(void) {
     
@@ -64,13 +67,14 @@ void EMC_Init(void) {
     memset(&lastPosUpdate, 0, sizeof(POS_Time));
     emergencyState = EMC_State_Idle;
     frameLength = 0;
+    lastMsgSent = 0;
 }
 
 void EMC_Process(void) {
 
     if (emergencyState == EMC_State_Emergency) {
         
-        if (RADIO_GetState(&radio) == RADIO_STATE_IDLE) {
+        if (RADIO_GetState(&radio) == RADIO_STATE_IDLE && HAL_GetTick() > lastMsgSent) {
             POS_Position* locPos = LOC_GetLastPosition();
 
             if (locPos != 0 && locPos->valid == POS_Valid_Flag_Valid
@@ -90,6 +94,7 @@ void EMC_Process(void) {
                 LOG("[EMC] Start Frame\n");
 
                 RADIO_SetFrame(&radio, dataFrame, frameLength);
+                lastMsgSent = HAL_GetTick() + MSG_INTERVAL;
             }
         }
 
