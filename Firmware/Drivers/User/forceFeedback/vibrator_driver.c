@@ -74,7 +74,6 @@ void vibrator_off(){
   * @retval None
 */
 void vibrator_deinit(){
-#warning Do not call if you are unsure
 	HAL_GPIO_DeInit(bank, pin);
 
 	if(bank == GPIOA){
