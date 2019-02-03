@@ -1,10 +1,12 @@
-/*
- * spidriver.cpp
- *
- *  Created on: 29.05.2018
- *      Author: tobilinux
+/**
+ ******************************************************************************
+ * @file    spi_driver.c
+ * @author  Tobias Egger
+ * @version V1.3
+ * @date    02-February-2019
+ * @brief   WatchPLB SPI- Driver Implementation File
+ ******************************************************************************
  */
-
 #define LUT_SIZE 26
 
 #include "spi_driver.h"

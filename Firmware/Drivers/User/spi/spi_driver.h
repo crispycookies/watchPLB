@@ -2,8 +2,8 @@
  ******************************************************************************
  * @file    spi_driver.h
  * @author  Tobias Egger
- * @version V1.1
- * @date    11-July-2018
+ * @version V1.3
+ * @date    02-February-2019
  * @brief   WatchPLB SPI- Driver Interface File
  ******************************************************************************
  */
