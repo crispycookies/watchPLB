@@ -49,19 +49,21 @@
 \section{Mainboard}
 \subsection{MCU}
 
-Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
-Platzhalter\\Platzhalter
+Der Prozessor wurde hauptsächlich wegen seinem Reichtum an UART-Modulen ausgewählt. Wir benötigen hier drei Stück: GPS, Bluetooth und Debugging über UART-to-USB chip\\Außerdem haben wir bereits Erfahrung mit Cortex-M0-Prozessoren wie diesem im Unterricht gesammelt.\\Der Controller ist in einem LQFP64 Gehäuse verpackt, das ohne Probleme per Hand gelötet werden kann.
 
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_mcu.png}
 \caption{Hauptplatine, Baugruppe MCU grün umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{Schaltplanteil Mikrocontroller STM32L073RZ}
-\label{fig:abb1}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[page=1, angle=0, width=\linewidth]{../Datasheets/stm32l073rz.pdf}
+\caption{Kurze Zusammenfassung der Features des STM32L073RZ auf der ersten Seite des Datenblattes}
 \end{figure}
 
 \subsection{Debug}
@@ -72,13 +74,11 @@ Platzhalter\\Platzhalter
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_debug.png}
 \caption{Hauptplatine, Baugruppe Debug grün umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
-\includegraphics[page=2, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\includegraphics[page=6, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{USB-To-UART und USB des STM}
-\label{fig:abb1}
 \end{figure}
 
 \subsection{Funk}
@@ -89,13 +89,11 @@ Platzhalter\\Platzhalter
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_funk.png}
 \caption{Hauptplatine, Baugruppe Funk grün umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
-\includegraphics[page=3, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\includegraphics[page=2, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{Funk}
-\label{fig:abb1}
 \end{figure}
 
 \subsection{Buttons}
@@ -106,13 +104,11 @@ Platzhalter\\Platzhalter
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_buttons.png}
 \caption{Hauptplatine, Baugruppe Buttons grün umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
-\includegraphics[page=4, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\includegraphics[page=3, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{Taster, WakeUp, Vibrationsmotor}
-\label{fig:abb1}
 \end{figure}
 
 \subsection{Bluetooth}
@@ -123,13 +119,11 @@ Platzhalter\\Platzhalter
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_bluetooth.png}
 \caption{Hauptplatine, Baugruppe Bluetooth grün umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
-\includegraphics[page=5, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\includegraphics[page=4, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{Bluetooth-Modul}
-\label{fig:abb1}
 \end{figure}
 
 \subsection{Charge}
@@ -140,13 +134,11 @@ Platzhalter\\Platzhalter
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_charge.png}
 \caption{Hauptplatine, Baugruppe Charge umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
-\includegraphics[page=6, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
+\includegraphics[page=5, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{Akkuladeschaltung}
-\label{fig:abb1}
 \end{figure}
 
 \subsection{Battery Protection}
@@ -157,13 +149,11 @@ Platzhalter\\Platzhalter
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_batprot.png}
 \caption{Hauptplatine, Baugruppe Battery Protection umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
 \includegraphics[page=7, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{Lithium-Ionen-Akku Schutzschaltung}
-\label{fig:abb1}
 \end{figure}
 
 \subsection{Voltage Regulator}
@@ -174,13 +164,11 @@ Platzhalter\\Platzhalter
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, width=\linewidth]{../Documentation/pics/mainboard_vreg.png}
 \caption{Hauptplatine, Baugruppe VREG umrahmt}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
 \includegraphics[page=8, angle=90, width=\linewidth]{../eagle/Mainboard/watchplb_mainboard_v1_0.pdf}
 \caption{Spannungsregler}
-\label{fig:abb1}
 \end{figure}
 
 \section{GPS-Board}
@@ -193,13 +181,11 @@ Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\Platzhalter\\
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=0, scale=0.4]{../Documentation/pics/gpsboard.png}
 \caption{Platine des GPS-Moduls}
-\label{fig:abb1}
 \end{figure}
 
 \begin{figure}[H]\centering
 \includegraphics[page=1, angle=90, width=\linewidth]{../eagle/GPS_board/watchplb_gps_v1_0_AB.pdf}
 \caption{GPS-Modul}
-\label{fig:abb1}
 \end{figure}
 
 
