@@ -2,8 +2,8 @@
  ******************************************************************************
  * @file    spi_driver.h
  * @author  Tobias Egger
- * @version V1.1
- * @date    11-July-2018
+ * @version V1.3
+ * @date    02-February-2019
  * @brief   WatchPLB SPI- Driver Interface File
  ******************************************************************************
  */
@@ -61,6 +61,7 @@ typedef struct {
  * @retval Result of Operation
  */
 SPI_RetType SPI_Init(SPI_Init_Struct * spi_init);
+
 /**
  * @brief Send Data via given SPI
  * @param spi_init: The Pins and SPI to use
@@ -71,6 +72,7 @@ SPI_RetType SPI_Init(SPI_Init_Struct * spi_init);
  */
 SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
 		uint8_t tx_buffer_size, uint8_t timeout);
+
 /**
  * @brief Receive Data via given SPI
  * @param spi_init: The Pins and SPI to use
@@ -81,6 +83,18 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
  */
 SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, uint8_t * rx_buffer,
 		uint8_t rx_buffer_size, uint8_t timeout);
+
+/**
+ * @brief Send and Receive Data via given SPI
+ * @param spi_init: The Pins and SPI to use
+ * @param tx_byte: the byte to send
+ * @param rx_byte: the byte to receive
+ * @param timout: the timeout
+ * @retval Result of Operation
+ */
+SPI_RetType SPI_WriteRead(SPI_Init_Struct * spi_init, uint8_t tx_byte, 
+		uint8_t * rx_byte, uint8_t timeout);
+
 /**
  * @brief Deinitialize SPI and GPIOs; Disables CS
  * @param spi_init: The Pins and SPI to deinitialize
@@ -94,6 +108,7 @@ SPI_RetType SPI_DeInit(SPI_Init_Struct * spi_init);
  * @retval none
  */
 void SPI_CS_Enable(SPI_Init_Struct * spi_init);
+
 /**
  * @brief Disable CS
  * @param  gp: The Pin and the Location of the Pin to use

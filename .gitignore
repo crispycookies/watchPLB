@@ -11,3 +11,5 @@ Firmware/.metadata/
 Firmware/Debug/
 .metadata/
 Firmware/.vscode/
+Firmware/STM32L073RZ_FLASH.ld
+Firmware/.code_review_properties
