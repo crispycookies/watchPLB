@@ -145,7 +145,7 @@ SPI_RetType SPI_Init(SPI_Init_Struct * spi_init) {
 	SPI_AF_INIT(spi_init->MISO);
 	SPI_AF_INIT(spi_init->SCLK);
 	SPI_Init_CS(spi_init->CS);
-	SPI_CS_Enable(spi_init);
+	SPI_CS_Disable(spi_init);
 
 	__HAL_SPI_DISABLE(&spi_init->SPI);
 

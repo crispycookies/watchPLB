@@ -50,11 +50,151 @@
 #include "stm32l0xx_hal.h"
 #include "usb.h"
 #include "log.h"
-#include "led_driver.h"
-#include "ui.h"
+#include "location.h"
+#include "emergencyCall.h"
+#include "sysclock_driver.h"
 
 /* Private variables ---------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
+#define POS_CNT 7
+#define DELAY 2000
+
+POS_Position positions[POS_CNT] = {
+	{
+		//empty config
+		.time = {
+			.hour = 1,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Valid //has to be valid
+	}, {
+		//test config
+		.time = {
+			.hour = 1,
+			.minute = 2,
+			.second = 3,
+			.split = 4
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 23,
+			.minute = 45.234
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 10,
+			.minute = 38.923
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (Hagenberg)
+		.time = {
+			.hour = 1,
+			.minute = 2,
+			.second = 4,
+			.split = 2
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 48,
+			.minute = 22.082
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_E,
+			.degree = 14,
+			.minute = 30.782
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (New York, US)
+		.time = {
+			.hour = 2,
+			.minute = 3,
+			.second = 4,
+			.split = 5
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 40,
+			.minute = 43.650
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 73,
+			.minute = 59.328
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config(Melbourne, Australia)
+		.time = {
+			.hour = 12,
+			.minute = 13,
+			.second = 14,
+			.split = 15
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 37,
+			.minute = 48.858
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_E,
+			.degree = 144,
+			.minute = 57.804
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (should be neglected because of old timestamp)
+		.time = {
+			.hour = 10,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (should be neglected because invalid)
+		.time = {
+			.hour = 14,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Invalid
+	}, 
+};
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
@@ -75,59 +215,33 @@ int main(void)
 
   //uint8_t mystring[]="Hello world !!!\r";
 
-  /*
-   led_on(led_pa4);
-   led_on(led_pa5);
-   led_on(led_pa6);
-   led_on(led_pa7);
-   led_on(led_pc4);
-   led_on(led_pc5);
-   led_on(led_pb0);
-   led_on(led_pb1);
-   led_on(led_pb2);
-   led_on(led_pb10);
-   led_on(led_pb11);
-   */
+	HAL_Init();
+	SystemClock_Config();
+	LOG_Init();
+	
+	HAL_Delay(1000);
+	
+	//LOC_Init();
+	LOC_InjectPosition(&(positions[2]));
+
+	EMC_Init();
+	EMC_SetEmergency(EMC_State_Emergency);
 
 
-   ////////////////////////BLEEEEE////////////////////
-   //ble_interface_init();
 
-   //uint8_t * rx = "Test Test Hallo Test";
-   //uint8_t len = (uint8_t) strlen(rx);
+	LOG("System initialized\n");
 
-   //uint8_t * name = "Michi du FGT";
-   //uint8_t name_len = (uint8_t) strlen(name);
+	uint32_t next = HAL_GetTick() + DELAY;
+	uint8_t i = 0;
 
-   //ble_interface_set_name(name, name_len);
-   //ble_interface_advertize(true);
-   ///////////////////END BLEEEE//////////////////////
+	while (1) {
+		//if (HAL_GetTick()  > next && i < POS_CNT) {
+		//	next = HAL_GetTick() + DELAY;
+		//	LOG("[MAIN] Next Position: %u Tick: %lu\n", i, HAL_GetTick());
+		//	//LOC_InjectPosition(&positions[i++]);
+		//}
 
-  while (1)
-  {
-	 //LOG_Log("String & int test: '%s' ... '%i'\r\r",mystring,i);
-	 //HAL_Delay(1000);
-	 UI_Update();
-  }
+		//LOC_Process();
+		EMC_Process();
+	}
 }
-
-
-
-
-
-#ifdef  USE_FULL_ASSERT
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t* file, uint32_t line)
-{ 
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-}
-#endif /* USE_FULL_ASSERT */

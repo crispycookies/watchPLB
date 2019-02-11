@@ -59,8 +59,7 @@ INCLUDES= \
 	-IApp/emergencyCall \
 	-IApp/location \
 	-IApp/system \
-	-IApp/userInterface \
-	-ITools/Logger
+	-IApp/userInterface
 	
 HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr pcd pcd_ex spi iwdg wwdg
 

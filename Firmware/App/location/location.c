@@ -54,9 +54,16 @@ void LOC_Init() {
 
 void LOC_Process() {
     while (UART_GetAvailableBytes(&uart) > 0) {
-        uint8_t byte = UART_GetByte(&uart);
-        NMEA_Process(&nmea, byte);
-        UBX_Process(&ubx, byte);
+        uint8_t tmpData[100];
+        int16_t cnt = UART_GetData(&uart, 100, tmpData);
+        LOG("%.*s", cnt, tmpData);
+        //uint8_t byte = UART_GetByte(&uart);
+        //NMEA_Process(&nmea, byte);
+        //UBX_Process(&ubx, byte);
+        for (uint16_t i = 0; i < cnt; i++) {
+            UBX_Process(&ubx, tmpData[i]);
+            NMEA_Process(&nmea, tmpData[i]);
+        }
     }
 }
 
