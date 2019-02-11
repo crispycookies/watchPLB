@@ -40,17 +40,21 @@ INCLUDES= \
 	-IDrivers/User/led \
 	-IDrivers/User/radio \
 	-IDrivers/User/uart \
-	-IDrivers/User/spi \
+	-IDrivers/User/sysclock \
 	-IDrivers/User/dma \
+	-IDrivers/User/forceFeedback \
+	-IDrivers/User/spi \
 	-IDrivers/User/usb \
 	-IDrivers/User/watchdog \
 	-IDrivers/User/sysclock \
+	-IDrivers/Interfaces/ble/CRC \
 	-IDrivers/Interfaces/ble \
 	-IDrivers/Interfaces/nmea \
 	-IDrivers/Interfaces/log \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
 	-IDrivers/Interfaces/plb \
+	-IDrivers/Interfaces/battery \
 	-IApp/communication \
 	-IApp/emergencyCall \
 	-IApp/location \
