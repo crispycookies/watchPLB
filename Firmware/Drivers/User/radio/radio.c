@@ -1,3 +1,11 @@
+/**
+ * @file radio.c
+ * @author Paul Götzinger
+ * @brief Radio driver using spi
+ * @version 1.0
+ * @date 2019-02-11
+ */
+
 #include "radio.h"
 #include "string.h"
 
@@ -5,17 +13,13 @@
 
 #define SPI_TIMEOUT   100
 
-#define TX_BUF_SIZE   2
-#define TX_BUF_ADDR   0
-#define TX_BUF_DATA   1
-
-#define MAX_ADDR      0x50
+#define MAX_ADDR      0x50  //maximal register address of radio module
 
 //RW Flag
-#define SPI_READ      0
-#define SPI_WRITE     (1 << 7)
+#define SPI_READ      0         //read flag
+#define SPI_WRITE     (1 << 7)  //write flag
 
-//Adresses
+//Register addresses
 #define ADDR_REVISION     0x00
 #define ADDR_SCRATCH      0x01
 #define ADDR_PWRMODE      0x02
@@ -51,7 +55,7 @@
 #define ADDR_TXRATEMID    0x32
 #define ADDR_TXRATELO     0x33
 
-//Configuration Values
+//Register configuration Values
 #define CONF_XTALOSC      0x18
 #define CONF_MODULATION   0x06
 #define CONF_ENCODING     0x00
@@ -73,7 +77,7 @@
 #define MASK_PLLRANGING_START 0x10
 #define MASK_PLLRANGING_ERROR 0x20
 
-//States
+//state mask
 #define STATE_S0_FIFOSTAT0  (1 << 0)
 #define STATE_S1_FIFOSTAT1  (1 << 1)
 #define STATE_S2_FIFO_EMPTY (1 << 2)
@@ -102,15 +106,40 @@
 #define PREAMBLE_DURATION 160
 #define AR_INTERVAL       (5*60*1000)
 
-#define BITSYNCPATTERN_LEN 16
-#define FRAMESYNCPATTERN_LEN 9
-
-static const uint8_t bitsyncPattern[BITSYNCPATTERN_LEN]     = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-static const uint8_t framesyncPattern[FRAMESYNCPATTERN_LEN] = {0,0,0,1,0,1,1,1,1};
-
+/**
+ * @brief Transmit bit as 10Bit symbol
+ * 
+ * @param inst radio instance
+ * @param data bit to send
+ * @return uint8_t 0 on fail, else 1
+ */
 static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data);
+
+/**
+ * @brief Set a register
+ * 
+ * @param inst radio instance
+ * @param addr address of register
+ * @param data value to set
+ * @return uint8_t status
+ */
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data);
+
+/**
+ * @brief Get a register
+ * 
+ * @param inst radio instance
+ * @param addr address of register
+ * @param data pointer to store value
+ * @return uint8_t status
+ */
 static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data);
+
+/**
+ * @brief Dump all registers to log
+ * 
+ * @param inst 
+ */
 static void DumpRegister(RADIO_Instance *inst);
 
 void RADIO_Init(RADIO_Instance *inst, SPI_Init_Struct *spi) {
@@ -151,45 +180,46 @@ void RADIO_Process(RADIO_Instance *inst) {
                 DumpRegister(inst);
 
                 LOG("[RADIO] Configuration complete\n");
-                //LOG("[RADIO] Change State: RADIO_STATE_CONFIGURE -> RADIO_STATE_WAIT_CONF\n");
                 inst->state = RADIO_STATE_WAIT_CONF;
                 break;
             case RADIO_STATE_WAIT_CONF:
+                //wait until configuration is finished
                 if (HAL_GetTick() > inst->idx) {
-                    //LOG("[RADIO] Change State: RADIO_STATE_WAIT_CONF -> RADIO_STATE_IDLE\n");
                     inst->state = RADIO_STATE_IDLE;
                 }
                 break;
             case RADIO_STATE_START_TX:
-                //LOG("[RADIO] Change State: RADIO_STATE_START_TX -> RADIO_STATE_WAIT_TX\n");
+                //power up transmitter (step 1)
                 SetReg(inst, ADDR_PWRMODE, PWRMODE_SYNTHTX);
                 inst->idx = HAL_GetTick() + STARTUP_DELAY;
                 inst->state = RADIO_STATE_WAIT_TX;
                 break;
             case RADIO_STATE_WAIT_TX:
+                //wait until transmitter is ready
                 if (HAL_GetTick() > inst->idx) {
                     if (HAL_GetTick() > inst->nextAR) {
-                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_TX -> RADIO_STATE_PREAMBLE\n");
+                        //power up transmitter (step 2)
                         SetReg(inst, ADDR_PWRMODE, PWRMODE_FULLTX);
                         inst->idx   = HAL_GetTick() + PREAMBLE_DURATION;
                         inst->state = RADIO_STATE_PREAMBLE;
                     } else {
-                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_TX -> RADIO_STATE_WAIT_AR\n");
+                        //perform autorange
                         SetReg(inst, ADDR_PLLRANGING, CONF_PLLRANGING);
                         inst->state = RADIO_STATE_WAIT_AR;
                     }
                 }
                 break;
             case RADIO_STATE_WAIT_AR:
+                //wait for auto range to finish
                 {
                     uint8_t reg;
                     GetReg(inst, ADDR_PLLRANGING, &reg);
                     if (reg & MASK_PLLRANGING_ERROR) {
+                        //autorange failed
                         LOG("[RADIO] PLL Ranging failed! Restart Configuration\n");
-                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_AR -> RADIO_STATE_CONFIGURE\n");
                         inst->state = RADIO_STATE_CONFIGURE;
                     } else if ((reg & MASK_PLLRANGING_START) == 0) {
-                        //LOG("[RADIO] Change State: RADIO_STATE_WAIT_AR -> RADIO_STATE_PREAMBLE\n");
+                        //autorange finished; power up transmitter (step 2)
                         SetReg(inst, ADDR_PWRMODE, PWRMODE_FULLTX);
                         inst->state  = RADIO_STATE_PREAMBLE;
                         inst->nextAR = HAL_GetTick() + AR_INTERVAL;
@@ -198,58 +228,35 @@ void RADIO_Process(RADIO_Instance *inst) {
                     break;
                 }
             case RADIO_STATE_PREAMBLE:
-                //set preamble sync message
+                //send preamble message
                 if (HAL_GetTick() < inst->idx) {
-                    //SetReg(inst, ADDR_FIFODATA, PREAMBLE_MSG); 
+                    SetReg(inst, ADDR_FIFODATA, PREAMBLE_MSG);
                 } else {
-                    inst->idx = 0;
-                    inst->state = RADIO_STATE_BITSYNC; 
-                    //LOG("[RADIO] Change State: RADIO_STATE_PREAMBLE -> RADIO_STATE_BITSYNC\n");
-                }
-                break;
-            case RADIO_STATE_BITSYNC:
-                if (inst->idx < BITSYNCPATTERN_LEN) {
-                    while (inst->idx < BITSYNCPATTERN_LEN && Transmit10(inst, bitsyncPattern[inst->idx])) {
-                        inst->idx++;
-                    }
-                } else {
-                    //LOG("[RADIO] Change State: RADIO_STATE_BITSYNC -> RADIO_STATE_FRAMESYNC\n");
-                    inst->idx = 0;
-                    inst->state = RADIO_STATE_FRAMESYNC; 
-                }
-                break;
-            case RADIO_STATE_FRAMESYNC:
-                if (inst->idx < FRAMESYNCPATTERN_LEN) {
-                    while (inst->idx < FRAMESYNCPATTERN_LEN && Transmit10(inst, framesyncPattern[inst->idx])) {
-                        inst->idx++;
-                    }
-                } else {
-                    //LOG("[RADIO] Change State: RADIO_STATE_FRAMESYNC -> RADIO_STATE_FRAME\n");
                     inst->idx = 0;
                     inst->state = RADIO_STATE_FRAME; 
                 }
                 break;
             case RADIO_STATE_FRAME:
+                //send frame
                 if (inst->idx >= inst->len) {
                     inst->state = RADIO_STATE_POSTAMBLE;
                     inst->idx = 0;
-                    //LOG("[RADIO] Change State: RADIO_STATE_FRAME -> RADIO_STATE_POSTAMBLE\n");
                 } else {
-                    //send modulated frame
                     while (inst->idx < inst->len && Transmit10(inst, inst->frame[inst->idx])) {
                         inst->idx++;
                     }
                 }                
                 break;
             case RADIO_STATE_POSTAMBLE:
+                //send postamble
                 Transmit10(inst, 0);
                 if (inst->idx == 0) {
                     inst->idx++;
                 } else {
+                    //power down transmitter
                     SetReg(inst, ADDR_PWRMODE, PWRMODE_STANDBY);
                     inst->state = RADIO_STATE_IDLE;
                     inst->idx = 0;
-                    //LOG("[RADIO] Change State: RADIO_STATE_POSTAMBLE -> RADIO_STATE_IDLE\n");
                 }
                 break;
             default:
@@ -261,6 +268,7 @@ void RADIO_Process(RADIO_Instance *inst) {
 void RADIO_SetFrame(RADIO_Instance *inst, uint8_t *data, uint16_t len) {
     if (inst != 0 && inst->state == RADIO_STATE_IDLE 
             && data != 0 && len != 0 && len < RADIO_FRAME_LENGTH) {
+        //copy new frames and initialize index
         LOG("[RADIO] New Frame\n");
         memcpy(inst->frame, data, len);
         inst->len = len;
@@ -278,30 +286,29 @@ RADIO_State RADIO_GetState(RADIO_Instance *inst) {
 }
 
 static uint8_t Transmit10(RADIO_Instance *inst, uint8_t data) {
-    uint16_t tx = (data == 0) ? IQ_0 : IQ_1;
+    uint16_t tx = (data == 0) ? IQ_0 : IQ_1;    //select symbol to send
 
-    //LOG("[RADIO] TX: %3x\n", tx);
+    uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8); //send bit 8 and 9
 
-    uint8_t ret = SetReg(inst, ADDR_FIFOCTRL, tx >> 8);
-
+    //check if fifo isn't full
     if ((ret  & STATE_S3_FIFO_FULL) == 0) {
-        SetReg(inst, ADDR_FIFODATA, tx & 0xFF);
+        SetReg(inst, ADDR_FIFODATA, tx & 0xFF); //send lower 8 bits
     }
     
     return (ret & STATE_S3_FIFO_FULL) == 0;
 }
 
 static uint8_t SetReg(RADIO_Instance *inst, uint8_t addr, uint8_t data) {
-    uint8_t status;
+    uint8_t status, tmp;
 
     //chip select -> 0
     SPI_CS_Enable(inst->spi);
+
+    //write address with write flag
     addr = SPI_WRITE | (addr & 0x7F);
-    SPI_WriteRead(inst->spi, addr, &status, SPI_TIMEOUT);
+    SPI_WriteRead(inst->spi, addr, &status, SPI_TIMEOUT);   
 
-    //LOG("[RADIO] SetReg 0x%x = 0x%x => 0x%x\n", addr, data, status);
-
-    uint8_t tmp;
+    //write data
     SPI_WriteRead(inst->spi, data, &tmp, SPI_TIMEOUT);
     
     //chip select -> 1
@@ -315,11 +322,12 @@ static uint8_t GetReg(RADIO_Instance *inst, uint8_t addr, uint8_t *data) {
 
     //chip select -> 0
     SPI_CS_Enable(inst->spi);
+
+    //write address with read flag
     addr = SPI_READ | (addr & 0x7F);
     SPI_WriteRead(inst->spi, addr, &status, SPI_TIMEOUT);
 
-    //LOG("[RADIO] SetReg 0x%x = 0x%x => 0x%x\n", addr, data, status);
-
+    //read data
     SPI_WriteRead(inst->spi, 0xff, data, SPI_TIMEOUT);
     
     //chip select -> 1

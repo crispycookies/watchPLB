@@ -1,9 +1,13 @@
-//
-//  plb.c
-//  
-//
-//  Created by Olia Sviridova on 30.09.18.
-//
+/**
+ * @file plb.h
+ * @author Paul Götzinger, Olia Sviridova
+ * @brief PLB frame creation
+ * @version 1.0
+ * @date 2019-02-11
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 
 #include <string.h>
 #include <math.h>
@@ -21,6 +25,7 @@
 
 static uint16_t const sync_bit = 0b111111111111111; //from 1-15
 static uint16_t const frame_sync = 0b000101111; //from 16-24
+
 //PDF1
 static uint8_t  const format_flag = 0b1; //25 -> begin pdf1
 static uint8_t  const protocol_flag = 0b1; //26
@@ -32,11 +37,11 @@ static uint32_t const serial_number = 0b11010000111011100101; //from 44-63; rand
 static uint16_t const national_use = 0b0000000000; //from 64-73, if national not used all 10 bits should be '0'
 static uint16_t const certif_number = 0b1111111111; //from 74-83, random
 static uint8_t  const radiolocating = 0b01; //from 84-85; 121,5MHz
+
 //BCH polynoms were generated with matlab function bchgenpoly
-//static int const bch1_poly = 0b1001101101100111100011; //22 with matlab function bchgenpoly(127,106)
 static uint8_t  bch1_poly[22] = {1,0,0,1,1,0,1,1,0,1,1,0,0,1,1,1,1,0,0,0,1,1};
 static uint8_t bch2_poly[13] = {1,0,1,0,1,0,0,1,1,1,0,0,1};
-//static uint16_t const bch2_poly = 0b1010100111001; //13 with matlab function bchgenpoly(63,51)
+
 //PDF2
 static uint8_t const position_data_source = 0b1; //107; GPS internal
 

@@ -84,6 +84,15 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
 SPI_RetType SPI_ReadData(SPI_Init_Struct * spi_init, uint8_t * rx_buffer,
 		uint8_t rx_buffer_size, uint8_t timeout);
 
+/**
+ * @brief Send and receive one byte via SPI
+ * 
+ * @param spi_init The Pins and SPI to use
+ * @param tx_byte byte to send
+ * @param rx_byte byte to receive
+ * @param timeout timeout
+ * @return Result of operation
+ */
 SPI_RetType SPI_WriteRead(SPI_Init_Struct * spi_init, uint8_t tx_byte, 
 		uint8_t * rx_byte, uint8_t timeout);
 

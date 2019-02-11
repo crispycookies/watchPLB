@@ -180,20 +180,6 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
 	return SPI_RET_OK;
 }
 
-SPI_RetType SPI_WriteRead(SPI_Init_Struct * spi_init, uint8_t tx_byte, 
-		uint8_t * rx_byte, uint8_t timeout) {
-	
-	if (spi_init == 0) {
-		return SPI_RET_INVALID_PARAM;
-	}
-
-	if (HAL_SPI_TransmitReceive(&spi_init->SPI, &tx_byte, rx_byte, 1, timeout) != HAL_OK) {
-		return SPI_RET_OP_FAILED;
-	}
-
-	return SPI_RET_OK;
-}
-
 /**
  * @brief Send and Receive Data via given SPI
  * @param spi_init: The Pins and SPI to use
