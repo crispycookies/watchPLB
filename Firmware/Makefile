@@ -25,10 +25,10 @@ HAL_DIRECTORY=Drivers/STM32L0xx_HAL_Driver
 HAL_PREFIX=stm32l0xx_hal_
 
 # Assembler, Compiler and Linker flags and linker script settings
-LINKER_FLAGS=-lm -mthumb -mcpu=cortex-m0plus  -Wl,--gc-sections -T$(LINK_SCRIPT) -static  -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs -specs=nosys.specs  -Wl,-cref "-Wl,-Map=$(BIN_DIR)/WatchPLB.map" -Wl,--defsym=malloc_getpagesize_P=0x1000
+LINKER_FLAGS=-lm -mthumb -mcpu=cortex-m0plus  -Wl,--gc-sections -T$(LINK_SCRIPT) -static  -Wl,--start-group -lc -lm -Wl,--end-group -specs=nosys.specs  -Wl,-cref "-Wl,-Map=$(BIN_DIR)/WatchPLB.map" -Wl,--defsym=malloc_getpagesize_P=0x1000
 LINK_SCRIPT="stm32_flash.ld"
-ASSEMBLER_FLAGS=-c -g -O0 -mcpu=cortex-m0plus  -mthumb -specs=nano.specs -D"STM32L073xx"  -x assembler-with-cpp
-COMPILER_FLAGS=-c -g -mcpu=cortex-m0plus  -O0 -Wall -ffunction-sections -fdata-sections -mthumb -specs=nano.specs -D"STM32L073xx" -include stm32l0xx_hal_conf.h -include system_stm32l0xx.h -include stm32l0xx_hal.h -include logger.h
+ASSEMBLER_FLAGS=-c -g -O0 -mcpu=cortex-m0plus  -mthumb -D"STM32L073xx"  -x assembler-with-cpp
+COMPILER_FLAGS=-c -g -mcpu=cortex-m0plus  -O0 -Wall -ffunction-sections -fdata-sections -mthumb -D"STM32L073xx" -include stm32l0xx_hal_conf.h -include system_stm32l0xx.h -include stm32l0xx_hal.h -include logger.h
 INCLUDES= \
 	-ITools/BitArray \
 	-ITools/Logger \
@@ -55,12 +55,12 @@ INCLUDES= \
 	-IDrivers/Interfaces/ubx \
 	-IDrivers/Interfaces/position \
 	-IDrivers/Interfaces/plb \
+	-IDrivers/Interfaces/battery \
 	-IApp/communication \
 	-IApp/emergencyCall \
 	-IApp/location \
 	-IApp/system \
-	-IApp/userInterface \
-	-ITools/Logger
+	-IApp/userInterface
 	
 HAL_MODULES=gpio adc dma tim uart uart_ex rcc rcc_ex cortex flash pwr pcd pcd_ex spi iwdg wwdg
 

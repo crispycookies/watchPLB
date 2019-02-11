@@ -108,6 +108,7 @@ void UI_CrazyLEDs() {
 HAL_StatusTypeDef UI_Init() {
 
 	KEY_Init();
+
 	led_init();
 	battery_init();
 

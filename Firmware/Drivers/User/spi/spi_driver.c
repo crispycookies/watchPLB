@@ -1,10 +1,12 @@
-/*
- * spidriver.cpp
- *
- *  Created on: 29.05.2018
- *      Author: tobilinux
+/**
+ ******************************************************************************
+ * @file    spi_driver.c
+ * @author  Tobias Egger
+ * @version V1.3
+ * @date    02-February-2019
+ * @brief   WatchPLB SPI- Driver Implementation File
+ ******************************************************************************
  */
-
 #define LUT_SIZE 26
 
 #include "spi_driver.h"
@@ -41,6 +43,11 @@ spi_init_lut_tdef spi_init_lut[LUT_SIZE] = { { { GPIO_PIN_4, GPIOA },
 		GPIO_PIN_13, GPIOE }, GPIO_AF2_SPI1 }, { { GPIO_PIN_14, GPIOE },
 		GPIO_AF2_SPI1 }, { { GPIO_PIN_15, GPIOE }, GPIO_AF2_SPI1 } };
 
+/**
+ * @brief Initializes GPIO- Clock
+ * @param  bank: The Bank to Initialize
+ * @retval none
+ */
 static void SPI_GPIO_CLK_Enable(const GPIO_TypeDef * bank) {
 	if (bank == GPIOA) {
 		__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -63,20 +70,6 @@ static void SPI_GPIO_CLK_Enable(const GPIO_TypeDef * bank) {
 static void SPI_AF_INIT(const SPI_GPIO_Pair gp) {
 
 	SPI_GPIO_CLK_Enable(gp.bank);
-
-	/*
-	 if (gp.bank == GPIOA) {
-	 __HAL_RCC_GPIOA_CLK_ENABLE();
-	 } else if (gp.bank == GPIOB) {
-	 __HAL_RCC_GPIOB_CLK_ENABLE();
-	 } else if (gp.bank == GPIOC) {
-	 __HAL_RCC_GPIOC_CLK_ENABLE();
-	 } else if (gp.bank == GPIOD) {
-	 __HAL_RCC_GPIOD_CLK_ENABLE();
-	 } else if (gp.bank == GPIOE) {
-	 __HAL_RCC_GPIOE_CLK_ENABLE();
-	 }
-	 */
 
 	GPIO_InitTypeDef spi_init_def;
 	spi_init_def.Pin = gp.pin;
@@ -104,19 +97,7 @@ static void SPI_Init_CS(const SPI_GPIO_Pair gp) {
 
 	SPI_GPIO_CLK_Enable(gp.bank);
 
-	/*
-	 if (gp.bank == GPIOA) {
-	 __HAL_RCC_GPIOA_CLK_ENABLE();
-	 } else if (gp.bank == GPIOB) {
-	 __HAL_RCC_GPIOB_CLK_ENABLE();
-	 } else if (gp.bank == GPIOC) {
-	 __HAL_RCC_GPIOC_CLK_ENABLE();
-	 } else if (gp.bank == GPIOD) {
-	 __HAL_RCC_GPIOD_CLK_ENABLE();
-	 } else if (gp.bank == GPIOE) {
-	 __HAL_RCC_GPIOE_CLK_ENABLE();
-	 }
-	 */
+
 
 	GPIO_InitTypeDef spi_init_def;
 	spi_init_def.Mode = GPIO_MODE_OUTPUT_PP;
@@ -164,7 +145,7 @@ SPI_RetType SPI_Init(SPI_Init_Struct * spi_init) {
 	SPI_AF_INIT(spi_init->MISO);
 	SPI_AF_INIT(spi_init->SCLK);
 	SPI_Init_CS(spi_init->CS);
-	SPI_CS_Enable(spi_init);
+	SPI_CS_Disable(spi_init);
 
 	__HAL_SPI_DISABLE(&spi_init->SPI);
 
@@ -198,6 +179,29 @@ SPI_RetType SPI_SendData(SPI_Init_Struct * spi_init, uint8_t * tx_buffer,
 
 	return SPI_RET_OK;
 }
+
+/**
+ * @brief Send and Receive Data via given SPI
+ * @param spi_init: The Pins and SPI to use
+ * @param tx_byte: the byte to send
+ * @param rx_byte: the byte to receive
+ * @param timout: the timeout
+ * @retval Result of Operation
+ */
+SPI_RetType SPI_WriteRead(SPI_Init_Struct * spi_init, uint8_t tx_byte, 
+		uint8_t * rx_byte, uint8_t timeout) {
+	
+	if (spi_init == 0) {
+		return SPI_RET_INVALID_PARAM;
+	}
+
+	if (HAL_SPI_TransmitReceive(&spi_init->SPI, &tx_byte, rx_byte, 1, timeout) != HAL_OK) {
+		return SPI_RET_OP_FAILED;
+	}
+
+	return SPI_RET_OK;
+}
+
 /**
  * @brief Receive Data via given SPI
  * @param spi_init: The Pins and SPI to use
