@@ -17,6 +17,9 @@
 #include "key.h"
 #include "emergencyCall.h"
 #include "battery.h"
+#include "adc.h"
+#include <stdbool.h>
+
 
 typedef enum {
 	UI_Idle, UI_Waiting, UI_SendLocation, UI_Sleepmode
@@ -33,7 +36,8 @@ const uint8_t battery_60 = 40;
 const uint8_t battery_40 = 20;
 const uint8_t battery_20 = 0;
 
-const uint8_t limiter = 10;
+const uint16_t limiter = 1000;
+static uint16_t counter = 0;
 
 void UI_UpdateBattery() {
 	// Check Battery state via ADC
@@ -102,7 +106,6 @@ void UI_CrazyLEDs() {
 }
 
 HAL_StatusTypeDef UI_Init() {
-	SystemClock_Config();
 
 	KEY_Init();
 
@@ -118,8 +121,8 @@ HAL_StatusTypeDef UI_Init() {
 
 HAL_StatusTypeDef UI_Update() {
 
-	static uint8_t counter = 0;
-	if(counter == limiter){
+
+	if(counter >= limiter){
 		UI_UpdateBattery();
 		counter = 0;
 	}
@@ -152,7 +155,7 @@ HAL_StatusTypeDef UI_Update() {
 		}
 
 		// show the battery status via LEDs
-		UI_UpdateBattery();
+		//UI_UpdateBattery();
 
 		break;
 	}
