@@ -156,4 +156,6 @@ void UBX_SetCallback(UBX_Instance* ubx, UBX_Callback cb, uint8_t msgClass, uint8
  */
 void UBX_Process(UBX_Instance* ubx, uint8_t byte);
 
+uint16_t UBX_CreateNMEAConfigFrame(UBX_Instance* ubx, uint8_t *frame, uint16_t len);
+
 #endif //!UBX_H

@@ -49,9 +49,151 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usb.h"
 #include "log.h"
+#include "location.h"
+#include "emergencyCall.h"
+#include "sysclock_driver.h"
 
 /* Private variables ---------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
+#define POS_CNT 7
+#define DELAY 2000
+
+POS_Position positions[POS_CNT] = {
+	{
+		//empty config
+		.time = {
+			.hour = 1,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Valid //has to be valid
+	}, {
+		//test config
+		.time = {
+			.hour = 1,
+			.minute = 2,
+			.second = 3,
+			.split = 4
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 23,
+			.minute = 45.234
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 10,
+			.minute = 38.923
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (Hagenberg)
+		.time = {
+			.hour = 1,
+			.minute = 2,
+			.second = 4,
+			.split = 2
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 48,
+			.minute = 22.082
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_E,
+			.degree = 14,
+			.minute = 30.782
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (New York, US)
+		.time = {
+			.hour = 2,
+			.minute = 3,
+			.second = 4,
+			.split = 5
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_N,
+			.degree = 40,
+			.minute = 43.650
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 73,
+			.minute = 59.328
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config(Melbourne, Australia)
+		.time = {
+			.hour = 12,
+			.minute = 13,
+			.second = 14,
+			.split = 15
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 37,
+			.minute = 48.858
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_E,
+			.degree = 144,
+			.minute = 57.804
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (should be neglected because of old timestamp)
+		.time = {
+			.hour = 10,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Valid
+	}, {
+		//test config (should be neglected because invalid)
+		.time = {
+			.hour = 14,
+			.minute = 0,
+			.second = 0,
+			.split = 0
+		},
+		.latitude = {
+			.direction = POS_Latitude_Flag_S,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.longitude = {
+			.direction = POS_Longitude_Flag_W,
+			.degree = 0,
+			.minute = 0.0
+		},
+		.valid = POS_Valid_Flag_Invalid
+	}, 
+};
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void _Error_Handler(char *file, int line);
@@ -79,74 +221,29 @@ int main(void) {
 	SystemClock_Config();
 	LOG_Init();
 	
+	HAL_Delay(1000);
+	
+	//LOC_Init();
+	LOC_InjectPosition(&(positions[2]));
+
+	EMC_Init();
+	EMC_SetEmergency(EMC_State_Emergency);
+
+
+
 	LOG("System initialized\n");
 
+	uint32_t next = HAL_GetTick() + DELAY;
+	uint8_t i = 0;
+
 	while (1) {
+		//if (HAL_GetTick()  > next && i < POS_CNT) {
+		//	next = HAL_GetTick() + DELAY;
+		//	LOG("[MAIN] Next Position: %u Tick: %lu\n", i, HAL_GetTick());
+		//	//LOC_InjectPosition(&positions[i++]);
+		//}
+
+		//LOC_Process();
+		EMC_Process();
 	}
-}
-
-/**
-  * @brief  System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void) {
-	RCC_OscInitTypeDef RCC_OscInitStruct;
-	RCC_ClkInitTypeDef RCC_ClkInitStruct;
-	RCC_PeriphCLKInitTypeDef PeriphClkInit;
-
-	//Configure the main internal regulator output voltage
-	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-
-	//Initializes the CPU, AHB and APB busses clocks 
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLLMUL_12;
-	RCC_OscInitStruct.PLL.PLLDIV = RCC_PLLDIV_4;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-	{
-		_Error_Handler(__FILE__, __LINE__);
-	}
-
-	//Initializes the CPU, AHB and APB busses clocks 
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-									| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-	{
-		_Error_Handler(__FILE__, __LINE__);
-	}
-
-	PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_USART1;
-	PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLL;
-	PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
-	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-	{
-		_Error_Handler(__FILE__, __LINE__);
-	}
-
-	//Configure the Systick interrupt time 
-	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
-
-	//Configure the Systick 
-	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-
-	//SysTick_IRQn interrupt configuration
-	HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
-}
-
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @param  file: The file name as string.
-  * @param  line: The line in file as a number.
-  * @retval None
-  */
-void _Error_Handler(char *file, int line)
-{
-	while(1) {}
 }
