@@ -268,7 +268,6 @@ void led_timer_init(TIME time_intervall) {
 	__HAL_RCC_TIM7_CLK_ENABLE();
 
 	SystemCoreClockUpdate();
-	const double factor = 3;
 
 	led_tim7_base.Prescaler = SystemCoreClock / (clkdivider);
 	led_tim7_base.CounterMode = TIM_COUNTERMODE_UP;
