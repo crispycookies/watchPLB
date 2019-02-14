@@ -1,3 +1,14 @@
+/**
+ * @file location.c
+ * @author Paul Götzinger
+ * @brief Location module
+ * @version 1.0
+ * @date 2019-02-14
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+
 #include "location.h"
 #include "nmea.h"
 #include "ubx.h"
@@ -21,14 +32,36 @@ static Configured cfgState;
 
 static uint8_t buf[BUF_LEN];
 
+/**
+ * @brief Callback function for received position
+ * 
+ * @param pos position
+ */
 static void positionCallback(POS_Position *pos);
+
+/**
+ * @brief callback function for other nmea messages
+ * 
+ * @param type nmea message type
+ * @param data message payload
+ * @param len payload length
+ */
 static void unknownCallback(NMEA_Type type, uint8_t* data, uint16_t len);
+
+/**
+ * @brief UBX acknowledge callback function
+ * 
+ * @param msgClass message class from message to be acknowledge
+ * @param id message id from message to be acknowledge
+ * @param ack acknowledge/not acknowledge
+ */
 static void ackCallback(UBX_Class msgClass, uint8_t id, UBX_Id_Ack ack);
 
 void LOC_Init() {
     position.valid = POS_Valid_Flag_Invalid;
     cfgState = No;
 
+    //configure uart
     UART_Config uart_conf;
     
     uart_conf.uart = USART4;
@@ -44,26 +77,21 @@ void LOC_Init() {
     
     UART_Init(&uart, &uart_conf);
 
+    //configure nmea interface
     NMEA_Init(&nmea);
     NMEA_SetPositionCallback(&nmea, positionCallback);
     NMEA_SetUnknownCallback(&nmea, unknownCallback);
 
+    //configure ubx interface
     UBX_Init(&ubx);
     UBX_SetAckCallback(&ubx, ackCallback, UBX_Class_CFG, 0x17);
 }
 
 void LOC_Process() {
     while (UART_GetAvailableBytes(&uart) > 0) {
-        uint8_t tmpData[100];
-        int16_t cnt = UART_GetData(&uart, 100, tmpData);
-        LOG("%.*s", cnt, tmpData);
-        //uint8_t byte = UART_GetByte(&uart);
-        //NMEA_Process(&nmea, byte);
-        //UBX_Process(&ubx, byte);
-        for (uint16_t i = 0; i < cnt; i++) {
-            UBX_Process(&ubx, tmpData[i]);
-            NMEA_Process(&nmea, tmpData[i]);
-        }
+        uint8_t byte = UART_GetByte(&uart);
+        NMEA_Process(&nmea, byte);
+        UBX_Process(&ubx, byte);
     }
 }
 
@@ -93,6 +121,7 @@ static void unknownCallback(NMEA_Type type, uint8_t* data, uint16_t len) {
         LOG("\n[LOC] Configure NMEA\n");
         cfgState = InProgress;
 
+        //configure gps module 
         uint16_t cnt = UBX_CreateNMEAConfigFrame(&ubx, buf, BUF_LEN);
         UART_SendData(&uart, cnt, buf);
     }

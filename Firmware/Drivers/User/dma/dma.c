@@ -1,10 +1,13 @@
-/*
- * dma.c
- *
- *  Created on: 27.05.2018
- *      Author: Paul
+/**
+ * @file dma.c
+ * @author Paul Götzinger
+ * @brief DMA interrupt module
+ * @version 0.1
+ * @date 2019-02-14
+ * 
+ * @copyright Copyright (c) 2019
+ * 
  */
-
 
 #include "dma.h"
 

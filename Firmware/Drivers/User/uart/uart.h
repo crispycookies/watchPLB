@@ -1,8 +1,12 @@
-/*
- * uart.h
- *
- *  Created on: 24.04.2018
- *      Author: Paul
+/**
+ * @file uart.c
+ * @author Paul Götzinger
+ * @brief 
+ * @version 1.0
+ * @date 2019-02-14
+ * 
+ * @copyright Copyright (c) 2019
+ * 
  */
 
 #ifndef UART_H

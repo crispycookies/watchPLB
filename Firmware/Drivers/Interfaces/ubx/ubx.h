@@ -1,8 +1,12 @@
-/*
- * ubx.h
- *
- *  Created on: 9.11.2018
- *      Author: Paul
+/**
+ * @file ubx.c
+ * @author Paul Götzinger
+ * @brief UBX protocol interface
+ * @version 1.0
+ * @date 2019-02-14
+ * 
+ * @copyright Copyright (c) 2019
+ * 
  */
 
 #ifndef UBX_H
