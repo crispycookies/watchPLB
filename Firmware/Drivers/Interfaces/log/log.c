@@ -2,6 +2,7 @@
   **************************
   * @file    log.c
   * @author  Michael Neuhofer
+  * @author  Paul Götzinger
   * @version V1.0
   * @date    13.11.2016
   * @brief   usb driver module

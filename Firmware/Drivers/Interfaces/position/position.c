@@ -1,3 +1,14 @@
+/**
+ * @file position.c
+ * @author Paul Götzinger
+ * @brief Position interface
+ * @version 1.0
+ * @date 2019-02-14
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+
 #include "position.h"
 #include "stdio.h"
 

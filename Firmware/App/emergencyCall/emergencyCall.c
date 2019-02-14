@@ -1,3 +1,14 @@
+/**
+ * @file emergencyCall.c
+ * @author Paul Götzinger
+ * @brief Emergency call module
+ * @version 1.0
+ * @date 2019-02-14
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+
 #include "emergencyCall.h"
 #include "spi_driver.h"
 #include "location.h"
@@ -19,7 +30,7 @@ static RADIO_Instance radio;
 static uint32_t lastMsgSent;
 
 void EMC_Init(void) {
-    
+    //init spi for radio module
     SPI_GPIO_Pair miso;
     miso.bank = GPIOC;
     miso.pin = GPIO_PIN_2;
@@ -50,10 +61,6 @@ void EMC_Init(void) {
     spi.SPI.Init.CLKPolarity = SPI_POLARITY_LOW;
     spi.SPI.Init.CLKPhase = SPI_PHASE_1EDGE;
     
-    //not defined
-    //spi.SPI.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-    //spi.SPI.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-    
     spi.CS = cs;
     spi.MISO = miso;
     spi.MOSI = mosi;
@@ -73,7 +80,7 @@ void EMC_Init(void) {
 void EMC_Process(void) {
 
     if (emergencyState == EMC_State_Emergency) {
-        
+        //if next message should be sent        
         if (RADIO_GetState(&radio) == RADIO_STATE_IDLE && HAL_GetTick() > lastMsgSent) {
             POS_Position* locPos = LOC_GetLastPosition();
 
@@ -98,6 +105,7 @@ void EMC_Process(void) {
             }
         }
 
+        //Process radio
         RADIO_Process(&radio);
     }
 }
