@@ -1,5 +1,5 @@
 /**
- * @file uart.c
+ * @file uart.h
  * @author Paul Götzinger
  * @brief 
  * @version 1.0

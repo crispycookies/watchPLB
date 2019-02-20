@@ -1,5 +1,5 @@
 /**
- * @file ubx.c
+ * @file ubx.h
  * @author Paul Götzinger
  * @brief UBX protocol interface
  * @version 1.0
